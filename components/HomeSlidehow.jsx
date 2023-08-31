@@ -32,8 +32,9 @@ const HomeSlideShow = () => {
             ? IMAGE3
             : IMAGE4
         }
+        priority
         alt=""
-        className="h-screen object-cover"
+        className="h-screen w-auto object-cover object-center"
       />
     </div>
   );
