@@ -1,18 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HomeSlideShow from "@/components/HomeSlidehow";
 import { BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
 import IMLOGO from "@/public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
+// import puppeteer from "puppeteer";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    // const response = await fetch(
+    //   "https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
+    //   {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //     mode: "no-cors",
+    //   }
+    // );
+
+    // const newdata = await response.json();
+    // console.log(newdata);
+
+    // axios
+    //   .post(
+    //     "https://corsproxy.io?https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
+    //     data
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     console.log(response.headers);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 
   return (
     <main className="max-w-screen overflow-hidden flex">
@@ -40,12 +75,21 @@ export default function Home() {
           </h2>
         </div>
 
-        <form className="flex flex-col gap-2 justify-center text-black">
+        <form
+          className="flex flex-col gap-2 justify-center text-black"
+          onSubmit={handleSubmit}
+        >
           <input
             type="text"
             placeholder="Matric Number"
             className="bg-slate-200 py-3 px-6 rounded-md focus:outline-none focus:shadow-inner"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) =>
+              setUsername(
+                (e.target.value = e.target.value
+                  .toLowerCase()
+                  .replace("@iium.edu.my", ""))
+              )
+            }
           />
           <input
             type="password"
