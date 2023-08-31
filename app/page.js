@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import IMLOGO from "@/public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
-// import puppeteer from "puppeteer";
+import imaluumLogin from "@/api/imaluumLogin";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -18,35 +18,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
-      username: username,
-      password: password,
-    };
-
-    // const response = await fetch(
-    //   "https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //     mode: "no-cors",
-    //   }
-    // );
-
-    // const newdata = await response.json();
-    // console.log(newdata);
-
-    // axios
-    //   .post(
-    //     "https://corsproxy.io?https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
-    //     data
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     console.log(response.headers);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    imaluumLogin({ username, password });
   };
 
   return (
