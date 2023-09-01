@@ -31,5 +31,10 @@
     "fs": false,
     "os": false,
     "path": false
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "@types/react": "^18.2.21",
+    "typescript": "^5.2.2"
   }
 }
