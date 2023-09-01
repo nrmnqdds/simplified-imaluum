@@ -1,24 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import HomeSlideShow from "@/components/HomeSlidehow";
+import HomeSlideShow from "../components/HomeSlideShow";
 import { BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
-import IMLOGO from "@/public/logo-landing-page.png";
+import IMLOGO from "../public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
-import imaluumLogin from "@/api/imaluumLogin";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginMessage, setLoginMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    imaluumLogin({ username, password });
+    try {
+      const response = await fetch("/api/imaluumLogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      // const { cookie } = await response.json();
+
+      // console.log("cookie: ", cookie);
+    } catch {
+      setLoginMessage("Login failed");
+    }
   };
 
   return (
@@ -50,9 +67,12 @@ export default function Home() {
         <form
           className="flex flex-col gap-2 justify-center text-black"
           onSubmit={handleSubmit}
+          id="login-form"
+          autoComplete="on"
         >
           <input
             type="text"
+            name="username"
             placeholder="Matric Number"
             className="bg-slate-200 py-3 px-6 rounded-md focus:outline-none focus:shadow-inner"
             onChange={(e) =>
@@ -65,6 +85,7 @@ export default function Home() {
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="bg-slate-200 py-3 px-6 rounded-md focus:outline-none focus:shadow-inner"
             onChange={(e) => setPassword(e.target.value)}
@@ -72,6 +93,7 @@ export default function Home() {
           <button className="bg-green-400 hover:bg-green-500 hover:scale-105 duration-75 active:translate-y-1 text-white px-4 py-2 rounded-md">
             Login
           </button>
+          <p className="text-red-500">{loginMessage}</p>
         </form>
         <Link
           href="https://github.com/qryskalyst20/simplified-imaluum"
