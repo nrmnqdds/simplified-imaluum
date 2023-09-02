@@ -27,12 +27,12 @@ export default function Home() {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-      console.log(data);
+      // const data = await response.json();
+      // console.log(data);
 
-      // const { cookie } = await response.json();
+      const { cookies } = await response.json();
 
-      // console.log("cookie: ", cookie);
+      console.log("cookie: ", cookies);
     } catch {
       setLoginMessage("Login failed");
     }
