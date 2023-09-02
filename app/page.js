@@ -14,8 +14,10 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     try {
@@ -33,6 +35,7 @@ export default function Home() {
       const { cookies } = await response.json();
 
       console.log("cookie: ", cookies);
+      setIsLoading(false);
     } catch {
       setLoginMessage("Login failed");
     }
@@ -90,8 +93,11 @@ export default function Home() {
             className="bg-slate-200 dark:bg-zinc-800 py-3 px-6 rounded-md focus:outline-none focus:shadow-inner"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="bg-green-400 hover:bg-green-500 hover:scale-105 duration-75 active:translate-y-1 text-white px-4 py-2 rounded-md">
-            Login
+          <button
+            className="bg-green-400 hover:bg-green-500 disabled:bg-green-900 disabled:hover:scale-100 disabled:cursor-not-allowed hover:scale-105 duration-75 active:translate-y-1 text-white px-4 py-2 rounded-md"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Login"}
           </button>
           <p className="text-red-500">{loginMessage}</p>
         </form>
