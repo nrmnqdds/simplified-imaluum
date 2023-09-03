@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer-core";
 import { IMALUUMLOGINPAGE } from "../../constants";
-import chromium from "@sparticuz/chromium-min";
+import chromium from "chrome-aws-lambda";
 
 export async function POST(request: Request) {
   const { username, password } = await request.json();
@@ -19,12 +19,10 @@ export async function POST(request: Request) {
   //   headless: chromium.headless,
   //   ignoreHTTPSErrors: true,
   // });
-  const browser = await puppeteer.launch({
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+  const browser = await chromium.puppeteer.launch({
+    args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
-    ),
+    executablePath: await chromium.executablePath,
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
