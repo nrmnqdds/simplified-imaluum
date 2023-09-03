@@ -38,6 +38,7 @@ export default function Home() {
       setIsLoading(false);
     } catch {
       setLoginMessage("Login failed");
+      setIsLoading(false);
     }
   };
 
