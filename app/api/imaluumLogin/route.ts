@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer-core";
+// import puppeteer from "puppeteer-core";
 import { IMALUUMLOGINPAGE } from "../../constants";
-import chromium from "chrome-aws-lambda";
+// import Chromium from "chrome-aws-lambda";
+import { chromium } from "playwright";
 
 export async function POST(request: Request) {
   const { username, password } = await request.json();
@@ -19,13 +20,11 @@ export async function POST(request: Request) {
   //   headless: chromium.headless,
   //   ignoreHTTPSErrors: true,
   // });
-  const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-  });
+
+  const browser = await chromium.launch();
+
+  const context = await browser.newContext();
+
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
 
@@ -34,18 +33,19 @@ export async function POST(request: Request) {
     await page.goto(IMALUUMLOGINPAGE);
 
     console.log("Typing username");
-    await page.type("input#username", username);
+    await page.locator("input#username").fill(username);
     await new Promise((r) => setTimeout(r, 500));
     console.log("Typing password");
-    await page.type("input#password", password);
+    await page.locator("input#password").fill(password);
     await new Promise((r) => setTimeout(r, 500));
     console.log("Clicking submit");
-    await page.click("input.btn");
+    await page.locator("input.btn").click();
 
-    await page.waitForNavigation();
+    await page.waitForURL("https://imaluum.iium.edu.my/home");
 
     console.log("Getting cookies");
-    const cookies = await page.cookies();
+    await new Promise((r) => setTimeout(r, 500));
+    const cookies = await page.context().cookies();
 
     return NextResponse.json({ cookies });
   } catch (error) {
