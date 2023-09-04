@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { IMALUUM_LOGIN_PAGE } from "../../constants";
 import { IMALUUM_HOME_PAGE } from "../../constants";
 // import Chromium from "chrome-aws-lambda";
@@ -9,10 +9,10 @@ export async function POST(request: Request) {
   const { username, password } = await request.json();
   console.log("Launching browser");
 
-  const browser = await puppeteer.launch({
-    headless: true, // Set to true for production means:takbukak browser
-    args: ["--no-sandbox"],
-  });
+  // const browser = await puppeteer.launch({
+  //   headless: true, // Set to true for production means:takbukak browser
+  //   args: ["--no-sandbox"],
+  // });
 
   // const browser = await chromium.puppeteer.launch({
   //   args: chromium.args,
@@ -22,9 +22,9 @@ export async function POST(request: Request) {
   //   ignoreHTTPSErrors: true,
   // });
 
-  // const browser = await puppeteer.connect({
-  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
-  // });
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
