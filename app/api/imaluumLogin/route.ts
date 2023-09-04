@@ -33,21 +33,21 @@ export async function POST(request: Request) {
     await page.goto(IMALUUMLOGINPAGE);
 
     console.log("Typing username");
-    await page.locator("input#username").fill(username);
-    await new Promise((r) => setTimeout(r, 500));
+    await page.type("input#username", username);
+    await new Promise((r) => setTimeout(r, 100));
     console.log("Typing password");
-    await page.locator("input#password").fill(password);
-    await new Promise((r) => setTimeout(r, 1000));
+    await page.type("input#password", password);
+    await new Promise((r) => setTimeout(r, 100));
     console.log("Clicking submit");
-    await page.waitForSelector("input.btn");
-    await new Promise((r) => setTimeout(r, 300));
-    await page.locator("input.btn").click();
+    // await page.waitForSelector("input.btn");
+    await new Promise((r) => setTimeout(r, 100));
+    await page.click("input.btn");
 
     console.log("Waiting for page to load");
-    await page.waitForNavigation({ waitUntil: "load" });
+    await page.waitForNavigation({ waitUntil: "networkidle2" });
 
     console.log("Getting cookies");
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 200));
     const cookies = await page.cookies();
     console.log("done");
 
