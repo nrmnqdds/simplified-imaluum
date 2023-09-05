@@ -1,11 +1,17 @@
 "use client";
 
 import cookies from "../../cookies.json";
+import { useEffect } from "react";
+import { ThemeSwitcher } from "../../components/ThemeSwitcher";
+import UserID from "../../components/UserID";
 
 const Page = () => {
-  console.log("cookies from dashboard", cookies);
+  // console.log("cookies from dashboard", cookies);
+
   return (
     <div className="min-w-screen min-h-screen bg-white dark:bg-zinc-900 flex flex-col items-center justify-center">
+      <ThemeSwitcher className="absolute top-2 left-5" />
+      <UserID />
       <div className="absolute top-5">
         <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100">
           Dashboard
