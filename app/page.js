@@ -8,6 +8,7 @@ import Image from "next/image";
 import IMLOGO from "../public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { ThemeSwitcher } from "../components/ThemeSwitcher";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -48,6 +49,7 @@ export default function Home() {
   return (
     <main className="max-w-screen overflow-hidden flex">
       <HomeSlideShow />
+      <ThemeSwitcher className="absolute top-2 right-5" />
       <div className="bg-gradient-to-l from-white dark:from-zinc-900 from-5% dark:10% to-transparent h-screen flex-1"></div>
       <div className="bg-white dark:bg-zinc-900 h-screen flex-1 flex flex-col items-center justify-center">
         <div className="mb-10">
