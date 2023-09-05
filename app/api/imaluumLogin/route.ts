@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { IMALUUM_LOGIN_PAGE } from "../../constants";
 import { IMALUUM_HOME_PAGE } from "../../constants";
+import { writeFileSync } from "fs";
 // import Chromium from "chrome-aws-lambda";
 // import { chromium } from "playwright";
 
@@ -9,10 +10,10 @@ export async function POST(request: Request) {
   const { username, password } = await request.json();
   console.log("Launching browser");
 
-  // const browser = await puppeteer.launch({
-  //   headless: true, // Set to true for production means:takbukak browser
-  //   args: ["--no-sandbox"],
-  // });
+  const browser = await puppeteer.launch({
+    headless: true, // Set to true for production means:takbukak browser
+    args: ["--no-sandbox"],
+  });
 
   // const browser = await chromium.puppeteer.launch({
   //   args: chromium.args,
@@ -22,9 +23,9 @@ export async function POST(request: Request) {
   //   ignoreHTTPSErrors: true,
   // });
 
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
-  });
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  // });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
@@ -77,6 +78,7 @@ export async function POST(request: Request) {
     }
 
     // await page.waitForNavigation({ waitUntil: "networkidle0" });
+    console.log("Opening home page");
     const currentUrl = page.url();
 
     if (currentUrl !== IMALUUM_HOME_PAGE) {
@@ -86,6 +88,7 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log("Getting cookies");
     const cookies = (await page.cookies())?.filter((value) => {
       if (value.name == "XSRF-TOKEN" || value.name == "laravel_session")
         return value;
@@ -96,6 +99,9 @@ export async function POST(request: Request) {
         return value;
       }
     });
+
+    // Create a JSON file with the cookies data
+    writeFileSync("cookies.json", JSON.stringify(cookies, null, 2));
 
     // console.log("Waiting for page to load");
     // await page.waitForNavigation({ waitUntil: "networkidle2" });
