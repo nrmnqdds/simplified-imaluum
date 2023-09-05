@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import HomeSlideShow from "../components/HomeSlideShow";
 import { BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
 import IMLOGO from "../public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -29,13 +31,14 @@ export default function Home() {
         body: JSON.stringify({ username, password }),
       });
 
-      // const data = await response.json();
-      // console.log(data);
-
       const { cookies } = await response.json();
+      console.log("cookies from login", cookies);
 
-      console.log("cookie: ", cookies);
-      setIsLoading(false);
+      if (cookies) {
+        router.push("/dashboard");
+      }
+
+      // setIsLoading(false);
     } catch {
       setLoginMessage("Login failed");
       setIsLoading(false);
