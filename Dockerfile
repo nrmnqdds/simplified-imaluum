@@ -4,6 +4,10 @@ FROM node:18.17.1-slim
 # Create and change to the app directory.
 WORKDIR /usr/app
 
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+ENTRYPOINT ["dumb-init", "--"]
+
 # Add Puppeteer installation code here.
 RUN apt-get update \
     && apt-get install -y wget gnupg \
