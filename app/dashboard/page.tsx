@@ -1,12 +1,14 @@
 "use client";
 
-import cookies from "../../cookies.json";
-import { useEffect } from "react";
+import { useState, useContext } from "react";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher";
 import UserID from "../../components/UserID";
+import { useCookiesProvider } from "../context/cookies-provider";
 
 const Page = () => {
   // console.log("cookies from dashboard", cookies);
+  const { cookies } = useCookiesProvider();
+  console.log("cookies from dashboard", cookies);
 
   return (
     <div className="min-w-screen min-h-screen bg-white dark:bg-zinc-900 flex flex-col items-center justify-center">
