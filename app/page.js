@@ -9,6 +9,7 @@ import IMLOGO from "../public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
+import { useCookiesProvider } from "./context/cookies-provider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -17,6 +18,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { cookies, setCookies } = useCookiesProvider();
 
   const router = useRouter();
   const handleSubmit = async (e) => {
@@ -32,10 +34,11 @@ export default function Home() {
         body: JSON.stringify({ username, password }),
       });
 
-      const { cookies } = await response.json();
-      console.log("cookies from login", cookies);
+      const { loginCookies } = await response.json();
+      console.log("cookies from login", loginCookies);
+      setCookies(loginCookies);
 
-      if (cookies) {
+      if (loginCookies) {
         router.push("/dashboard");
       }
 
