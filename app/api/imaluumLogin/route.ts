@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import { IMALUUM_LOGIN_PAGE } from "../../constants";
 import { IMALUUM_HOME_PAGE } from "../../constants";
-import { writeFileSync } from "fs";
 // import Chromium from "chrome-aws-lambda";
 // import { chromium } from "playwright";
 
@@ -89,7 +88,7 @@ export async function POST(request: Request) {
     }
 
     console.log("Getting cookies");
-    const cookies = (await page.cookies())?.filter((value) => {
+    const loginCookies = (await page.cookies())?.filter((value) => {
       if (value.name == "XSRF-TOKEN" || value.name == "laravel_session")
         return value;
       else if (value.name == "MOD_AUTH_CAS") {
@@ -100,9 +99,6 @@ export async function POST(request: Request) {
       }
     });
 
-    // Create a JSON file with the cookies data
-    writeFileSync("cookies.json", JSON.stringify(cookies, null, 2));
-
     // console.log("Waiting for page to load");
     // await page.waitForNavigation({ waitUntil: "networkidle2" });
 
@@ -111,7 +107,7 @@ export async function POST(request: Request) {
     // const cookies = await page.cookies();
     // console.log("done");
 
-    return NextResponse.json({ cookies });
+    return NextResponse.json({ loginCookies });
   } catch (error) {
     // Handle any errors here
     console.error("Error:", error);
