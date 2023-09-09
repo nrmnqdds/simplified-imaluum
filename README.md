@@ -4,14 +4,10 @@
 
 ## 🚧 **In Construction** 🚧
 
-Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly.
+Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly. Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
 
 >[!IMPORTANT]
-> Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
-
-> [!NOTE]
 > *This project is **not** associated with the official i-Ma'luum website!*
-
 
 ## Features 🚀
 
