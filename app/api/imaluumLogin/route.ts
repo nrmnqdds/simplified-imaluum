@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import { IMALUUM_LOGIN_PAGE } from "../../constants";
 import { IMALUUM_HOME_PAGE } from "../../constants";
+import { writeFileSync } from "fs";
 // import Chromium from "chrome-aws-lambda";
 // import { chromium } from "playwright";
 
@@ -98,6 +99,11 @@ export async function POST(request: Request) {
         return value;
       }
     });
+
+    writeFileSync(
+      "app/api/userCookies.json",
+      JSON.stringify(loginCookies, null, 2)
+    );
 
     // console.log("Waiting for page to load");
     // await page.waitForNavigation({ waitUntil: "networkidle2" });
