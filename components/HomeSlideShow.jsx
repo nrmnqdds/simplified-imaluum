@@ -32,7 +32,7 @@ const HomeSlideShow = () => {
             ? IMAGE3
             : IMAGE4
         }
-        priority={currentSlide === 1 ? true : false}
+        priority
         alt=""
         className="h-screen w-auto object-cover object-center"
       />
