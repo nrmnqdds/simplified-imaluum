@@ -35,7 +35,7 @@ export default function Home() {
       });
 
       const { loginCookies } = await response.json();
-      console.log("cookies from login", loginCookies);
+      // console.log("cookies from login", loginCookies);
       setCookies(loginCookies);
 
       if (loginCookies) {
