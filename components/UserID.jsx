@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const UserID = () => {
   const [userName, setUserName] = useState("");
+  const [userImage, setUserImage] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
   useEffect(() => {
     async function fetchData() {
@@ -12,15 +14,19 @@ const UserID = () => {
 
         if (response.ok) {
           const { userImageText, hiddenText } = await response.json();
-          setUserName(hiddenText); // Store the data in state
-          setLoading(false); // Update loading state
+          // const decodedUserImage = atob(userImageText);
+          // setUserImage(decodedUserImage);
+          // console.log("User Image:", decodedUserImage);
+          setUserImage(userImageText);
+          setUserName(hiddenText);
+          setLoading(false);
         } else {
           console.error("Error fetching user data");
-          setLoading(false); // Update loading state
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setLoading(false); // Update loading state
+        setLoading(false);
       }
     }
 
@@ -33,14 +39,25 @@ const UserID = () => {
   }
 
   return (
-    <div className="absolute top-5 right-10">
-      <h1>User ID</h1>
-      <p className="text-white">User Name: {userName}</p>
-      {/* Display user data */}
-      {/* <div>
-        User Image: <Image src={userData.userImageText} alt="User" />
-      </div> */}
-      {/* <p className="text-white">Hidden Text: {userData.hiddenText}</p> */}
+    <div className="absolute top-5 right-10 flex gap-2 items-center">
+      <div className="text-right">
+        <p className="dark:text-white text-zinc-900 font-bold text-[12px]">
+          {userName}
+        </p>
+        <p className="text-zinc-700 dark:text-zinc-600 font-semibold text-[10px]">
+          Student
+        </p>
+      </div>
+      {userImage && (
+        <Image
+          src={userImage}
+          alt="User"
+          width={0}
+          height={0}
+          className="rounded-xl"
+          style={{ width: "40px", height: "auto", objectFit: "contain" }}
+        />
+      )}
     </div>
   );
 };
