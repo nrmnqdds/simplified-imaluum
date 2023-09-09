@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { IMALUUM_LOGIN_PAGE } from "../../constants";
 import { IMALUUM_HOME_PAGE } from "../../constants";
 import { writeFileSync } from "fs";
@@ -99,6 +99,8 @@ export async function POST(request: Request) {
         return value;
       }
     });
+
+    browser.close();
 
     writeFileSync(
       "app/api/userCookies.json",
