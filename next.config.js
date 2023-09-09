@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverRuntimeConfig: {
-    experimental: {
-      serverActions: true,
-    },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "souq.iium.edu.my",
+        pathname: "**",
+        port: "",
+      },
+    ],
   },
 };
 
