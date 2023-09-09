@@ -4,9 +4,11 @@ import { load } from "cheerio";
 import { writeFileSync } from "fs";
 
 export async function GET(request: Request) {
-  const url = "https://souq.iium.edu.my/embeded";
+  try {
+    const url = "https://souq.iium.edu.my/embeded";
 
-  axios.get(url).then((response: AxiosResponse) => {
+    const response: AxiosResponse = await axios.get(url); // Use async/await to handle the response
+
     const $ = load(response.data);
     const articles = $('div[style*="width:100%; clear:both;height:100px"]');
 
@@ -22,9 +24,12 @@ export async function GET(request: Request) {
         adsLink,
       });
     });
-    // console.log("data", structuredData);
+
     writeFileSync("app/api/adsList.json", JSON.stringify(structuredData));
 
-    // return NextResponse.json({ structuredData });
-  });
+    return NextResponse.json({ structuredData });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return NextResponse.error();
+  }
 }
