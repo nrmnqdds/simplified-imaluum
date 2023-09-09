@@ -1,0 +1,44 @@
+[
+  {
+    "name": "laravel_session",
+    "value": "eyJpdiI6ImhWbm8xbnFvV0daQitFWCtKcFwvMmtBPT0iLCJ2YWx1ZSI6Ijd2Q0YxVVlnZGxRM2JPbjk4Y0l3anhIdlVvUnYyYTVaRm1nZ0RycE5PdDZXT1lUVXBrbEZ3VjM4SThwQzZ5Y3QyK205QWcrckUxdW1YdTYwV0g0aWZ3PT0iLCJtYWMiOiJmZjRlNzJhODc0M2IzMzIyODZjZmVlYTczYjFkNDc5MmY4NDZkYmViNmQxZDllZWEzYmFlZGRlNDE1YjBkMzA3In0%3D",
+    "domain": "imaluum.iium.edu.my",
+    "path": "/",
+    "expires": 1694259898.494569,
+    "size": 293,
+    "httpOnly": true,
+    "secure": false,
+    "session": false,
+    "sameParty": false,
+    "sourceScheme": "Secure",
+    "sourcePort": 443
+  },
+  {
+    "name": "XSRF-TOKEN",
+    "value": "eyJpdiI6IldvUEhZeHl1TmdXbDFGM2RjVGl3dlE9PSIsInZhbHVlIjoiWjRROWp2Nlo0bThTNE5yMWJlWjFaYWlDWkxVeitrdjdqeXhwUEFBd2Q1eUI5UER6YTN4V25SZkhLejdJR2JEd3N3d3N6UFBTRktkdTRKWThOejFyTkE9PSIsIm1hYyI6Ijk1YWFlMWYwYzgyOWRhYzYwZjI4M2EzY2VhZDBhZjBiMjA2NTJkYWFlNjZlMTYxODI5NDJiMTYyNmM2YTFlZTgifQ%3D%3D",
+    "domain": "imaluum.iium.edu.my",
+    "path": "/",
+    "expires": 1694259898.494424,
+    "size": 290,
+    "httpOnly": false,
+    "secure": false,
+    "session": false,
+    "sameParty": false,
+    "sourceScheme": "Secure",
+    "sourcePort": 443
+  },
+  {
+    "name": "MOD_AUTH_CAS",
+    "value": "ae8b701ec2342c5f2c32f7f71d68e8de",
+    "domain": "imaluum.iium.edu.my",
+    "path": "/",
+    "expires": 10000000000,
+    "size": 44,
+    "httpOnly": true,
+    "secure": false,
+    "session": false,
+    "sameParty": false,
+    "sourceScheme": "Secure",
+    "sourcePort": 443
+  }
+]
