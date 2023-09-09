@@ -1,5 +1,6 @@
 "use client";
 
+import Advertisement from "../../components/Advertisements";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher";
 import UserID from "../../components/UserID";
 // import { useCookiesProvider } from "../context/cookies-provider";
@@ -9,16 +10,14 @@ const Page = () => {
   // console.log("cookies from dashboard", cookies);
 
   return (
-    <div className="min-w-screen min-h-screen bg-white dark:bg-zinc-900 flex flex-col items-center justify-center">
+    <div className="min-w-screen min-h-screen bg-slate-100 dark:bg-zinc-900 flex">
       <ThemeSwitcher className="absolute top-2 left-5" />
-      <UserID />
-      <div className="absolute top-5">
-        <h1 className="text-5xl font-bold text-gray-900 dark:text-gray-100">
-          Dashboard
-        </h1>
-        <p className="text-gray-700 dark:text-gray-400 text-center">
-          Welcome to your dashboard
-        </p>
+
+      <div className="w-[60%] flex p-5">
+        <Advertisement />
+      </div>
+      <div className="w-[40%] dark:bg-zinc-950 bg-slate-50">
+        <UserID />
       </div>
     </div>
   );
