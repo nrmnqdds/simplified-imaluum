@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { NextResponse } from "next/server";
 import { load } from "cheerio";
-import cookies from "../userCookies.json";
+import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "../../constants";
 
 export async function GET(request: Request) {
@@ -9,10 +9,14 @@ export async function GET(request: Request) {
     // Define the URL you want to scrape
     const url = IMALUUM_HOME_PAGE;
 
+    const cookieStore = cookies();
+    // console.log("cookieStore", cookieStore);
+
     // Create a Axios instance with cookies
     const axiosInstance = axios.create({
       headers: {
-        Cookie: cookies
+        Cookie: cookieStore
+          .getAll()
           .map((cookie) => `${cookie.name}=${cookie.value}`)
           .join("; "), // Use only name and value properties
       },
