@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import axios, { AxiosResponse } from "axios";
 import { load } from "cheerio";
-import { writeFileSync } from "fs";
 
 export async function GET(request: Request) {
   try {
@@ -24,8 +23,6 @@ export async function GET(request: Request) {
         adsLink,
       });
     });
-
-    writeFileSync("app/api/adsList.json", JSON.stringify(structuredData));
 
     return NextResponse.json({ structuredData });
   } catch (error) {
