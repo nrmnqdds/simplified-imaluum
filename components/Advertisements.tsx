@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, Fragment } from "react";
-import adsList from "../app/api/adsList.json";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
@@ -13,8 +12,14 @@ const Advertisement = () => {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch("api/ads");
-    setLoading(false);
+    async function getAds() {
+      const response = await fetch("api/ads");
+      const data = await response.json();
+      setAds(data);
+      // console.log("ads from client", data);
+      setLoading(false);
+    }
+    getAds();
   }, []);
 
   return (
@@ -37,7 +42,7 @@ const Advertisement = () => {
           <p>Loading...</p>
         ) : (
           <Fragment>
-            <ScrollCarousel />
+            <ScrollCarousel ads={ads} />
           </Fragment>
         )}
       </div>

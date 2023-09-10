@@ -1,32 +1,37 @@
 "use client"; // For Next JS 13 app router
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ScrollCarousel from "scroll-carousel-react";
-import adsList from "../app/api/adsList.json";
+// import adsList from "../app/api/adsList.json";
+import { Rerousel } from "rerousel";
 
-const ScrollCarouselComponent = () => {
+const ScrollCarouselComponent = ({ ads }) => {
+  const [adsList, setAdsList] = useState(ads.structuredData);
+  const adsImages = useRef(null);
   return (
-    <ScrollCarousel
-      autoplay
-      autoplaySpeed={2}
-      speed={4}
-      margin={30}
-      onReady={() => console.log("I am ready")}
-    >
+    <Rerousel itemRef={adsImages} interval={2000}>
       {adsList.map((item, index) => (
-        <Link key={index} href={item.adsLink} target="_blank" passHref={true}>
+        <Link
+          key={index}
+          href={item.adsLink}
+          target="_blank"
+          passHref={true}
+          ref={adsImages}
+          className="w-36 h-36 relative mx-2"
+        >
           <Image
             src={item.adsImg}
             alt=""
-            priority
+            blurDataURL={item.adsImg}
+            placeholder="blur"
             fill
-            className="rounded-lg object-contain"
+            sizes="100%"
+            className="rounded-lg object-cover"
           />
         </Link>
       ))}
-    </ScrollCarousel>
+    </Rerousel>
   );
 };
 
