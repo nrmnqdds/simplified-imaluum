@@ -2,15 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useCookiesProvider } from "../app/context/cookies-provider";
 
 const UserID = () => {
   const [userName, setUserName] = useState("");
   const [userImage, setUserImage] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
+  const { cookies } = useCookiesProvider();
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("api/user");
+        const response = await fetch("api/user", {
+          headers: {
+            Cookie: cookies,
+          },
+        });
 
         if (response.ok) {
           const { userImageText, hiddenText } = await response.json();
@@ -31,7 +38,7 @@ const UserID = () => {
     }
 
     fetchData();
-  }, []);
+  }, [cookies]);
 
   // Render loading indicator while data is being fetched
   if (loading) {
