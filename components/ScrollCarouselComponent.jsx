@@ -20,8 +20,8 @@ const ScrollCarouselComponent = () => {
           <Image
             src={item.adsImg}
             alt=""
-            width={144}
-            height={144}
+            priority
+            fill
             className="rounded-lg object-contain"
           />
         </Link>
