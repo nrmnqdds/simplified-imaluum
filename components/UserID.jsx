@@ -62,9 +62,6 @@ const UserID = () => {
       height={70}
       style={{
         borderRadius: "20px",
-        position: "absolute",
-        top: "5px",
-        right: "10px",
       }}
     />
   ) : (
@@ -76,9 +73,6 @@ const UserID = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         style={{
-          position: "absolute",
-          top: "5px",
-          right: "10px",
           display: "flex",
           gap: "8px",
           alignItems: "center",
