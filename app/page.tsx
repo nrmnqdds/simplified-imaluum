@@ -9,7 +9,6 @@ import IMLOGO from "../public/logo-landing-page.png";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
-import { useCookiesProvider } from "./context/cookies-provider";
 import { GetLoginCookies } from "./api/GetLoginCookies";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
@@ -21,7 +20,6 @@ export default function Home() {
   });
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { cookies, setCookies } = useCookiesProvider();
 
   const router = useRouter();
 
@@ -42,39 +40,7 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-
-    // if (loginCookies) {
-    //   router.push("/dashboard");
-    // }
   };
-  // const {loginCookies} = await GetLoginCookies(username, password);
-  // const handleSubmit = async (e) => {
-  //   setIsLoading(true);
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await fetch("/api/imaluumLogin", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-
-  //     const { loginCookies } = await response.json();
-  //     // console.log("cookies from login", loginCookies);
-  //     setCookies(loginCookies);
-
-  //     if (loginCookies) {
-  //       router.push("/dashboard");
-  //     }
-
-  //     // setIsLoading(false);
-  //   } catch {
-  //     setLoginMessage("Login failed");
-  //     setIsLoading(false);
-  //   }
-  // };
 
   return (
     <main className="max-w-screen overflow-hidden flex">
