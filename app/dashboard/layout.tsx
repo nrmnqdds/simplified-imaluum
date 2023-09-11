@@ -6,7 +6,7 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "i-Ma'luum Dashboard",
+  title: "Dashboard | Simplified i-Ma'luum",
   description: "Personal dashboard, only what you need to know.",
 };
 
