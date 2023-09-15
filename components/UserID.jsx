@@ -53,6 +53,10 @@ const UserID = () => {
     setAnchorEl(null);
     router.replace("/");
   };
+  const handleSchedule = () => {
+    setAnchorEl(null);
+    router.replace("/dashboard/schedule");
+  };
 
   return loading ? (
     <Skeleton
@@ -107,6 +111,7 @@ const UserID = () => {
           "aria-labelledby": "basic-button",
         }}
       >
+        <MenuItem onClick={handleSchedule}>Schedule</MenuItem>
         <MenuItem onClick={handleLogout}>Log out</MenuItem>
       </Menu>
     </Fragment>
