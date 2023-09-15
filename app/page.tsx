@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HomeSlideShow from "../components/HomeSlideShow";
 import { BsGithub } from "react-icons/bs";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { GetLoginCookies } from "./api/GetLoginCookies";
+import { useTheme } from "next-themes";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -20,8 +21,22 @@ export default function Home() {
   });
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -45,7 +60,11 @@ export default function Home() {
   return (
     <main className="max-w-screen overflow-hidden flex">
       <HomeSlideShow />
-      <ThemeSwitcher className="absolute top-2 right-5" />
+      <ThemeSwitcher
+        className="absolute top-2 right-5"
+        toggleTheme={toggleTheme}
+        theme={theme}
+      />
       <div className="bg-gradient-to-l from-white dark:from-zinc-900 from-5% dark:10% to-transparent h-screen flex-1"></div>
       <div className="bg-white dark:bg-zinc-900 h-screen flex-1 flex flex-col items-center justify-center">
         <div className="mb-10">
