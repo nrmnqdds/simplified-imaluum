@@ -1,5 +1,6 @@
 import { ThemeProvider } from "../context/theme-provider";
 import { CookiesProvider } from "../context/cookies-provider";
+import ScheduleProvider from "../context/schedule-provider";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 
@@ -15,7 +16,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <CookiesProvider>{children}</CookiesProvider>
+          <ScheduleProvider>
+            <CookiesProvider>{children}</CookiesProvider>
+          </ScheduleProvider>
         </ThemeProvider>
       </body>
     </html>
