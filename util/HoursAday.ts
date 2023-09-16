@@ -1,18 +1,18 @@
 import { tHours } from "../index";
 
-function create24HoursArray() {
+function createHoursArray() {
   const hours: Array<tHours> = [];
-  for (let i = 0; i < 12; i++) {
-    const hour = i;
-    const item = { text: `${i === 0 ? 12 : i}AM`, hour };
-    hours.push(item);
-  }
-  for (let i = 0; i < 12; i++) {
-    const hour = i === 0 ? 12 : i + 12;
-    const item = { text: `${i === 0 ? 12 : i}PM`, hour };
+  for (let i = 8; i <= 18; i++) {
+    const item = { text: `${i} AM`, hour: i };
+    if (i === 12) {
+      const item = { text: `${i} PM`, hour: i };
+      hours.push(item);
+      continue;
+    }
+
     hours.push(item);
   }
   return hours;
 }
 
-export const hours24 = create24HoursArray();
+export const hours24 = createHoursArray();
