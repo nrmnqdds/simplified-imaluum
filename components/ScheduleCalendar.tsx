@@ -1,9 +1,15 @@
-import { tDays } from "../index";
+import { tDays, tScheduleDetail } from "../index";
 import { dayOfWeek } from "../util/dayOfWeek";
 import { hours24 } from "../util/HoursAday";
-import { removeSchedule, schedules } from "../store/modules/schedule";
+import {
+  addSchedule,
+  schedules,
+  removeSchedule,
+} from "../store/modules/schedule";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import SessionSwitcher from "./SessionSwitcher";
+import moment from "moment";
 
 export default function ScheduleCalendar({
   days,
@@ -51,13 +57,6 @@ export default function ScheduleCalendar({
     setDeleteSchedule(scheduleData);
   };
 
-  const deleteHandle = () => {
-    setIsDeleteOpen(false);
-    dispatch(
-      removeSchedule({ date: deleteSchedule.date, index: deleteSchedule.index })
-    );
-  };
-
   useEffect(() => {
     if (isDeleteOpen) {
       document.getElementById("schedule")!.style.overflow = "hidden";
@@ -66,15 +65,108 @@ export default function ScheduleCalendar({
     }
   }, [isDeleteOpen]);
 
+  const addCustomEvent = (date: string, data: tScheduleDetail) => {
+    dispatch(addSchedule({ date, data }));
+  };
+
+  const handleCurrentScheduleChange = (newCurrentSchedule: any) => {
+    // Find the keys (dates) in scheduleData that belong to the current session
+    const currentSessionDates = Object.keys(scheduleData).filter((date) =>
+      moment(date).isSameOrAfter(moment(), "day")
+    );
+
+    // Remove the schedule data for the current session
+    currentSessionDates.forEach((date) => {
+      delete scheduleData[date];
+    });
+
+    newCurrentSchedule.schedule.forEach(
+      (
+        item: { days: any; courseCode: any; time: (string | any[])[] },
+        index: any
+      ) => {
+        const days = item.days;
+        const courseCode = item.courseCode;
+
+        // Function to add leading zero if necessary
+        function addLeadingZero(timeString: string | any[]) {
+          return timeString.length === 3 ? `0${timeString}` : timeString;
+        }
+
+        const startTime = moment(addLeadingZero(item.time[0]), "HHmm");
+        const startHour = Number(startTime.format("HH"));
+        const startMinute = Number(startTime.format("mm"));
+
+        const endTime = moment(addLeadingZero(item.time[1]), "HHmm");
+        const endHour = Number(endTime.format("HH"));
+        const endMinute = Number(endTime.format("mm"));
+
+        function getDateForDayOfWeek(inputDay) {
+          const currentDate = new Date();
+          const currentDayOfWeek = currentDate.getDay();
+          const dayDifference = inputDay - currentDayOfWeek;
+          currentDate.setDate(currentDate.getDate() + dayDifference);
+          return currentDate; // Return as Date object
+        }
+
+        const eventDate = getDateForDayOfWeek(days);
+
+        const newEvent: tScheduleDetail = {
+          start: { hour: startHour - 8, minute: startMinute }, // Set the start time
+          end: { hour: endHour - 8, minute: endMinute }, // Set the end time
+          color: "green",
+          title: courseCode,
+        };
+
+        addCustomEvent(moment(eventDate).format("YYYY-MM-DD"), newEvent);
+      }
+    );
+    // Force re-render by creating a new object reference
+    dispatch(
+      addSchedule({
+        date: "",
+        data: {
+          start: {
+            hour: 0,
+            minute: 0,
+          },
+          end: {
+            hour: 0,
+            minute: 0,
+          },
+          color: "green",
+          title: "",
+        },
+      })
+    );
+  };
+
   return (
     <>
       <div className="overflow-auto w-full flex flex-col mb-2" id="schedule">
+        {/* <button
+          onClick={() => {
+            const newEvent: tScheduleDetail = {
+              start: { hour: 9, minute: 0 }, // Set the start time
+              end: { hour: 10, minute: 0 }, // Set the end time
+              color: "green", // Set the color
+              title: "New Event", // Set the title
+            };
+            addCustomEvent("2023-09-13", newEvent); // Provide the date and event data
+          }}
+        >
+          Add Custom Event
+        </button> */}
+
+        <SessionSwitcher
+          onUpdateCurrentSchedule={handleCurrentScheduleChange}
+        />
         <div className="flex flex-col flex-1">
-          <div className="sticky top-0 flex bg-white dark:bg-zinc-900 z-20">
-            <div className="min-w-[70px] w-[70px] dark:bg-zinc-900 bg-white" />
+          <div className="sticky top-0 flex bg-slate-100 dark:bg-zinc-900 z-20">
+            <div className="min-w-[70px] w-[70px] dark:bg-zinc-900 bg-slate-100" />
             {days.map((day, index) => (
               <div
-                className="flex-1 min-w-[81px] flex flex-col text-zinc-900 dark:text-white dark:bg-zinc-900 bg-white z-20 pt-4"
+                className="flex-1 min-w-[81px] flex flex-col text-zinc-900 dark:text-white dark:bg-zinc-900 bg-slate-100 z-20 pt-4"
                 key={day.date}
               >
                 <div className="text-center font-light text-sm">
@@ -95,7 +187,7 @@ export default function ScheduleCalendar({
             ))}
           </div>
           <div className="flex flex-1">
-            <div className="bg-white dark:bg-zinc-900 sticky left-0 top-0 w-20 min-w-[70px] z-10">
+            <div className="bg-slate-100 dark:bg-zinc-900 sticky left-0 top-0 w-20 min-w-[70px] z-10">
               {hours24.map((hour) => (
                 <div
                   className="font-light text-[12px] h-[60px] text-right pr-2 text-zinc-900 dark:text-white"
@@ -156,17 +248,9 @@ export default function ScheduleCalendar({
               ))}
             </div>
           </div>
+          Time
         </div>
       </div>
-      {isDeleteOpen && (
-        <div
-          className="fixed text-[12px] px-6 py-2 shadow rounded z-10 bg-zinc-900 dark:bg-white cursor-pointer"
-          style={{ top: `${deleteBox.top}px`, left: `${deleteBox.left}px` }}
-          onClick={() => deleteHandle()}
-        >
-          삭제
-        </div>
-      )}
     </>
   );
 }
