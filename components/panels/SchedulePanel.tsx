@@ -11,14 +11,13 @@ import formatDay from "../../util/formatDay";
 
 const SchedulePanel = () => {
   const { year, month, days } = useSelector(currentCalendar);
-  const [isSideCalendar, setIsSideCalendar] = useState<boolean>(true);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [modalDate, setModalDate] = useState<string>(formatDay(new Date()));
   const [timeIndex, setTimeIndex] = useState<number>(0);
 
   return (
-    <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2 bg-white dark:bg-zinc-900">
+    <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2 bg-slate-100 dark:bg-zinc-900">
       <ScheduleCalendar
         days={getThisWeek(days)}
         setModalDate={setModalDate}
