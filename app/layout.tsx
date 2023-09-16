@@ -1,17 +1,22 @@
-import { ThemeProvider } from "../context/theme-provider";
-import { CookiesProvider } from "../context/cookies-provider";
-import ScheduleProvider from "../context/schedule-provider";
+import "./globals.css";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "./context/theme-provider";
+import { CookiesProvider } from "./context/cookies-provider";
+import ScheduleProvider from "./context/schedule-provider";
 import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dashboard | Simplified i-Ma'luum",
-  description: "Personal dashboard, only what you need to know.",
+  title: "Simplified i-Ma'luum",
+  description: "A simplified version of i-Ma'luum for students.",
 };
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -23,6 +28,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </body>
     </html>
   );
-};
-
-export default DashboardLayout;
+}
