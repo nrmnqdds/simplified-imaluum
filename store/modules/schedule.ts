@@ -35,10 +35,15 @@ export const scheduleSlice = createSlice({
     ) => {
       delete state[action.payload.date][action.payload.index];
     },
+    clearAllEvents: (state) => {
+      // Clear all events by resetting the state to an empty object
+      return {};
+    },
   },
 });
 
-export const { addSchedule, removeSchedule } = scheduleSlice.actions;
+export const { addSchedule, removeSchedule, clearAllEvents } =
+  scheduleSlice.actions;
 export const schedules = (state: RootState) => state.schedule;
 
 export default scheduleSlice.reducer;
