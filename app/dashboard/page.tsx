@@ -1,9 +1,9 @@
 "use client";
 
-import { ThemeSwitcher } from "../../components/ThemeSwitcher";
-import UserID from "../../components/UserID";
-import HomePanel from "../../components/panels/HomePanel";
-import SchedulePanel from "../../components/panels/SchedulePanel";
+import { ThemeSwitcher } from "@components/ThemeSwitcher";
+import UserID from "@components/UserID";
+import HomePanel from "@components/panels/HomePanel";
+import SchedulePanel from "@components/panels/SchedulePanel";
 import { useState, useEffect, SyntheticEvent } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles"; // Import MUI ThemeProvider and createTheme
 import CssBaseline from "@mui/material/CssBaseline";
@@ -103,13 +103,13 @@ const Page = () => {
       <div className="min-w-screen min-h-screen bg-slate-100 dark:bg-zinc-900 flex flex-col px-5">
         {show && (
           <div
-            className="fixed bottom-10 right-10 z-20 text-zinc-900 dark:text-slate-100 cursor-pointer opacity-90"
+            className="fixed bottom-10 right-10 z-20 text-zinc-900 dark:text-slate-100 cursor-pointer opacity-30 hover:opacity-80"
             onClick={scrollUp}
           >
             <BsFillArrowUpCircleFill size={50} />
           </div>
         )}
-        <header className="flex justify-between items-center mb-0 border-b border-zinc-500">
+        <header className="flex justify-between items-center mb-0 py-2 border-b border-zinc-500">
           <ThemeSwitcher toggleTheme={toggleTheme} theme={theme2} />
           <Tabs
             value={value}
@@ -118,7 +118,7 @@ const Page = () => {
           >
             <Tab label="Home" {...a11yProps(0)} />
             <Tab label="Schedule" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
+            <Tab label="Coming Soon" {...a11yProps(2)} disabled />
           </Tabs>
           <UserID />
         </header>
