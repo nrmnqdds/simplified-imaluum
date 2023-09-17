@@ -16,11 +16,15 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@util/*": ["./util/*"],
+      "@store/*": ["./store/*"]
+    }
   },
-  "paths": {
-    "@/*": ["./*"]
-  },
+
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
