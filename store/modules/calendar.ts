@@ -1,7 +1,7 @@
 import { tDays } from "../../index";
-import getCalendar from "../../util/getCalendar";
-import addWeek from "../../util/addWeek";
-import addMonth from "../../util/addMonth";
+import getCalendar from "@utils/getCalendar";
+import addWeek from "@utils/addWeek";
+import addMonth from "@utils/addMonth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 

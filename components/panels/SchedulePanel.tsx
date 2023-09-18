@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { currentCalendar } from "../../store/modules/calendar";
 import ScheduleCalendar from "../ScheduleCalendar";
-import getThisWeek from "../../util/getThisWeek";
+import getThisWeek from "@utils/getThisWeek";
 import { useState } from "react";
 
 const SchedulePanel = () => {
