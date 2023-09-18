@@ -28,7 +28,7 @@ const Advertisement = ({ className }) => {
   return (
     <section className={className}>
       <div className="m-3 flex justify-between w-full items-center">
-        <h2 className="text-2xl font-bold text-zinc-900 dark:text-slate-100">
+        <h2 className="lg:text-2xl font-bold text-zinc-900 dark:text-slate-100">
           <span className="mr-2">
             <NewspaperIcon />
           </span>

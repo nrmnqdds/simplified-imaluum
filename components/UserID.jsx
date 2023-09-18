@@ -80,10 +80,10 @@ const UserID = () => {
         // className="absolute top-5 right-10 flex gap-2 items-center"
       >
         <div className="text-right">
-          <p className="dark:text-white text-zinc-900 font-bold text-[12px]">
+          <p className="dark:text-white text-zinc-900 font-bold text-[12px] hidden md:block">
             {userName}
           </p>
-          <p className="text-zinc-700 dark:text-zinc-600 font-semibold text-[10px]">
+          <p className="text-zinc-700 dark:text-zinc-600 font-semibold text-[10px] hidden md:block">
             Student
           </p>
         </div>
