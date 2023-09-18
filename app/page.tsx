@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { GetLoginCookies } from "./api/GetLoginCookies";
 import { useTheme } from "next-themes";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { Tooltip } from "@mui/material";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -95,20 +97,30 @@ export default function Home() {
           id="login-form"
           autoComplete="on"
         >
-          <input
-            type="text"
-            name="username"
-            placeholder="Matric Number"
-            className="bg-slate-200 dark:bg-zinc-800 py-3 px-6 rounded-md focus:outline-none focus:shadow-inner"
-            onChange={(e) =>
-              setData({
-                ...data,
-                username: (e.target.value = e.target.value
-                  .toLowerCase()
-                  .replace("@iium.edu.my", "")),
-              })
-            }
-          />
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              name="username"
+              placeholder="Matric Number"
+              className="bg-slate-200 dark:bg-zinc-800 py-3 px-6 rounded-md focus:shadow-inner focus:outline-none"
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  username: (e.target.value = e.target.value
+                    .toLowerCase()
+                    .replace("@iium.edu.my", "")),
+                })
+              }
+            />
+            <Tooltip
+              title="Use i-Ma'luum credentials"
+              placement="top-end"
+              className="absolute right-0"
+            >
+              <QuestionMarkIcon className="text-slate-300 dark:text-zinc-600 " />
+            </Tooltip>
+          </div>
+
           <input
             type="password"
             name="password"
