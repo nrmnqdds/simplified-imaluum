@@ -131,12 +131,18 @@ const Page = () => {
         </CustomTabPanel>
         <footer className="h-fit py-5 flex items-center justify-between border-t border-zinc-500 bg-slate-100 dark:bg-zinc-900">
           <div className="flex gap-5">
-            <Image src="/logo-landing-page.png" alt="" width={50} height={50} />
+            <Image
+              src="/logo-landing-page.png"
+              alt=""
+              width={50}
+              height={50}
+              className="object-contain"
+            />
             <div>
-              <h1 className="font-bold text-2xl text-zinc-900 dark:text-slate-100">
+              <h1 className="font-bold lg:text-2xl text-zinc-900 dark:text-slate-100">
                 Simplified i-Ma&apos;luum
               </h1>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="text-xs lg:text-sm text-zinc-600 dark:text-zinc-400">
                 A simplified version of i-Ma&apos;luum for students
               </p>
             </div>
