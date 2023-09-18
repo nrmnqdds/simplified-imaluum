@@ -23,10 +23,6 @@ Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'lu
 
 🔒 **Secure Access**: We prioritize the security of user data. The website employs robust security measures to safeguard sensitive information and maintain user privacy.
 
-🎓 **Enhanced Student Portal**: Students can now easily access their course materials, schedules, grades, and more in an organized and visually appealing manner.
-
-👨‍🏫 **Faculty Resources**: Faculty members have a dedicated space for sharing resources, announcements, and important updates with students.
-
 📅 **Event Calendar**: Stay up-to-date with university events, workshops, seminars, and important dates through our interactive event calendar.
 
 📄 **Quick Links**: Frequently accessed pages and resources are just a click away, thanks to the strategically placed quick links section.
