@@ -35,7 +35,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
       setLoading(false);
     }
     getSession();
-  }, [cookies]);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -64,7 +64,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
     if (session) {
       fetchData();
     }
-  }, [cookies, session]);
+  }, [session]);
 
   const handleChange = (event: any) => {
     startTransition(() => {
