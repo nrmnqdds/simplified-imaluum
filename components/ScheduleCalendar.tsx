@@ -29,6 +29,46 @@ export default function ScheduleCalendar({
     index: 0,
   });
 
+  const predefinedColors = [
+    "bg-stone-200 text-stone-700 border-stone-500 hover:bg-stone-300 hover:text-stone-800",
+    "bg-red-200 text-red-700 border-red-500 hover:bg-red-300 hover:text-red-800",
+    "bg-orange-200 text-orange-700 border-orange-500 hover:bg-orange-300 hover:text-orange-800",
+    "bg-yellow-200 text-yellow-700 border-yellow-500 hover:bg-yellow-300 hover:text-yellow-800",
+    "bg-lime-200 text-lime-700 border-lime-500 hover:bg-lime-300 hover:text-lime-800",
+    "bg-emerald-200 text-emerald-700 border-emerald-500 hover:bg-emerald-300 hover:text-emerald-800",
+    "bg-sky-200 text-sky-700 border-sky-500 hover:bg-sky-300 hover:text-sky-800",
+    "bg-indigo-200 text-indigo-700 border-indigo-500 hover:bg-indigo-300 hover:text-indigo-800",
+    "bg-purple-200 text-purple-700 border-purple-500 hover:bg-purple-300 hover:text-purple-800",
+    "bg-pink-200 text-pink-700 border-pink-500 hover:bg-pink-300 hover:text-pink-800",
+  ];
+
+  const usedColors: string[] = [];
+
+  // Color mapping for event titles
+  const colorMapping: Record<string, string> = {};
+
+  // Function to get a color for an event bg.
+  function getColorForTitle(title: string) {
+    if (!colorMapping[title]) {
+      // Generate an array of available colors that haven't been used
+      const availableColors = predefinedColors.filter(
+        (color) => !usedColors.includes(color)
+      );
+
+      if (availableColors.length === 0) {
+        // If all colors have been used, assign a random color from the predefinedColors array
+        colorMapping[title] =
+          predefinedColors[Math.floor(Math.random() * predefinedColors.length)];
+      } else {
+        // Assign the first available color and mark it as used
+        const selectedColor = availableColors[0];
+        colorMapping[title] = selectedColor;
+        usedColors.push(selectedColor);
+      }
+    }
+    return colorMapping[title];
+  }
+
   // Function to clear all events
   const clearAllEvents = () => {
     dispatch(clearAllEventsAction());
@@ -77,13 +117,6 @@ export default function ScheduleCalendar({
         }
 
         const eventDate = getDateForDayOfWeek(days);
-
-        // dispatch(
-        //   removeSchedule({
-        //     date: String(eventDate),
-        //     index: index,
-        //   })
-        // );
 
         const newEvent: tScheduleDetail = {
           start: { hour: startHour - 8, minute: startMinute }, // Set the start time
@@ -148,7 +181,7 @@ export default function ScheduleCalendar({
                   {hours24.map((hour, index) => (
                     <div
                       key={`schedule${hour.text}`}
-                      className="border border-solid border-transparent border-r-zinc-200 border-t-zinc-200 h-[60px]"
+                      className="border border-solid border-transparent border-r-zinc-200 dark:border-r-zinc-800 border-t-zinc-200 dark:border-t-zinc-800 h-[60px]"
                     />
                   ))}
                   {scheduleData[day.day] && (
@@ -162,14 +195,22 @@ export default function ScheduleCalendar({
                           s.end.minute;
                         if (h < 20) h = 20;
                         const height = `${h}px`;
+                        // Format the minutes with leading zero
+                        const startMinuteFormatted = s.start.minute
+                          .toString()
+                          .padStart(2, "0");
+                        const endMinuteFormatted = s.end.minute
+                          .toString()
+                          .padStart(2, "0");
                         return (
                           <div
                             key={idx}
-                            className="scheduleBox flex items-center justify-center absolute left-0 rounded w-5/6 p-[2px] text-[12px] font-light text-zinc-900 dark:text-white overflow-y-auto"
+                            className={`scheduleBox flex items-center justify-center absolute left-0 rounded w-5/6 p-[2px] text-[12px] font-bold overflow-y-auto border border-solid ${getColorForTitle(
+                              s.title
+                            )}`}
                             style={{
                               top: top,
                               height: height,
-                              background: s.color,
                             }}
                             data-schedule={{ date: day.day, index: idx }}
                             onClick={(e) => {
@@ -179,7 +220,9 @@ export default function ScheduleCalendar({
                               );
                             }}
                           >
-                            {s.title}
+                            {s.title} <br />
+                            {s.start.hour + 8}:{startMinuteFormatted} -{" "}
+                            {s.end.hour + 8}:{endMinuteFormatted}
                           </div>
                         );
                       })}
