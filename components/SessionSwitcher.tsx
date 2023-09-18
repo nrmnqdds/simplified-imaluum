@@ -26,7 +26,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
         const responseData = await response.json();
         setSessionsList(responseData);
         if (responseData.sessionList.length > 1) {
-          setSession(responseData.sessionList[1].sessionQuery);
+          setSession(responseData.sessionList[0].sessionQuery);
         }
       } else {
         console.error("Error fetching user data");
