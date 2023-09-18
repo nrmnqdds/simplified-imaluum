@@ -3,9 +3,9 @@
 import { useState, useEffect, Fragment } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { Skeleton } from "@mui/material";
+import { PiTelevisionBold } from "react-icons/pi";
+import { AiOutlineLink } from "react-icons/ai";
+import { Skeleton } from "@components/ui/skeleton";
 
 const ScrollCarousel = dynamic(() => import("./ScrollCarouselComponent"), {
   ssr: false,
@@ -28,20 +28,18 @@ const Advertisement = ({ className }) => {
   return (
     <section className={className}>
       <div className="m-3 flex justify-between w-full items-center">
-        <h2 className="lg:text-2xl font-bold text-zinc-900 dark:text-slate-100">
-          <span className="mr-2">
-            <NewspaperIcon />
-          </span>
+        <h2 className="lg:text-2xl font-bold text-zinc-900 dark:text-slate-100 flex items-center gap-5">
+          <PiTelevisionBold />
           SOUQ Advertisement
         </h2>
         <Link
           href="https://souq.iium.edu.my/list"
           target="_blank"
-          className="text-blue-500 hover:text-blue-700"
+          className="text-blue-500 hover:text-blue-700 flex items-center gap-1 mr-5"
         >
           See More
           <span>
-            <KeyboardDoubleArrowRightIcon />
+            <AiOutlineLink />
           </span>
         </Link>
       </div>
@@ -51,13 +49,7 @@ const Advertisement = ({ className }) => {
           // <p>Loading...</p>
           <div className="flex flex-row gap-2 overflow-hidden">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <Skeleton
-                key={item}
-                sx={{ bgcolor: "grey.900" }}
-                variant="rectangular"
-                width={144}
-                height={144}
-              />
+              <Skeleton key={item} className="w-40 h-40 rounded-xl" />
             ))}
           </div>
         ) : (

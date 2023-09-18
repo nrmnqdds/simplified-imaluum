@@ -1,10 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, Fragment, useTransition } from "react";
 import { useCookiesProvider } from "../app/context/cookies-provider";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Skeleton } from "@mui/material";
+import { Skeleton } from "@components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select";
 
 export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   const [loading, setLoading] = useState(true);
@@ -68,7 +72,8 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
 
   const handleChange = (event: any) => {
     startTransition(() => {
-      setSession(event.target.value);
+      setSession(event);
+      // console.log(event);
     });
   };
 
@@ -76,32 +81,20 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
     <Fragment>
       <div className="my-2 w-fit">
         {loading ? (
-          <Skeleton
-            sx={{ bgcolor: "grey.900" }}
-            variant="rectangular"
-            width={200}
-            height={50}
-            style={{
-              borderRadius: "20px",
-            }}
-          />
+          <Skeleton className="w-24 h-8 rounded-xl" />
         ) : (
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Session</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={session}
-              label="Session"
-              onChange={handleChange}
-            >
+          <Select onValueChange={handleChange} defaultValue={session}>
+            <SelectTrigger className="w-fit ml-3 py-6">
+              <SelectValue placeholder="Session" />
+            </SelectTrigger>
+            <SelectContent>
               {sessionsList.sessionList.map((session, index) => (
-                <MenuItem key={index} value={session.sessionQuery}>
+                <SelectItem key={index} value={session.sessionQuery}>
                   {session.sessionName}
-                </MenuItem>
+                </SelectItem>
               ))}
-            </Select>
-          </FormControl>
+            </SelectContent>
+          </Select>
         )}
       </div>
     </Fragment>
