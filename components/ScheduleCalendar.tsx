@@ -8,7 +8,7 @@ import {
   clearAllEvents as clearAllEventsAction,
 } from "../store/modules/schedule";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useTransition, useState } from "react";
 import SessionSwitcher from "./SessionSwitcher";
 import moment from "moment";
 
@@ -29,17 +29,19 @@ export default function ScheduleCalendar({
     index: 0,
   });
 
+  const [isPending, startTransition] = useTransition();
+
   const predefinedColors = [
-    "bg-stone-200 text-stone-700 border-stone-500 hover:bg-stone-300 hover:text-stone-800",
     "bg-red-200 text-red-700 border-red-500 hover:bg-red-300 hover:text-red-800",
-    "bg-orange-200 text-orange-700 border-orange-500 hover:bg-orange-300 hover:text-orange-800",
-    "bg-yellow-200 text-yellow-700 border-yellow-500 hover:bg-yellow-300 hover:text-yellow-800",
-    "bg-lime-200 text-lime-700 border-lime-500 hover:bg-lime-300 hover:text-lime-800",
-    "bg-emerald-200 text-emerald-700 border-emerald-500 hover:bg-emerald-300 hover:text-emerald-800",
     "bg-sky-200 text-sky-700 border-sky-500 hover:bg-sky-300 hover:text-sky-800",
-    "bg-indigo-200 text-indigo-700 border-indigo-500 hover:bg-indigo-300 hover:text-indigo-800",
     "bg-purple-200 text-purple-700 border-purple-500 hover:bg-purple-300 hover:text-purple-800",
+    "bg-orange-200 text-orange-700 border-orange-500 hover:bg-orange-300 hover:text-orange-800",
+    "bg-lime-200 text-lime-700 border-lime-500 hover:bg-lime-300 hover:text-lime-800",
+    "bg-yellow-200 text-yellow-700 border-yellow-500 hover:bg-yellow-300 hover:text-yellow-800",
+    "bg-emerald-200 text-emerald-700 border-emerald-500 hover:bg-emerald-300 hover:text-emerald-800",
     "bg-pink-200 text-pink-700 border-pink-500 hover:bg-pink-300 hover:text-pink-800",
+    "bg-indigo-200 text-indigo-700 border-indigo-500 hover:bg-indigo-300 hover:text-indigo-800",
+    "bg-stone-200 text-stone-700 border-stone-500 hover:bg-stone-300 hover:text-stone-800",
   ];
 
   const usedColors: string[] = [];
@@ -86,48 +88,50 @@ export default function ScheduleCalendar({
   };
 
   const handleCurrentScheduleChange = (newCurrentSchedule: any) => {
-    clearAllEvents();
-    newCurrentSchedule.schedule.forEach(
-      (
-        item: { days: any; courseCode: any; time: (string | any[])[] },
-        index: any
-      ) => {
-        const days = item.days;
-        const courseCode = item.courseCode;
+    startTransition(() => {
+      clearAllEvents();
+      newCurrentSchedule.schedule.forEach(
+        (
+          item: { days: any; courseCode: any; time: (string | any[])[] },
+          index: any
+        ) => {
+          const days = item.days;
+          const courseCode = item.courseCode;
 
-        // Function to add leading zero if necessary
-        function addLeadingZero(timeString: string | any[]) {
-          return timeString.length === 3 ? `0${timeString}` : timeString;
+          // Function to add leading zero if necessary
+          function addLeadingZero(timeString: string | any[]) {
+            return timeString.length === 3 ? `0${timeString}` : timeString;
+          }
+
+          const startTime = moment(addLeadingZero(item.time[0]), "HHmm");
+          const startHour = Number(startTime.format("HH"));
+          const startMinute = Number(startTime.format("mm"));
+
+          const endTime = moment(addLeadingZero(item.time[1]), "HHmm");
+          const endHour = Number(endTime.format("HH"));
+          const endMinute = Number(endTime.format("mm"));
+
+          function getDateForDayOfWeek(inputDay: any) {
+            const currentDate = new Date();
+            const currentDayOfWeek = currentDate.getDay();
+            const dayDifference = inputDay - currentDayOfWeek;
+            currentDate.setDate(currentDate.getDate() + dayDifference);
+            return currentDate; // Return as Date object
+          }
+
+          const eventDate = getDateForDayOfWeek(days);
+
+          const newEvent: tScheduleDetail = {
+            start: { hour: startHour - 8, minute: startMinute }, // Set the start time
+            end: { hour: endHour - 8, minute: endMinute }, // Set the end time
+            color: "green",
+            title: courseCode,
+          };
+
+          addCustomEvent(moment(eventDate).format("YYYY-MM-DD"), newEvent);
         }
-
-        const startTime = moment(addLeadingZero(item.time[0]), "HHmm");
-        const startHour = Number(startTime.format("HH"));
-        const startMinute = Number(startTime.format("mm"));
-
-        const endTime = moment(addLeadingZero(item.time[1]), "HHmm");
-        const endHour = Number(endTime.format("HH"));
-        const endMinute = Number(endTime.format("mm"));
-
-        function getDateForDayOfWeek(inputDay: any) {
-          const currentDate = new Date();
-          const currentDayOfWeek = currentDate.getDay();
-          const dayDifference = inputDay - currentDayOfWeek;
-          currentDate.setDate(currentDate.getDate() + dayDifference);
-          return currentDate; // Return as Date object
-        }
-
-        const eventDate = getDateForDayOfWeek(days);
-
-        const newEvent: tScheduleDetail = {
-          start: { hour: startHour - 8, minute: startMinute }, // Set the start time
-          end: { hour: endHour - 8, minute: endMinute }, // Set the end time
-          color: "green",
-          title: courseCode,
-        };
-
-        addCustomEvent(moment(eventDate).format("YYYY-MM-DD"), newEvent);
-      }
-    );
+      );
+    });
   };
 
   return (
