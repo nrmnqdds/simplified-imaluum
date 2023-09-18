@@ -1,6 +1,6 @@
 import { tDays, tScheduleDetail } from "../index";
-import { dayOfWeek } from "@util/dayOfWeek";
-import { hours24 } from "@util/HoursAday";
+import { dayOfWeek } from "@utils/dayOfWeek";
+import { hours24 } from "@utils/HoursAday";
 import {
   addSchedule,
   schedules,
@@ -225,8 +225,14 @@ export default function ScheduleCalendar({
                             }}
                           >
                             {s.title} <br />
-                            {s.start.hour + 8}:{startMinuteFormatted} -{" "}
-                            {s.end.hour + 8}:{endMinuteFormatted}
+                            {s.start.hour + 8 > 12
+                              ? s.start.hour + 8 - 12
+                              : s.start.hour + 8}
+                            :{startMinuteFormatted} -{" "}
+                            {s.end.hour + 8 > 12
+                              ? s.end.hour + 8 - 12
+                              : s.end.hour + 8}
+                            :{endMinuteFormatted}
                           </div>
                         );
                       })}
