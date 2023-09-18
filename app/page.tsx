@@ -65,11 +65,11 @@ export default function Home() {
         toggleTheme={toggleTheme}
         theme={theme}
       />
-      <div className="bg-gradient-to-l from-white dark:from-zinc-900 from-5% dark:10% to-transparent h-screen flex-1"></div>
+      <div className="bg-gradient-to-l from-white dark:from-zinc-900 from-5% dark:10% to-transparent h-screen flex-1 hidden md:block"></div>
       <div className="bg-white dark:bg-zinc-900 h-screen flex-1 flex flex-col items-center justify-center">
         <div className="mb-10">
           <h1
-            className={`text-4xl text-zinc-900 dark:text-white font-bold flex items-center ${poppins.className}`}
+            className={`text-xl lg:text-4xl text-zinc-900 dark:text-white font-bold flex items-center ${poppins.className}`}
           >
             Simplified{" "}
             <span>
@@ -83,7 +83,7 @@ export default function Home() {
             i-Ma&apos;luum
           </h1>
 
-          <h2 className={`text-2xl text-zinc-700 ${poppins.className}`}>
+          <h2 className={`lg:text-2xl text-zinc-700 ${poppins.className}`}>
             A simplified version of i-Ma&apos;luum for students
           </h2>
         </div>
