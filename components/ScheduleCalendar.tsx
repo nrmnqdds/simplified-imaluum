@@ -209,7 +209,7 @@ export default function ScheduleCalendar({
                         return (
                           <div
                             key={idx}
-                            className={`scheduleBox flex items-center justify-center absolute left-0 rounded w-5/6 p-[2px] text-[12px] font-bold overflow-y-auto border border-solid ${getColorForTitle(
+                            className={`flex items-center justify-center text-center absolute left-0 rounded w-5/6 p-[2px] text-[8px] md:text-[12px] font-bold overflow-y-auto border border-solid ${getColorForTitle(
                               s.title
                             )}`}
                             style={{
