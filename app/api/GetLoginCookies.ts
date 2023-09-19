@@ -1,6 +1,6 @@
 "use server";
 
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { cookies } from "next/headers";
 import { IMALUUM_LOGIN_PAGE } from "../constants";
 import { IMALUUM_HOME_PAGE } from "../constants";
@@ -49,14 +49,14 @@ export async function GetLoginCookies(data: FormData) {
 
   console.log("Launching browser");
 
-  // const browser = await puppeteer.launch({
-  //   headless: "new", // Set to true for production means:takbukak browser
-  //   args: minimal_args,
-  // });
-
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  const browser = await puppeteer.launch({
+    headless: "new", // Set to true for production means:takbukak browser
+    args: minimal_args,
   });
+
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  // });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
