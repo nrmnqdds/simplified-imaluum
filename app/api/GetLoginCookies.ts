@@ -6,8 +6,8 @@ import { IMALUUM_LOGIN_PAGE } from "../constants";
 import { IMALUUM_HOME_PAGE } from "../constants";
 
 export async function GetLoginCookies(data: FormData) {
-  //   console.log("username", (data.get("username")));
-  //   console.log("password", data.get("password"));
+  console.log("username", data.get("username"));
+  console.log("password", data.get("password"));
 
   console.log("Launching browser");
 
