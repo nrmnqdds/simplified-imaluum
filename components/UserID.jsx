@@ -54,7 +54,7 @@ const UserID = () => {
   return (
     <Fragment>
       {loading ? (
-        <Skeleton classname="w-8 h-8 rounded-xl" />
+        <Skeleton className="w-24 h-8 rounded-xl" />
       ) : (
         <Menubar>
           <MenubarMenu>
