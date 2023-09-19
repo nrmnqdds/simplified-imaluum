@@ -22,6 +22,19 @@ export async function GetLoginCookies(data: FormData) {
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
+  await page.setRequestInterception(true);
+
+  page.on("request", (req) => {
+    if (
+      req.resourceType() == "stylesheet" ||
+      req.resourceType() == "font" ||
+      req.resourceType() == "image"
+    ) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
 
   try {
     console.log("Opening page");
@@ -49,7 +62,7 @@ export async function GetLoginCookies(data: FormData) {
     // await page.$eval("input.btn", (el) => el.click());
     const [response] = await Promise.all([
       page.waitForNavigation({
-        waitUntil: "networkidle0",
+        waitUntil: "domcontentloaded",
       }),
       page.$eval("#fm1 input.btn-submit", (node) => {
         // @ts-ignore
@@ -103,6 +116,7 @@ export async function GetLoginCookies(data: FormData) {
   } catch (error) {
     console.error("Error:", error);
   } finally {
+    await page.close(); // Close the page when done
     await browser.close(); // Close the browser when done
   }
 }
