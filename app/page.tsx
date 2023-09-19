@@ -38,15 +38,14 @@ export default function Home() {
     formData.append("username", data.username);
     formData.append("password", data.password);
 
-    try {
-      await GetLoginCookies(formData);
+    const response = await GetLoginCookies(formData);
+    if (response) {
       router.push("/dashboard");
-    } catch (err) {
+    } else {
       setLoginMessage("Login failed");
-      console.log(err);
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
   return (
