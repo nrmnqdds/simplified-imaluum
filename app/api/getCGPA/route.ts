@@ -41,22 +41,24 @@ export async function GET(request: Request) {
     sessionList.push({ sessionName, sessionQuery });
   });
 
-  async function fetchgpa(element: any) {
-    const response: AxiosResponse = await axiosInstance.get(
-      url + element.sessionQuery
-    );
-    const $ = load(response.data);
+  return NextResponse.json({ sessionList });
 
-    const gpaValue = $("td:contains('Grade Point Average(GPA)')")
-      .next("td")
-      .text();
-    const cgpaValue = $("td:contains('Cummulative Grade Point Average (CGPA)')")
-      .next("td")
-      .text();
+  // async function fetchgpa(element: any) {
+  //   const response: AxiosResponse = await axiosInstance.get(
+  //     url + element.sessionQuery
+  //   );
+  //   const $ = load(response.data);
 
-    console.log("GPA:", gpaValue);
-    console.log("CGPA:", cgpaValue);
-  }
+  //   const gpaValue = $("td:contains('Grade Point Average(GPA)')")
+  //     .next("td")
+  //     .text();
+  //   const cgpaValue = $("td:contains('Cummulative Grade Point Average (CGPA)')")
+  //     .next("td")
+  //     .text();
+
+  //   console.log("GPA:", gpaValue);
+  //   console.log("CGPA:", cgpaValue);
+  // }
 
   //   sessionList.forEach((element) => {
   //     fetchgpa(element.sessionQuery);
