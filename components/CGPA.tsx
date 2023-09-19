@@ -6,14 +6,14 @@ const CGPA = ({ className }) => {
   const { cookies } = useCookiesProvider();
   const [sessionsList, setSessionsList] = useState({ sessionList: [] });
   const [session, setSession] = useState("");
-  useEffect(() => {
-    async function getSession() {
-      const response = await fetch(`api/getCGPA`);
+  // useEffect(() => {
+  //   async function getSession() {
+  //     const response = await fetch(`api/getCGPA`);
 
-      setLoading(false);
-    }
-    getSession();
-  }, [cookies]);
+  //     setLoading(false);
+  //   }
+  //   getSession();
+  // }, [cookies]);
 
   return (
     <div className={`flex items-center justify-center ${className}`}>
