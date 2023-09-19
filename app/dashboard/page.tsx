@@ -30,7 +30,7 @@ const Page = () => {
 
   return (
     <Tabs
-      defaultValue="Home"
+      defaultValue="Schedule"
       className="min-w-screen min-h-screen bg-slate-100 dark:bg-zinc-900 flex flex-col px-5"
     >
       {show && (
