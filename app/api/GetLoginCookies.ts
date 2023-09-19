@@ -1,9 +1,47 @@
 "use server";
 
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { cookies } from "next/headers";
 import { IMALUUM_LOGIN_PAGE } from "../constants";
 import { IMALUUM_HOME_PAGE } from "../constants";
+
+const minimal_args = [
+  "--autoplay-policy=user-gesture-required",
+  "--disable-background-networking",
+  "--disable-background-timer-throttling",
+  "--disable-backgrounding-occluded-windows",
+  "--disable-breakpad",
+  "--disable-client-side-phishing-detection",
+  "--disable-component-update",
+  "--disable-default-apps",
+  "--disable-dev-shm-usage",
+  "--disable-domain-reliability",
+  "--disable-extensions",
+  "--disable-features=AudioServiceOutOfProcess",
+  "--disable-hang-monitor",
+  "--disable-ipc-flooding-protection",
+  "--disable-notifications",
+  "--disable-offer-store-unmasked-wallet-cards",
+  "--disable-popup-blocking",
+  "--disable-print-preview",
+  "--disable-prompt-on-repost",
+  "--disable-renderer-backgrounding",
+  "--disable-setuid-sandbox",
+  "--disable-speech-api",
+  "--disable-sync",
+  "--hide-scrollbars",
+  "--ignore-gpu-blacklist",
+  "--metrics-recording-only",
+  "--mute-audio",
+  "--no-default-browser-check",
+  "--no-first-run",
+  "--no-pings",
+  "--no-sandbox",
+  "--no-zygote",
+  "--password-store=basic",
+  "--use-gl=swiftshader",
+  "--use-mock-keychain",
+];
 
 export async function GetLoginCookies(data: FormData) {
   console.log("username", data.get("username"));
@@ -11,14 +49,14 @@ export async function GetLoginCookies(data: FormData) {
 
   console.log("Launching browser");
 
-  // const browser = await puppeteer.launch({
-  //   headless: false, // Set to true for production means:takbukak browser
-  //   args: ["--no-sandbox"],
-  // });
-
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  const browser = await puppeteer.launch({
+    headless: "new", // Set to true for production means:takbukak browser
+    args: minimal_args,
   });
+
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  // });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
