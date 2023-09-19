@@ -41,23 +41,25 @@ const Page = () => {
           <BsFillArrowUpCircleFill size={50} />
         </div>
       )}
-      <header className="flex justify-between items-center mb-0 py-2 border-b border-zinc-500">
+      <header className="flex justify-between items-center py-2 border-b border-zinc-500">
         <ThemeSwitcher />
 
         <TabsList>
-          <TabsTrigger value="Home">Home</TabsTrigger>
           <TabsTrigger value="Schedule">Schedule</TabsTrigger>
+          <TabsTrigger value="Coming Soon">Coming Soon</TabsTrigger>
         </TabsList>
+
         <UserID />
       </header>
 
-      <TabsContent value="Home">
-        <HomePanel />
-      </TabsContent>
       <TabsContent value="Schedule">
         <SchedulePanel />
       </TabsContent>
-      <footer className="h-fit py-5 flex items-center justify-between border-t border-zinc-500 bg-slate-100 dark:bg-zinc-900">
+      <TabsContent value="Coming Soon">
+        <HomePanel />
+      </TabsContent>
+
+      <footer className="h-fit py-5 mt-5 flex items-center justify-between border-t border-zinc-500 bg-slate-100 dark:bg-zinc-900">
         <div className="flex gap-5">
           <Image
             src="/logo-landing-page.png"
