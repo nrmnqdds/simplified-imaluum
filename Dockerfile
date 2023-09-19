@@ -13,8 +13,6 @@ COPY . .
 # If you add a package-lock.json, speed your build by switching to 'npm ci'.
 RUN npm ci --only=production
 
-RUN npm run gcp-build
-
 RUN npm run build
 
 # Note: this installs the necessary libs to make the browser work with Puppeteer.
