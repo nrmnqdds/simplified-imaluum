@@ -6,7 +6,6 @@ import { BsGithub } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
 import IMLOGO from "../public/logo-landing-page.png";
-import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { GetLoginCookies } from "./api/GetLoginCookies";
@@ -18,8 +17,6 @@ import {
   TooltipTrigger,
 } from "@components/ui/tooltip";
 import toast, { Toaster } from "react-hot-toast";
-
-const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 const loadingMessageList = [
   "Checking credentials...",
@@ -91,7 +88,7 @@ export default function Home() {
       <div className="bg-white dark:bg-zinc-900 h-screen flex-1 flex flex-col items-center justify-center">
         <div className="mb-10">
           <h1
-            className={`text-xl lg:text-4xl text-zinc-900 dark:text-white font-bold flex items-center ${poppins.className}`}
+            className={`text-xl lg:text-4xl text-zinc-900 dark:text-white flex items-center`}
           >
             Simplified{" "}
             <span>
@@ -105,7 +102,7 @@ export default function Home() {
             i-Ma&apos;luum
           </h1>
 
-          <h2 className={`lg:text-2xl text-zinc-700 ${poppins.className}`}>
+          <h2 className={`lg:text-2xl text-zinc-700`}>
             A simplified version of i-Ma&apos;luum for students
           </h2>
         </div>
