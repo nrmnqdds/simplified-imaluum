@@ -149,7 +149,7 @@ export async function GetLoginCookies(data: FormData) {
     });
 
     // redirect("/dashboard");
-    console.log("loginCookies", loginCookies);
+    // console.log("loginCookies", loginCookies);
     return loginCookies;
   } catch (error) {
     console.error("Error:", error);
