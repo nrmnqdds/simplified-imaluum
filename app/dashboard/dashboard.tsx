@@ -36,7 +36,7 @@ const Dashboard = () => {
   return (
     <Tabs
       defaultValue="Schedule"
-      className="min-w-screen min-h-screen bg-slate-100 dark:bg-zinc-900 flex flex-col px-5"
+      className="min-w-screen min-h-screen bg-gradient-to-b from-slate-200 to-slate-100 dark:from-zinc-950 dark:to-zinc-900 flex flex-col px-5"
     >
       {show && (
         <div
