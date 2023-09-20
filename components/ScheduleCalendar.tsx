@@ -141,11 +141,11 @@ export default function ScheduleCalendar({
           onUpdateCurrentSchedule={handleCurrentScheduleChange}
         />
         <div className="flex flex-col flex-1">
-          <div className="sticky top-0 flex bg-slate-100 dark:bg-zinc-900 z-20">
-            <div className="min-w-[70px] w-[70px] dark:bg-zinc-900 bg-slate-100" />
+          <div className="sticky top-0 flex z-20">
+            <div className="min-w-[70px] w-[70px]" />
             {days.map((day, index) => (
               <div
-                className="flex-1 min-w-[81px] flex flex-col text-zinc-900 dark:text-white dark:bg-zinc-900 bg-slate-100 z-20 pt-4"
+                className="flex-1 min-w-[81px] flex flex-col text-zinc-900 dark:text-white z-20 pt-4"
                 key={day.date}
               >
                 <div className="text-center font-light text-sm">
@@ -156,7 +156,7 @@ export default function ScheduleCalendar({
                     className={`w-10 h-10 rounded-full m-auto flex justify-center items-center
                       ${
                         day.isToday &&
-                        "bg-blue-500 text-zinc-900 dark:text-white"
+                        "text-blue-500 drop-shadow-glow font-bold"
                       }`}
                   >
                     {day.date}
@@ -166,7 +166,7 @@ export default function ScheduleCalendar({
             ))}
           </div>
           <div className="flex flex-1">
-            <div className="bg-slate-100 dark:bg-zinc-900 sticky left-0 top-0 w-20 min-w-[70px] z-10">
+            <div className="sticky left-0 top-0 w-20 min-w-[70px] z-10">
               {hours24.map((hour) => (
                 <div
                   className="font-light text-[12px] h-[60px] text-right pr-2 text-zinc-900 dark:text-white"
@@ -185,7 +185,7 @@ export default function ScheduleCalendar({
                   {hours24.map((hour, index) => (
                     <div
                       key={`schedule${hour.text}`}
-                      className="border border-solid border-transparent border-r-zinc-200 dark:border-r-zinc-800 border-t-zinc-200 dark:border-t-zinc-800 h-[60px]"
+                      className="border border-solid border-transparent border-r-zinc-300 dark:border-r-zinc-800 border-t-zinc-300 dark:border-t-zinc-800 h-[60px]"
                     />
                   ))}
                   {scheduleData[day.day] && (
