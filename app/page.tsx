@@ -22,7 +22,6 @@ import toast, { Toaster } from "react-hot-toast";
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 const loadingMessageList = [
-  "Authenticating...",
   "Checking credentials...",
   "Please wait...",
   "Grab a coffee first...",
@@ -36,6 +35,7 @@ export default function Home() {
   });
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Authenticating...");
 
   const router = useRouter();
 
@@ -63,13 +63,14 @@ export default function Home() {
 
     if (isLoading) {
       interval = setInterval(() => {
-        toast.dismiss();
-        toast.loading(
+        toast.remove();
+        setLoadingMessage(
           loadingMessageList[
             Math.floor(Math.random() * loadingMessageList.length)
           ]
         );
       }, 5000);
+      toast.loading(loadingMessage);
     } else {
       toast.dismiss();
       clearInterval(interval);
@@ -79,7 +80,7 @@ export default function Home() {
       // Clean up the interval when the component unmounts
       clearInterval(interval);
     };
-  }, [isLoading]);
+  }, [isLoading, loadingMessage]);
 
   return (
     <main className="max-w-screen overflow-hidden flex">
