@@ -8,7 +8,7 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Simplified i-Ma'luum",
+  title: "Login | Simplified i-Ma'luum",
   description: "A simplified version of i-Ma'luum for students.",
 };
 
