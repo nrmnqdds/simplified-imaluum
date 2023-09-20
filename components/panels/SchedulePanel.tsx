@@ -12,7 +12,7 @@ const SchedulePanel = () => {
   const [timeIndex, setTimeIndex] = useState<number>(0);
 
   return (
-    <div className="flex flex-col h-full overflow-x-scroll flex-1 pr-2 bg-slate-100 dark:bg-zinc-900">
+    <div className="flex flex-col h-full overflow-x-scroll lg:overflow-hidden flex-1 pr-2">
       <ScheduleCalendar
         days={getThisWeek(days)}
         setTimeIndex={setTimeIndex}
