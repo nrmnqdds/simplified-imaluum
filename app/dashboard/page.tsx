@@ -9,9 +9,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
 import { BsGithub, BsFillArrowUpCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
 
 const Page = () => {
   const [show, handleShow] = useState<Boolean>(false);
+
+  useEffect(() => {
+    toast.success("Login succesful!");
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -19,7 +24,7 @@ const Page = () => {
         handleShow(true);
       } else handleShow(false);
     });
-  });
+  }, []);
 
   const scrollUp = () => {
     window.scrollTo({
@@ -41,6 +46,7 @@ const Page = () => {
           <BsFillArrowUpCircleFill size={50} />
         </div>
       )}
+      <Toaster position="top-center" reverseOrder={false} />
       <header className="flex justify-between items-center py-2 border-b border-zinc-500">
         <ThemeSwitcher />
 
