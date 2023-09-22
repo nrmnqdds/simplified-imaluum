@@ -30,3 +30,5 @@ export type tScheduleDetail = {
 };
 
 export type tSchedule = { [key: string]: Array<tScheduleDetail> };
+
+declare module "tailwindcss-dotted-background";
