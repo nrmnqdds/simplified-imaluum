@@ -15,13 +15,6 @@ export type tHours = {
 
 export type tTime = { hour: number; minute: number };
 
-export type tRangeColor =
-  | "red"
-  | "orange"
-  | "green"
-  | "blue"
-  | "brown"
-  | "pink";
 export type tScheduleDetail = {
   start: tTime;
   end: tTime;

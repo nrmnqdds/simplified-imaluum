@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, SetStateAction, useTransition } from "react";
 import SessionSwitcher from "./SessionSwitcher";
 import moment from "moment";
-import { Skeleton } from "./ui/skeleton";
 
 export default function ScheduleCalendar({
   days,
