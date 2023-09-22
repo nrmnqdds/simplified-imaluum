@@ -22,6 +22,11 @@ module.exports = {
           "0 0px 30px rgba(255,255,255,0.9)",
         ],
       },
+      boxShadow: {
+        neumorphism: [
+          "-4px -4px 10px rgb(255, 255, 255), 4px 4px 10px rgba(0, 0, 0, 0.219)",
+        ],
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -38,5 +43,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-dotted-background"),
+  ],
 };
