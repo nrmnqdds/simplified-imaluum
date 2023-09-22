@@ -47,6 +47,8 @@
     "@types/node": "^20.5.7",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "css-loader": "^6.8.1",
+    "postcss-loader": "^7.3.3",
     "tailwindcss-dotted-background": "^1.1.0",
     "typescript": "^5.2.2"
   }
