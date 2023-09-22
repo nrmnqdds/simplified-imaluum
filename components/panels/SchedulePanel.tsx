@@ -7,12 +7,12 @@ import getThisWeek from "@utils/getThisWeek";
 import { useState } from "react";
 
 const SchedulePanel = () => {
-  const { year, month, days } = useSelector(currentCalendar);
+  const { days } = useSelector(currentCalendar);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [timeIndex, setTimeIndex] = useState<number>(0);
 
   return (
-    <div className="flex flex-col h-full overflow-x-scroll lg:overflow-hidden flex-1 pr-2">
+    <div className="flex flex-col h-full overflow-x-scroll lg:overflow-hidden flex-1 px-5">
       <ScheduleCalendar
         days={getThisWeek(days)}
         setTimeIndex={setTimeIndex}
