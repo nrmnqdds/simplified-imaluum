@@ -36,7 +36,7 @@ const Dashboard = () => {
   return (
     <Tabs
       defaultValue="Schedule"
-      className="min-w-screen min-h-screen bg-gradient-to-b from-slate-200 to-slate-100 dark:from-zinc-950 dark:to-zinc-900 flex flex-col px-5"
+      className="min-w-screen min-h-screen bg-dotted-spacing-4 bg-dotted-zinc-800 bg-slate-100 dark:bg-zinc-900 flex flex-col"
     >
       {show && (
         <div
@@ -47,7 +47,7 @@ const Dashboard = () => {
         </div>
       )}
       <Toaster position="top-center" reverseOrder={false} />
-      <header className="flex justify-between items-center py-2 border-b border-zinc-500">
+      <header className="flex justify-between items-center py-2 border-b border-zinc-500 bg-slate-100 dark:bg-zinc-900 px-5">
         <ThemeSwitcher />
 
         <TabsList>
