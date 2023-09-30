@@ -9,6 +9,7 @@ env:
   PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
   REGION: asia-southeast1
   REPO_NAME: simplifiedimaluum
+  NEXT_PUBLIC_REDIS_URL: ${{ secrets.NEXT_PUBLIC_REDIS_URL }}
 
 jobs:
   build-and-deploy:
