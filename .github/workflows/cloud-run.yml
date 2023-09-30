@@ -9,7 +9,6 @@ env:
   PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
   REGION: asia-southeast1
   REPO_NAME: simplifiedimaluum
-  NEXT_PUBLIC_REDIS_URL: ${{ secrets.NEXT_PUBLIC_REDIS_URL }}
 
 jobs:
   build-and-deploy:
@@ -34,7 +33,9 @@ jobs:
 
       - name: Build and tag the docker image
         run: |-
-          docker build . --tag gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+          docker build \
+            --build-arg NEXT_PUBLIC_REDIS_URL=${{ secrets.NEXT_PUBLIC_REDIS_URL }} \
+            --tag gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA .
 
       - name: Push the image to the Google Container Registry (GCR)
         run: |-
