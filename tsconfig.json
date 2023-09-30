@@ -17,11 +17,12 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
+    "target": "es5",
     "paths": {
       "@components/*": ["./components/*"],
       "@utils/*": ["./utils/*"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [
