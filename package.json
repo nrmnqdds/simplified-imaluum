@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-env": "printenv > .env.local"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.3",
