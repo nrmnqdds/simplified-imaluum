@@ -15,6 +15,4 @@ RUN echo "NEXT_PUBLIC_REDIS_URL: $_NEXT_PUBLIC_REDIS_URL"
 
 RUN npm run build
 
-
-
 CMD ["npm", "start"]

@@ -165,6 +165,7 @@ export default function Home() {
         >
           <BsGithub className="text-3xl mt-4 text-zinc-900 dark:text-slate-200" />
         </Link>
+        <p className="text-sm text-zinc-600 absolute bottom-3">Version 1.1</p>
       </div>
     </main>
   );
