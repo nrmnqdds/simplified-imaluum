@@ -9,14 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
 import { BsGithub, BsFillArrowUpCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
-import toast, { Toaster } from "react-hot-toast";
 
-const Dashboard = () => {
+const Page = () => {
   const [show, handleShow] = useState<Boolean>(false);
-
-  useEffect(() => {
-    toast.success("Login succesful!");
-  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -34,10 +29,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Tabs
-      defaultValue="Schedule"
-      className="min-w-screen min-h-screen bg-dotted-spacing-4 bg-dotted-zinc-800 bg-slate-100 dark:bg-zinc-900 flex flex-col"
-    >
+    <div className=" flex flex-row">
       {show && (
         <div
           className="fixed bottom-10 right-10 z-20 text-zinc-900 dark:text-slate-100 cursor-pointer opacity-30 hover:opacity-80"
@@ -46,26 +38,25 @@ const Dashboard = () => {
           <BsFillArrowUpCircleFill size={50} />
         </div>
       )}
-      <Toaster position="top-center" reverseOrder={false} />
-      <header className="flex justify-between items-center py-2 border-b border-zinc-500 bg-slate-100 dark:bg-zinc-900 px-5">
+
+      <p className="text-white">TEST</p>
+      {/* <nav className="flex flex-col justify-center items-center h-screen w-fit border-b border-zinc-500 bg-slate-100 dark:bg-zinc-900 px-5">
         <ThemeSwitcher />
 
-        <TabsList>
+        <TabsList className="flex flex-col">
           <TabsTrigger value="Schedule">Schedule</TabsTrigger>
           <TabsTrigger value="Coming Soon">Coming Soon</TabsTrigger>
         </TabsList>
 
         <UserID />
-      </header>
-
-      <TabsContent value="Schedule">
+      </nav> */}
+      {/* <TabsContent value="Schedule">
         <SchedulePanel />
       </TabsContent>
       <TabsContent value="Coming Soon">
         <HomePanel />
-      </TabsContent>
-
-      <footer className="h-fit py-5 mt-5 flex items-center justify-between border-t border-zinc-500 bg-slate-100 dark:bg-zinc-900">
+      </TabsContent> */}
+      {/* <footer className="h-fit py-5 mt-5 flex items-center justify-between border-t border-zinc-500 bg-slate-100 dark:bg-zinc-900">
         <div className="flex gap-5">
           <Image
             src="/logo-landing-page.png"
@@ -91,9 +82,9 @@ const Dashboard = () => {
         >
           <BsGithub className="text-3xl text-zinc-900 dark:text-slate-200" />
         </Link>
-      </footer>
-    </Tabs>
+      </footer> */}
+    </div>
   );
 };
 
-export default Dashboard;
+export default Page;

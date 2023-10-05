@@ -1,9 +1,9 @@
 "use server";
 
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { cookies } from "next/headers";
-import { IMALUUM_LOGIN_PAGE } from "../constants";
-import { IMALUUM_HOME_PAGE } from "../constants";
+import { IMALUUM_LOGIN_PAGE } from "../app/constants";
+import { IMALUUM_HOME_PAGE } from "../app/constants";
 
 const minimal_args = [
   "--autoplay-policy=user-gesture-required",
@@ -49,14 +49,14 @@ export async function GetLoginCookies(data: FormData) {
 
   console.log("Launching browser");
 
-  // const browser = await puppeteer.launch({
-  //   headless: "new", // Set to true for production means:takbukak browser
-  //   args: minimal_args,
-  // });
-
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  const browser = await puppeteer.launch({
+    headless: true, // Set to true for production means:takbukak browser
+    args: minimal_args,
   });
+
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  // });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
@@ -82,7 +82,7 @@ export async function GetLoginCookies(data: FormData) {
     // await page.type("input#username", username);
     await page.$eval(
       "input#username",
-      (el, username) => (el.value = username as string),
+      (el, username) => ((el as HTMLInputElement).value = username as string),
       data.get("username") as string
     );
     // await new Promise((r) => setTimeout(r, 100));
@@ -90,7 +90,7 @@ export async function GetLoginCookies(data: FormData) {
     // await page.type("input#password", password);
     await page.$eval(
       "input#password",
-      (el, password) => (el.value = password as string),
+      (el, password) => ((el as HTMLInputElement).value = password as string),
       data.get("password") as string
     );
     console.log("Clicking submit");

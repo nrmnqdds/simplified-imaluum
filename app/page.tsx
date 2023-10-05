@@ -8,7 +8,7 @@ import Image from "next/image";
 import IMLOGO from "../public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
-import { GetLoginCookies } from "./api/GetLoginCookies";
+import { GetLoginCookies } from "../lib/GetLoginCookies";
 import { FaQuestion } from "react-icons/fa";
 import {
   Tooltip,
@@ -46,7 +46,7 @@ export default function Home() {
 
     const response = await GetLoginCookies(formData);
     if (response) {
-      router.push("/dashboard");
+      router.push("/auth");
     } else {
       setLoginMessage("Login failed");
       toast.error("Login failed!");

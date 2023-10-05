@@ -58,8 +58,8 @@ const UserID = () => {
       ) : (
         <Menubar>
           <MenubarMenu>
-            <MenubarTrigger className="flex gap-2">
-              <div className="text-right">
+            <MenubarTrigger className="flex flex-col-reverse items-center justify-center gap-2">
+              <div className="text-center">
                 <p className="dark:text-white text-zinc-900 font-bold text-[12px] hidden md:block">
                   {userName}
                 </p>
