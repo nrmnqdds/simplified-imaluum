@@ -84,7 +84,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
           <Skeleton className="w-24 h-8 rounded-xl" />
         ) : (
           <Select onValueChange={handleChange} defaultValue={session}>
-            <SelectTrigger className="w-fit ml-3 py-6 bg-green-500 font-bold text-slate-100 shadow focus:ring-0 dark:focus:ring-0">
+            <SelectTrigger className="w-fit ml-3 py-6 bg-green-500 hover:bg-green-600 font-bold text-slate-100 shadow focus:ring-0 dark:focus:ring-0">
               <SelectValue placeholder="Session" />
             </SelectTrigger>
             <SelectContent>
