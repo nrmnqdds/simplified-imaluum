@@ -19,10 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`min-h-screen bg-dotted-spacing-4 bg-dotted-slate-300 dark:bg-dotted-zinc-800 bg-slate-100 dark:bg-zinc-900 ${poppins.className}`}
+        className={`flex min-h-screen bg-dotted-spacing-4 bg-dotted-slate-300 dark:bg-dotted-zinc-800 bg-slate-100 dark:bg-zinc-900 ${poppins.className}`}
       >
-        <SideNavbar />
-        {children}
+        <div>
+          <SideNavbar />
+        </div>
+
+        <main className="w-full">{children}</main>
       </body>
     </html>
   );
