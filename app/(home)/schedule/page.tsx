@@ -1,18 +1,18 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import { currentCalendar } from "../../store/modules/calendar";
-import ScheduleCalendar from "../ScheduleCalendar";
+import { currentCalendar } from "@/store/modules/calendar";
+import ScheduleCalendar from "@components/ScheduleCalendar";
 import getThisWeek from "@utils/getThisWeek";
 import { useState } from "react";
 
-const SchedulePanel = () => {
+const Page = () => {
   const { days } = useSelector(currentCalendar);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [timeIndex, setTimeIndex] = useState<number>(0);
 
   return (
-    <div className="flex flex-col h-full overflow-x-scroll lg:overflow-hidden flex-1 px-5">
+    <div className="flex-1 min-h-screen overflow-scroll px-5 lg:pl-[250px]">
       <ScheduleCalendar
         days={getThisWeek(days)}
         setTimeIndex={setTimeIndex}
@@ -22,4 +22,4 @@ const SchedulePanel = () => {
   );
 };
 
-export default SchedulePanel;
+export default Page;

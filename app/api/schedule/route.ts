@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
   const { session } = await request.json();
-  // console.log("session", session);
 
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule${session}`;
   console.log("url", url);
@@ -99,11 +98,6 @@ export async function POST(request: Request) {
   //   ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
   // );
   // const hiddenText = hiddenTextSelector.text().trim().replace(/\s+/g, " "); // Trim and replace multiple whitespace with a single space;
-
-  // redis.set("schedule", JSON.stringify(schedule));
-
-
-  // redis.set("schedule", JSON.stringify(schedule));
 
   return NextResponse.json({ schedule });
 }

@@ -2,8 +2,8 @@
 
 import puppeteer from "puppeteer-core";
 import { cookies } from "next/headers";
-import { IMALUUM_LOGIN_PAGE } from "../constants";
-import { IMALUUM_HOME_PAGE } from "../constants";
+import { IMALUUM_LOGIN_PAGE } from "../app/constants";
+import { IMALUUM_HOME_PAGE } from "../app/constants";
 
 const minimal_args = [
   "--autoplay-policy=user-gesture-required",
@@ -50,7 +50,7 @@ export async function GetLoginCookies(data: FormData) {
   console.log("Launching browser");
 
   // const browser = await puppeteer.launch({
-  //   headless: "new", // Set to true for production means:takbukak browser
+  //   headless: false, // Set to true for production means:takbukak browser
   //   args: minimal_args,
   // });
 
@@ -82,20 +82,20 @@ export async function GetLoginCookies(data: FormData) {
     // await page.type("input#username", username);
     await page.$eval(
       "input#username",
-      (el, username) => (el.value = username as string),
+      (el, username) => ((el as HTMLInputElement).value = username as string),
       data.get("username") as string
     );
-    // await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 1000));
     console.log("Typing password");
     // await page.type("input#password", password);
     await page.$eval(
       "input#password",
-      (el, password) => (el.value = password as string),
+      (el, password) => ((el as HTMLInputElement).value = password as string),
       data.get("password") as string
     );
     console.log("Clicking submit");
     // await page.waitForSelector("input.btn");
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 500));
     // await page.click("input.btn");
     // await page.$eval("input.btn", (el) => el.click());
     const [response] = await Promise.all([
@@ -122,6 +122,7 @@ export async function GetLoginCookies(data: FormData) {
     }
 
     // await page.waitForNavigation({ waitUntil: "networkidle0" });
+    await new Promise((r) => setTimeout(r, 500));
     console.log("Opening home page");
     const currentUrl = page.url();
 
