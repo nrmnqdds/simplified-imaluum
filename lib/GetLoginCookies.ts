@@ -1,6 +1,6 @@
 "use server";
 
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { cookies } from "next/headers";
 import { IMALUUM_LOGIN_PAGE } from "../app/constants";
 import { IMALUUM_HOME_PAGE } from "../app/constants";
@@ -49,14 +49,14 @@ export async function GetLoginCookies(data: FormData) {
 
   console.log("Launching browser");
 
-  const browser = await puppeteer.launch({
-    headless: true, // Set to true for production means:takbukak browser
-    args: minimal_args,
-  });
-
-  // const browser = await puppeteer.connect({
-  //   browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  // const browser = await puppeteer.launch({
+  //   headless: false, // Set to true for production means:takbukak browser
+  //   args: minimal_args,
   // });
+
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  });
 
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(0);
@@ -85,7 +85,7 @@ export async function GetLoginCookies(data: FormData) {
       (el, username) => ((el as HTMLInputElement).value = username as string),
       data.get("username") as string
     );
-    // await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 1000));
     console.log("Typing password");
     // await page.type("input#password", password);
     await page.$eval(
@@ -95,7 +95,7 @@ export async function GetLoginCookies(data: FormData) {
     );
     console.log("Clicking submit");
     // await page.waitForSelector("input.btn");
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 500));
     // await page.click("input.btn");
     // await page.$eval("input.btn", (el) => el.click());
     const [response] = await Promise.all([
@@ -122,6 +122,7 @@ export async function GetLoginCookies(data: FormData) {
     }
 
     // await page.waitForNavigation({ waitUntil: "networkidle0" });
+    await new Promise((r) => setTimeout(r, 500));
     console.log("Opening home page");
     const currentUrl = page.url();
 

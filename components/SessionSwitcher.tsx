@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, Fragment, useTransition } from "react";
 import { useCookiesProvider } from "../app/context/cookies-provider";
+import React from "react";
 import { Skeleton } from "@components/ui/skeleton";
 import {
   Select,
@@ -9,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select";
+import { redirect } from "next/navigation";
 
 export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
           setSession(responseData.sessionList[0].sessionQuery);
         }
       } else {
-        console.error("Error fetching user data");
+        redirect("/");
       }
 
       setLoading(false);
@@ -78,7 +80,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   };
 
   return (
-    <Fragment>
+    <React.StrictMode>
       <div className="my-2 w-fit">
         {loading ? (
           <Skeleton className="w-24 h-8 rounded-xl" />
@@ -97,6 +99,6 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
           </Select>
         )}
       </div>
-    </Fragment>
+    </React.StrictMode>
   );
 }
