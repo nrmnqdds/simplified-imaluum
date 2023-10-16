@@ -1,9 +1,10 @@
-"use server";
-
 import puppeteer from "puppeteer-core";
 import { cookies } from "next/headers";
-import { IMALUUM_LOGIN_PAGE } from "../app/constants";
-import { IMALUUM_HOME_PAGE } from "../app/constants";
+import { IMALUUM_LOGIN_PAGE } from "@/app/constants";
+import { IMALUUM_HOME_PAGE } from "@/app/constants";
+import { NextResponse } from "next/server";
+
+// export const runtime = "edge";
 
 const minimal_args = [
   "--autoplay-policy=user-gesture-required",
@@ -43,14 +44,13 @@ const minimal_args = [
   "--use-mock-keychain",
 ];
 
-export async function GetLoginCookies(data: FormData) {
-  console.log("username", data.get("username"));
-  console.log("password", data.get("password"));
+export async function POST(request: Request) {
+  const body = await request.json();
 
   console.log("Launching browser");
 
   // const browser = await puppeteer.launch({
-  //   headless: false, // Set to true for production means:takbukak browser
+  //   headless: true, // Set to true for production means:takbukak browser
   //   args: minimal_args,
   // });
 
@@ -83,7 +83,7 @@ export async function GetLoginCookies(data: FormData) {
     await page.$eval(
       "input#username",
       (el, username) => ((el as HTMLInputElement).value = username as string),
-      data.get("username") as string
+      body.username as string
     );
     await new Promise((r) => setTimeout(r, 1000));
     console.log("Typing password");
@@ -91,7 +91,7 @@ export async function GetLoginCookies(data: FormData) {
     await page.$eval(
       "input#password",
       (el, password) => ((el as HTMLInputElement).value = password as string),
-      data.get("password") as string
+      body.password as string
     );
     console.log("Clicking submit");
     // await page.waitForSelector("input.btn");
@@ -151,7 +151,7 @@ export async function GetLoginCookies(data: FormData) {
 
     // redirect("/dashboard");
     // console.log("loginCookies", loginCookies);
-    return loginCookies;
+    return NextResponse.json({ loginCookies });
   } catch (error) {
     console.error("Error:", error);
   } finally {

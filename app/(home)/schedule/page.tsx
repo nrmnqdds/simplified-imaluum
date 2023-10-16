@@ -12,7 +12,7 @@ const Page = () => {
   const [timeIndex, setTimeIndex] = useState<number>(0);
 
   return (
-    <div className="flex-1 min-h-screen overflow-scroll px-5 lg:pl-[250px]">
+    <div className="flex-1 min-h-screen">
       <ScheduleCalendar
         days={getThisWeek(days)}
         setTimeIndex={setTimeIndex}

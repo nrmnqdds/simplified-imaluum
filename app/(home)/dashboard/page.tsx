@@ -4,7 +4,7 @@ import CGPA from "@components/CGPA";
 
 const Page = () => {
   return (
-    <div className="h-screen flex flex-col justify-between px-5 lg:pl-[250px]">
+    <div className="h-screen flex flex-col justify-between">
       <div className="h-screen flex flex-col justify-between">
         <div className="h-full grid grid-cols-2 grid-rows-2 gap-2">
           <Disciplinary className={"border-zinc-500 border rounded-2xl"} />

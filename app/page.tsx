@@ -8,7 +8,6 @@ import Image from "next/image";
 import IMLOGO from "../public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
-import { GetLoginCookies } from "../lib/GetLoginCookies";
 import { FaQuestion } from "react-icons/fa";
 import {
   Tooltip,
@@ -40,13 +39,12 @@ export default function Home() {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData();
-    formData.append("username", data.username);
-    formData.append("password", data.password);
-
-    const response = await GetLoginCookies(formData);
+    const response = await fetch("api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
     if (response) {
-      router.push("/auth");
+      router.push("/auth/login");
     } else {
       setLoginMessage("Login failed");
       toast.error("Login failed!");

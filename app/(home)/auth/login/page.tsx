@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    router.push("/dashboard");
+    router.replace("/dashboard");
   }, [router]);
 
   return <Toaster position="top-center" reverseOrder={false} />;
