@@ -49,7 +49,7 @@ export default function HomeLayout({
   const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { student } = useStudent();
+  const student = useStudent();
 
   return (
     <Fragment>
@@ -279,7 +279,7 @@ export default function HomeLayout({
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="w-8 h-8 object-fit rounded-full bg-gray-50"
-                      src={student.imageURL}
+                      src={student?.imageURL}
                       alt=""
                     />
                     <span className="hidden lg:flex lg:items-center">
@@ -287,7 +287,7 @@ export default function HomeLayout({
                         className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
                         aria-hidden="true"
                       >
-                        {student.name}
+                        {student?.name}
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
