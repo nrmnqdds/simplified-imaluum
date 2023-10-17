@@ -49,7 +49,30 @@ export default function HomeLayout({
   const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const student = useStudent();
+  const [isLoading, setIsLoading] = useState(true);
+  const [student, setStudent] = useState<Student>({
+    name: "",
+    imageURL: "",
+  });
+  // const { student, isLoading, isValidating } = useStudent();
+
+  // useEffect(() => {
+  //   if (!student && !isValidating) router.push("/");
+  // }, [student, isValidating]);
+
+  useEffect(() => {
+    (async function () {
+      const res = await fetch("api/student");
+      if (res.ok) {
+        const data = await res.json();
+        setStudent(data);
+        console.log(data);
+        setIsLoading(false);
+      }
+
+      setIsLoading(false);
+    })();
+  }, []);
 
   return (
     <Fragment>
@@ -277,23 +300,36 @@ export default function HomeLayout({
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      className="w-8 h-8 object-fit rounded-full bg-gray-50"
-                      src={student?.imageURL}
-                      alt=""
-                    />
-                    <span className="hidden lg:flex lg:items-center">
-                      <span
-                        className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
-                        aria-hidden="true"
-                      >
-                        {student?.name}
-                      </span>
-                      <ChevronDownIcon
-                        className="ml-2 h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
+                    {isLoading ? (
+                      <>
+                        <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse" />
+                        <div className="h-4 w-16 rounded-sm bg-gray-200 animate-pulse ml-4" />
+                        <ChevronDownIcon
+                          className="ml-2 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          className="h-8 w-8 rounded-full bg-gray-50"
+                          src={student?.imageURL}
+                          alt=""
+                        />
+                        <span className="hidden lg:flex lg:items-center">
+                          <span
+                            className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
+                            aria-hidden="true"
+                          >
+                            {student?.name}
+                          </span>
+                          <ChevronDownIcon
+                            className="ml-2 h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </>
+                    )}
                   </Menu.Button>
                   <Transition
                     as={Fragment}
