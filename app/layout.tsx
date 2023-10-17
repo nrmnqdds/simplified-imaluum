@@ -7,7 +7,7 @@ import { Metadata } from "next";
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Login | Simplified i-Ma'luum",
+  title: "Simplified i-Ma'luum",
   description: "A simplified version of i-Ma'luum for students.",
 };
 
