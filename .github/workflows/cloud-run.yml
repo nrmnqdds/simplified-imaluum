@@ -32,9 +32,6 @@ jobs:
       - name: Authorize Docker push
         run: gcloud auth configure-docker
 
-      - name: Prints NEXT_PUBLIC_REDIS_URL
-        run: echo $NEXT_PUBLIC_REDIS_URL
-
       - name: Build and tag the docker image
         run: |-
           docker build \
