@@ -7,18 +7,24 @@ const useStudent = () => {
     name: "",
     imageURL: "",
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const res = await fetch("api/student", {
         method: "GET",
-      });
-      const data = await res.json();
-      setStudent(data);
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setStudent(data);
+        });
+      setLoading(false);
     })();
   }, []);
 
-  return { student };
+  if (!loading) {
+    return student;
+  }
 };
 
 export default useStudent;
