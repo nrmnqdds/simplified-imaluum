@@ -1,14 +1,10 @@
-FROM node:18.17.1-slim
+FROM node:18.18.0-slim
 
 WORKDIR /usr/app
 
 COPY . .
 
-RUN npm ci --only=production
-
-# ARG NEXT_PUBLIC_REDIS_URL
-
-# ENV _NEXT_PUBLIC_REDIS_URL=$NEXT_PUBLIC_REDIS_URL
+RUN npm ci --omit=dev
 
 RUN npm run build
 
