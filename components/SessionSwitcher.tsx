@@ -23,9 +23,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   useEffect(() => {
     async function getSession() {
       const response = await fetch(`api/session`, {
-        headers: {
-          Cookie: cookies.toString(),
-        },
+        method: "GET",
       });
 
       if (response.ok) {
