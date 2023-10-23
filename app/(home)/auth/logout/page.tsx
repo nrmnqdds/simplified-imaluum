@@ -9,6 +9,11 @@ export default function Page() {
 
   useEffect(() => {
     toast.error("Logging out...");
+    (async function () {
+      await fetch("/api/logout", {
+        method: "DELETE",
+      });
+    })();
   }, []);
 
   useEffect(() => {
