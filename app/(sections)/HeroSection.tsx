@@ -161,7 +161,7 @@ const Hero = () => {
             onSubmit={handleSubmit}
             className="mt-10 flex flex-col items-center gap-y-6"
           >
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-col md:flex-row gap-3">
               <div className="sm:col-span-4">
                 <label
                   htmlFor="username"
