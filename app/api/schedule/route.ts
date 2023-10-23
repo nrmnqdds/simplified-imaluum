@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 
 export const runtime = "edge";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { session } = await request.json();
 
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule${session}`;

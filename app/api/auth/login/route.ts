@@ -1,8 +1,7 @@
 import puppeteer from "puppeteer-core";
 import { cookies } from "next/headers";
-import { IMALUUM_LOGIN_PAGE } from "@/app/constants";
-import { IMALUUM_HOME_PAGE } from "@/app/constants";
-import { NextResponse } from "next/server";
+import { IMALUUM_LOGIN_PAGE, IMALUUM_HOME_PAGE } from "@/app/constants";
+import { NextResponse, NextRequest } from "next/server";
 
 // export const runtime = "edge";
 
@@ -44,7 +43,7 @@ const minimal_args = [
   "--use-mock-keychain",
 ];
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const body = await request.json();
 
   console.log("Launching browser");
