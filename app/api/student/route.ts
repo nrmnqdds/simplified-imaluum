@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "../../constants";
 
@@ -14,11 +14,12 @@ export async function GET(request: Request) {
 
     const cookieStrings = cookieStore
       .getAll()
-      .map((cookie) => `${cookie.name}=${cookie.value}`);
+      .map((cookie) => `${cookie.name}=${cookie.value}`)
+      .join("; ");
 
     const response = await fetch(url, {
       headers: {
-        Cookie: cookieStrings.join("; "), // Use only name and value properties
+        Cookie: cookieStrings,
       },
     });
 
@@ -28,21 +29,22 @@ export async function GET(request: Request) {
 
     const html = await response.text();
 
-    const $ = load(html);
-    const userImageSelector = $(
+    const root = parse(html);
+    const userImageSelector = root.querySelector(
       ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu img.user-image"
     );
-    const hiddenTextSelector = $(
+    const hiddenTextSelector = root.querySelector(
       ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
     );
 
     // Check if the selectors were found
-    if (userImageSelector.length === 0 || hiddenTextSelector.length === 0) {
+    if (!userImageSelector || !hiddenTextSelector) {
       throw new Error("Selectors not found on the page.");
     }
 
-    const imageURL = userImageSelector.attr("src");
-    const name = hiddenTextSelector.text().trim().replace(/\s+/g, " "); // Trim and replace multiple whitespace with a single space;
+    const imageURL = userImageSelector.getAttribute("src") ?? "";
+    const name =
+      hiddenTextSelector.textContent?.trim().replace(/\s+/g, " ") ?? "";
     console.log(name);
 
     // Return the text content of the selectors or do further processing as needed

@@ -1,22 +1,30 @@
 import { NextResponse } from "next/server";
-import axios, { AxiosResponse } from "axios";
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
+
+export const runtime = "edge";
 
 export async function GET(request: Request) {
   try {
     const url = "https://souq.iium.edu.my/embeded";
 
-    const response: AxiosResponse = await axios.get(url); // Use async/await to handle the response
+    const response = await fetch(url);
 
-    const $ = load(response.data);
-    const articles = $('div[style*="width:100%; clear:both;height:100px"]');
+    if (!response.ok) {
+      return NextResponse.json(`Failed to fetch data from ${url}`);
+    }
+
+    const html = await response.text();
+
+    const root = parse(html);
+    const articles = root.querySelectorAll(
+      'div[style*="width:100%; clear:both;height:100px"]'
+    );
 
     const structuredData = [];
 
-    articles.each((index, element) => {
-      const $element = $(element);
-      const adsImg = $element.find("img").attr("src");
-      const adsLink = $element.find("a").attr("href");
+    articles.forEach((element) => {
+      const adsImg = element.querySelector("img")?.getAttribute("src") || "";
+      const adsLink = element.querySelector("a")?.getAttribute("href") || "";
 
       structuredData.push({
         adsImg,
