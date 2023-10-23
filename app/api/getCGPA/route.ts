@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { NextResponse } from "next/server";
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
@@ -26,18 +26,18 @@ export async function GET(request: Request) {
   //   console.log("Login response status:", response.status);
 
   // Load the HTML content into Cheerio
-  const $ = load(response.data);
+  const root = parse(response.data);
 
-  const sessionBody = $(
+  const sessionBody = root.querySelectorAll(
     ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
   );
 
   let sessionList = [];
 
-  sessionBody.each((index, element) => {
-    const row = $(element);
-    const sessionName = row.find("a").text().trim();
-    const sessionQuery = row.find("a").attr("href");
+  sessionBody.forEach((element) => {
+    const row = element;
+    const sessionName = row.querySelector("a").textContent.trim();
+    const sessionQuery = row.querySelector("a").getAttribute("href");
     sessionList.push({ sessionName, sessionQuery });
   });
 

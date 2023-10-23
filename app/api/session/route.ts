@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { load } from "cheerio";
+import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 
 export const runtime = "edge";
@@ -11,11 +11,12 @@ export async function GET(request: Request) {
 
   const cookieStrings = cookieStore
     .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`);
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; "); // Join the cookie strings
 
   const response = await fetch(url, {
     headers: {
-      Cookie: cookieStrings.join("; "), // Use only name and value properties
+      Cookie: cookieStrings,
     },
   });
 
@@ -25,18 +26,23 @@ export async function GET(request: Request) {
 
   const html = await response.text();
 
-  const $ = load(html);
+  const root = parse(html);
+  // console.log("root", root);
 
-  const sessionBody = $(
+  // Corrected selector to target the session elements
+  const sessionBody = root.querySelectorAll(
     ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
   );
 
+  // console.log("sessionBody", sessionBody);
+
   let sessionList = [];
 
-  sessionBody.each((index, element) => {
-    const row = $(element);
-    const sessionName = row.find("a").text().trim();
-    const sessionQuery = row.find("a").attr("href");
+  sessionBody.forEach((element) => {
+    // Removed the unnecessary parameters
+    const row = element;
+    const sessionName = row.querySelector("a").textContent.trim();
+    const sessionQuery = row.querySelector("a").getAttribute("href");
     sessionList.push({ sessionName, sessionQuery });
   });
 

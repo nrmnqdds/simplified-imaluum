@@ -1,11 +1,15 @@
-import { tDays } from "../../index";
 import getCalendar from "@utils/getCalendar";
 import addWeek from "@utils/addWeek";
 import addMonth from "@utils/addMonth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 
-type tCurrent = { day: string; days: tDays[]; year: number; month: number };
+type tCurrent = {
+  day: string;
+  days: CalendarDays[];
+  year: number;
+  month: number;
+};
 type tCalendar = {
   select: string;
   current: tCurrent;
