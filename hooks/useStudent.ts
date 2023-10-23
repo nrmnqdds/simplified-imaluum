@@ -1,17 +1,21 @@
-import axios from "axios";
-import useSWR from "swr";
+"use client";
+
+import { useEffect, useState } from "react";
 
 const useStudent = () => {
-  console.log("running useStudent");
-  const swr = useSWR("../api/student", async function (url) {
-    const { student } = (await axios.get(url)).data;
-    console.log("result", student);
-    return student;
-  });
+  const [student, setStudent] = useState<Student>();
 
-  const student: Student | undefined = swr.data;
+  useEffect(() => {
+    (async function () {
+      const res = await fetch("/api/student", {
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((data) => setStudent(data));
+    })();
+  }, []);
 
-  return { student, ...swr };
+  return student;
 };
 
 export default useStudent;
