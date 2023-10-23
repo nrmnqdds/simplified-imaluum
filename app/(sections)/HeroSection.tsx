@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ThemeSwitcher } from "@components/ThemeSwitcher";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import DARKDEMOPIC from "@/public/darkdemo.png";
 import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import LOGO from "@/public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
 
 const loadingMessageList = [
   "Checking credentials...",
@@ -25,7 +24,6 @@ const Hero = () => {
   });
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("Authenticating...");
 
   const router = useRouter();
 
@@ -33,51 +31,27 @@ const Hero = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const response = await fetch("api/auth/login", {
+    const res = await fetch("api/auth/login2", {
+      method: "GET",
+    });
+
+    const res2 = await fetch("api/auth/login2", {
       method: "POST",
       body: JSON.stringify(data),
     });
-    if (response) {
-      router.replace("/auth/login");
+    // });
+    if (res2) {
+      router.replace("/dashboard");
     } else {
       setLoginMessage("Login failed");
-      toast.error("Login failed!");
     }
-
-    // const res = await fetch("api/auth/login2");
-    // const data = await res.json();
-    // console.log(data);
 
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    let interval: string | number | NodeJS.Timeout;
-
-    if (isLoading) {
-      interval = setInterval(() => {
-        toast.remove();
-        setLoadingMessage(
-          loadingMessageList[
-            Math.floor(Math.random() * loadingMessageList.length)
-          ]
-        );
-      }, 5000);
-      toast.loading(loadingMessage);
-    } else {
-      toast.dismiss();
-      clearInterval(interval);
-    }
-
-    return () => {
-      // Clean up the interval when the component unmounts
-      clearInterval(interval);
-    };
-  }, [isLoading, loadingMessage]);
   return (
     <section className="relative">
       <ThemeSwitcher className="absolute top-2 right-5" />
-      <Toaster position="top-center" reverseOrder={false} />
       <svg
         className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 dark:stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
         aria-hidden="true"
@@ -220,7 +194,7 @@ const Hero = () => {
                 disabled={isLoading}
                 className={`rounded-md ${
                   isLoading
-                    ? "bg-cyan-900 cursor-not-allowed"
+                    ? "bg-cyan-900 cursor-not-allowed hover:bg-cyan-900 dark:hover:bg-cyan-900"
                     : "dark:bg-cyan-500 bg-cyan-600"
                 } px-6 py-2.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300`}
               >

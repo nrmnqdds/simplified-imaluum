@@ -33,7 +33,7 @@ const navigation = [
 ];
 const userNavigation = [
   { name: "Profile", href: "#" },
-  { name: "Sign out", href: "/auth/logout" },
+  { name: "Sign out", href: "/" },
 ];
 
 function classNames(...classes: string[]) {
