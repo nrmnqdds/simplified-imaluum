@@ -15,7 +15,7 @@ export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   useEffect(() => {
     async function getSession() {
       const response = await fetch(`api/session`, {
-        method: "GET",
+        method: "POST",
       });
 
       if (response.ok) {
