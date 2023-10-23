@@ -31,16 +31,25 @@ const Hero = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const res = await fetch("api/auth/login2", {
-      method: "GET",
-    });
+    // const res = await fetch("api/auth/login2", {
+    //   method: "GET",
+    // });
 
-    const res2 = await fetch("api/auth/login2", {
+    // const res2 = await fetch("api/auth/login2", {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    // });
+    // if (res2) {
+    //   router.replace("/dashboard");
+    // } else {
+    //   setLoginMessage("Login failed");
+    // }
+
+    const res = await fetch("api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
     });
-    // });
-    if (res2) {
+    if (res) {
       router.replace("/dashboard");
     } else {
       setLoginMessage("Login failed");

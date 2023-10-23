@@ -7,12 +7,9 @@ export async function GET(request: NextRequest) {
 
   const cookieStore = cookies();
 
-  // Create an array of cookie strings
   const cookieStrings = cookieStore
     .getAll()
     .map((cookie) => `${cookie.name}=${cookie.value}`);
-
-  // console.log("cookieStrings", cookieStrings);
 
   return NextResponse.json({ cookieStrings });
 }
@@ -23,12 +20,9 @@ export async function POST(request: NextRequest) {
 
   const cookieStore = cookies();
 
-  // Create an array of cookie strings
   const cookieStrings = cookieStore
     .getAll()
     .map((cookie) => `${cookie.name}=${cookie.value}`);
-
-  // console.log("cookieStrings", cookieStrings);
 
   return NextResponse.json({ cookieStrings });
 }
