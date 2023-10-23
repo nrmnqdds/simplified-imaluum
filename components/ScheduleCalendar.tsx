@@ -1,4 +1,3 @@
-import { tDays, tScheduleDetail } from "../index";
 import { dayOfWeek } from "@utils/dayOfWeek";
 import { hours24 } from "@utils/HoursAday";
 import {
@@ -14,7 +13,7 @@ import moment from "moment";
 export default function ScheduleCalendar({
   days,
 }: {
-  days: tDays[];
+  days: CalendarDays[];
   setTimeIndex: Dispatch<SetStateAction<number>>;
   setIsDeleteOpen: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -73,7 +72,7 @@ export default function ScheduleCalendar({
     scheduleData: { date: string; index: number }
   ) => {};
 
-  const addCustomEvent = (date: string, data: tScheduleDetail) => {
+  const addCustomEvent = (date: string, data: ScheduleDetail) => {
     dispatch(addSchedule({ date, data }));
   };
 
@@ -110,7 +109,7 @@ export default function ScheduleCalendar({
 
         const eventDate = getDateForDayOfWeek(days);
 
-        const newEvent: tScheduleDetail = {
+        const newEvent: ScheduleDetail = {
           start: { hour: startHour - 8, minute: startMinute }, // Set the start time
           end: { hour: endHour - 8, minute: endMinute }, // Set the end time
           color: "green",
