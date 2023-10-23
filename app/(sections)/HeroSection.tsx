@@ -77,6 +77,7 @@ const Hero = () => {
   return (
     <section className="relative">
       <ThemeSwitcher className="absolute top-2 right-5" />
+      <Toaster position="top-center" reverseOrder={false} />
       <svg
         className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 dark:stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
         aria-hidden="true"
@@ -217,7 +218,11 @@ const Hero = () => {
             <div className="flex flex-row gap-3 items-center justify-between w-full">
               <button
                 disabled={isLoading}
-                className="rounded-md dark:bg-cyan-500 bg-cyan-600 px-6 py-2.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300"
+                className={`rounded-md ${
+                  isLoading
+                    ? "bg-cyan-900 cursor-not-allowed"
+                    : "dark:bg-cyan-500 bg-cyan-600"
+                } px-6 py-2.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300`}
               >
                 {isLoading ? "Loading..." : "Log In"}
               </button>
