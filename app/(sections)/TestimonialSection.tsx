@@ -1,5 +1,5 @@
 const featuredTestimonial = {
-  body: "Integer id nunc sit semper purus. Bibendum at lacus ut arcu blandit montes vitae auctor libero. Hac condimentum dignissim nibh vulputate ut nunc. Amet nibh orci mi venenatis blandit vel et proin. Non hendrerit in vel ac diam.",
+  body: "This app helps me to manage my time and schedule. I can easily see my schedule and alert when will my class be. This app is very useful for me.",
   author: {
     name: "MUHAMMAD 'IZZAT BIN MOHD KHASBI",
     handle: "2211003",
@@ -12,7 +12,7 @@ const testimonials = [
   [
     [
       {
-        body: "Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.",
+        body: "The app is so interactive and modern than the current one. It is easy to use and the UI is so clean and neat. I love it!",
         author: {
           name: "MUHAMMAD IHSAN SHAMIL",
           handle: "2215009",
@@ -24,7 +24,7 @@ const testimonials = [
     ],
     [
       {
-        body: "Aut reprehenderit voluptatem eum asperiores beatae id. Iure molestiae ipsam ut officia rem nulla blanditiis.",
+        body: "Hard to believe that this app is made by students. It is so good and I hope this app will be used by the whole IIUM community.",
         author: {
           name: "MUHAMMAD AFIQ",
           handle: "2214015",
@@ -38,7 +38,7 @@ const testimonials = [
   [
     [
       {
-        body: "Voluptas quos itaque ipsam in voluptatem est. Iste eos blanditiis repudiandae. Earum deserunt enim molestiae ipsum perferendis recusandae saepe corrupti.",
+        body: "Definitely recommending this app to my friends!",
         author: {
           name: "MUHAMMAD NURIMAN QUDDUS",
           handle: "2214227",
@@ -50,7 +50,7 @@ const testimonials = [
     ],
     [
       {
-        body: "Molestias ea earum quos nostrum doloremque sed. Quaerat quasi aut velit incidunt excepturi rerum voluptatem minus harum.",
+        body: "It's finger licking good!",
         author: {
           name: "ABDULLAH FAWWAZ",
           handle: "2215387",
