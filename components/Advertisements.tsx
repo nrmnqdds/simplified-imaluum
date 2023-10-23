@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { PiTelevisionBold } from "react-icons/pi";
 import { AiOutlineLink } from "react-icons/ai";
-import { Skeleton } from "@components/ui/skeleton";
 
 const ScrollCarousel = dynamic(() => import("./ScrollCarouselComponent"), {
   ssr: false,
@@ -49,7 +48,10 @@ const Advertisement = ({ className }) => {
           // <p>Loading...</p>
           <div className="flex flex-row gap-2 overflow-hidden">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <Skeleton key={item} className="w-40 h-40 rounded-xl" />
+              <div
+                key={item}
+                className="w-40 h-40 rounded-xl bg-gray-200 dark:bg-zinc-600 animate-pulse"
+              ></div>
             ))}
           </div>
         ) : (
