@@ -1,7 +1,5 @@
-import { tHours } from "../index";
-
 function createHoursArray() {
-  const hours: Array<tHours> = [];
+  const hours: Array<CalendarHours> = [];
   for (let i = 8; i <= 18; i++) {
     const item = { text: `${i} AM`, hour: i };
     if (i >= 12) {

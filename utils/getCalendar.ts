@@ -1,4 +1,3 @@
-import { tDays } from "../index";
 import checkIsThisWeek from "./checkIsThisWeek";
 import formatDay from "./formatDay";
 
@@ -9,7 +8,7 @@ export default function getCalendar({
   select: Date;
   current: Date;
 }): {
-  days: tDays[];
+  days: CalendarDays[];
   month: number;
   year: number;
 } {
@@ -21,7 +20,7 @@ export default function getCalendar({
   const currentMonth = current.getMonth();
   const firstDay = new Date(currentYear, currentMonth, 1);
   const lastDay = new Date(currentYear, currentMonth + 1, 0);
-  const days: tDays[] = [];
+  const days: CalendarDays[] = [];
   let dayOfWeek = firstDay.getDay();
   let dayNumber = 1;
 

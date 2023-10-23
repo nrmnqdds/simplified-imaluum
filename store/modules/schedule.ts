@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { tSchedule, tScheduleDetail } from "../../index";
 import { RootState } from "../index";
 
-const initialState: tSchedule = {
+const initialState: Schedule = {
   "2022-09-14": [
     {
       start: { hour: 14, minute: 20 },
@@ -19,7 +18,7 @@ export const scheduleSlice = createSlice({
   reducers: {
     addSchedule: (
       state,
-      action: PayloadAction<{ date: string; data: tScheduleDetail }>
+      action: PayloadAction<{ date: string; data: ScheduleDetail }>
     ) => {
       if (!state[action.payload.date]) {
         state[action.payload.date] = [];
