@@ -229,6 +229,11 @@ export default function HomeLayout({
                             aria-hidden="true"
                           />
                           {item.name}
+                          {item.name === "Class Timetable" && (
+                            <span className="ml-auto text-xs font-semibold bg-red-500 text-red-200 animate-pulse rounded-full px-3 py-1">
+                              HOT
+                            </span>
+                          )}
                         </Link>
                       </li>
                     ))}
@@ -283,7 +288,7 @@ export default function HomeLayout({
                 />
                 <input
                   id="search-field"
-                  className="bg-slate-100 dark:bg-zinc-900 block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                  className="bg-slate-100 dark:bg-zinc-900 block h-full w-full border-0 py-0 pl-8 pr-0 text-zinc-800 dark:text-slate-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                   placeholder="Search..."
                   type="search"
                   name="search"
@@ -302,8 +307,8 @@ export default function HomeLayout({
                     <span className="sr-only">Open user menu</span>
                     {isLoading ? (
                       <>
-                        <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse" />
-                        <div className="h-4 w-16 rounded-sm bg-gray-200 animate-pulse ml-4" />
+                        <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
+                        <div className="h-4 w-16 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
                         <ChevronDownIcon
                           className="ml-2 h-5 w-5 text-gray-400"
                           aria-hidden="true"
