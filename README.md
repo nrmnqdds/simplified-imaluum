@@ -9,8 +9,9 @@ Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'lu
 > [!IMPORTANT]
 > This project is **not** associated with the official i-Ma'luum website!
 
-![image](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/b26feda3-74dd-4ad4-bd7e-c5f524b88411)
-![vis22](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/582a09fa-c860-4040-ae40-835fc14420a2)
+![swappy-20231024_235051](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/98cc8548-b75b-47ca-93eb-cc12c547e284)
+![swappy-20231024_235251](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/33ee032f-d23c-4665-8671-77dbf5408def)
+
 
 ## Features 🚀
 
