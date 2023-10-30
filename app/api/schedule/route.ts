@@ -68,8 +68,9 @@ export async function POST(request: NextRequest) {
       const lecturer = tds[8].textContent.trim();
 
       // Add each split day as a separate entry in the schedule
-      splitDays.forEach((splitDay: any) => {
+      splitDays.forEach((splitDay: any, index: number) => {
         schedule.push({
+          id: `${courseCode}-${section}-${index}`,
           courseCode,
           courseName,
           section,

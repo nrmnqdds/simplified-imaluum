@@ -1,160 +1,57 @@
-import puppeteer from "puppeteer-core";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { IMALUUM_LOGIN_PAGE, IMALUUM_HOME_PAGE } from "@/app/constants";
-import { NextResponse, NextRequest } from "next/server";
-
-// export const runtime = "edge";
-
-const minimal_args = [
-  "--autoplay-policy=user-gesture-required",
-  "--disable-background-networking",
-  "--disable-background-timer-throttling",
-  "--disable-backgrounding-occluded-windows",
-  "--disable-breakpad",
-  "--disable-client-side-phishing-detection",
-  "--disable-component-update",
-  "--disable-default-apps",
-  "--disable-dev-shm-usage",
-  "--disable-domain-reliability",
-  "--disable-extensions",
-  "--disable-features=AudioServiceOutOfProcess",
-  "--disable-hang-monitor",
-  "--disable-ipc-flooding-protection",
-  "--disable-notifications",
-  "--disable-offer-store-unmasked-wallet-cards",
-  "--disable-popup-blocking",
-  "--disable-print-preview",
-  "--disable-prompt-on-repost",
-  "--disable-renderer-backgrounding",
-  "--disable-setuid-sandbox",
-  "--disable-speech-api",
-  "--disable-sync",
-  "--hide-scrollbars",
-  "--ignore-gpu-blacklist",
-  "--metrics-recording-only",
-  "--mute-audio",
-  "--no-default-browser-check",
-  "--no-first-run",
-  "--no-pings",
-  "--no-sandbox",
-  "--no-zygote",
-  "--password-store=basic",
-  "--use-gl=swiftshader",
-  "--use-mock-keychain",
-];
+import got, { GotBodyOptions } from "got";
+import { CookieJar } from "tough-cookie";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  const cookieJar = new CookieJar();
 
-  console.log("Launching browser");
-
-  // const browser = await puppeteer.launch({
-  //   headless: true, // Set to true for production means:takbukak browser
-  //   args: minimal_args,
-  // });
-
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=7a2f92d0-ef85-42e1-b577-c8750cedfc80`,
+  const payload = new URLSearchParams({
+    username: body.username,
+    password: body.password,
+    execution: body.execution,
+    _eventId: body._eventId,
+    geolocation: "",
   });
 
-  const page = await browser.newPage();
-  page.setDefaultNavigationTimeout(0);
-  await page.setRequestInterception(true);
+  const { headers: __headers } = await got(
+    "https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
+    {
+      cookieJar,
+      https: { rejectUnauthorized: false },
+      followRedirect: false,
+    } as GotBodyOptions<string>
+  );
 
-  page.on("request", (req) => {
-    if (
-      req.resourceType() == "stylesheet" ||
-      req.resourceType() == "font" ||
-      req.resourceType() == "image"
-    ) {
-      req.abort();
-    } else {
-      req.continue();
-    }
-  });
+  const { headers: _headers } = await got.post(
+    "https://cas.iium.edu.my:8448/cas/login?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome?service=https%3a%2f%2fimaluum.iium.edu.my%2fhome",
+    {
+      cookieJar,
+      body: payload.toString(),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      followRedirect: false,
+    } as GotBodyOptions<string>
+  );
 
-  try {
-    console.log("Opening page");
-    await page.goto(IMALUUM_LOGIN_PAGE);
+  const { headers: ___headers } = await got(_headers["location"], {
+    cookieJar,
+    https: { rejectUnauthorized: false },
+    followRedirect: false,
+  } as GotBodyOptions<string>);
 
-    console.log("Typing username");
-    // await page.type("input#username", username);
-    await page.$eval(
-      "input#username",
-      (el, username) => ((el as HTMLInputElement).value = username as string),
-      body.username as string
-    );
-    await new Promise((r) => setTimeout(r, 1000));
-    console.log("Typing password");
-    // await page.type("input#password", password);
-    await page.$eval(
-      "input#password",
-      (el, password) => ((el as HTMLInputElement).value = password as string),
-      body.password as string
-    );
-    console.log("Clicking submit");
-    // await page.waitForSelector("input.btn");
-    await new Promise((r) => setTimeout(r, 500));
-    // await page.click("input.btn");
-    // await page.$eval("input.btn", (el) => el.click());
-    const [response] = await Promise.all([
-      page.waitForNavigation({
-        waitUntil: "domcontentloaded",
-      }),
-      page.$eval("#fm1 input.btn-submit", (node) => {
-        // @ts-ignore
-        node.disabled = false;
-        // @ts-ignore
-        node.click();
-      }),
-    ]);
-
-    if (response.status() == 401) {
-      const invalidStr = await page?.$eval(
-        "form#fm1 div.alert.alert-danger span",
-        (elem) => elem.textContent
-      );
-
-      if (invalidStr == "Invalid credentials.")
-        throw new Error("Invalid credentials");
-      else throw new Error("Unable to proceed from login page");
-    }
-
-    // await page.waitForNavigation({ waitUntil: "networkidle0" });
-    await new Promise((r) => setTimeout(r, 500));
-    console.log("Opening home page");
-    const currentUrl = page.url();
-
-    if (currentUrl !== IMALUUM_HOME_PAGE) {
-      console.log("test");
-      throw new Error(
-        `Wrong page. Expected ${IMALUUM_HOME_PAGE} but got ${currentUrl}.`
-      );
-    }
-
-    console.log("Getting cookies");
-    const loginCookies = (await page.cookies())?.filter((value) => {
-      if (value.name == "XSRF-TOKEN" || value.name == "laravel_session")
-        return value;
-      else if (value.name == "MOD_AUTH_CAS") {
-        value.expires = 10000000000;
-        value.session = false;
-        value.secure = false;
-        return value;
+  cookieJar.store.getAllCookies((err, _cookies) => {
+    // console.log("cookies", cookies);
+    _cookies.forEach((cookie) => {
+      const cookieName = cookie.key;
+      const cookieValue = cookie.value;
+      if (cookieName === "MOD_AUTH_CAS") {
+        cookies().set(cookieName, cookieValue);
       }
     });
+  });
 
-    loginCookies.forEach((cookie) => {
-      cookies().set(cookie.name, cookie.value);
-    });
-
-    // redirect("/dashboard");
-    // console.log("loginCookies", loginCookies);
-    return NextResponse.json({ loginCookies });
-  } catch (error) {
-    console.error("Error:", error);
-  } finally {
-    await page.close(); // Close the page when done
-    await browser.close(); // Close the browser when done
-  }
+  return NextResponse.json("success");
 }
