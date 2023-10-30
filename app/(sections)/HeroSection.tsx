@@ -10,17 +10,13 @@ import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import LOGO from "@/public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
 
-const loadingMessageList = [
-  "Checking credentials...",
-  "Please wait...",
-  "Grab a coffee first...",
-  "Just a moment...",
-];
-
 const Hero = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<iMaluumForm>({
     username: "",
     password: "",
+    execution: "e1s1",
+    _eventId: "submit",
+    geolocation: "",
   });
   const [loginMessage, setLoginMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,29 +27,17 @@ const Hero = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // const res = await fetch("api/auth/login2", {
-    //   method: "GET",
-    // });
-
-    // const res2 = await fetch("api/auth/login2", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    // });
-    // if (res2) {
-    //   router.replace("/dashboard");
-    // } else {
-    //   setLoginMessage("Login failed");
-    // }
-
-    const res = await fetch("api/auth/login", {
+    await fetch("api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.status === 200) {
+        router.push("/dashboard");
+      }
+      if (res.status === 401) {
+        setLoginMessage("Invalid username or password");
+      }
     });
-    if (res) {
-      router.replace("/dashboard");
-    } else {
-      setLoginMessage("Login failed");
-    }
 
     setIsLoading(false);
   };
@@ -198,7 +182,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-row gap-3 items-center justify-between w-full">
+            <div className="flex flex-row gap-3 items-center justify-start pl-10 lg:pl-0 w-full">
               <button
                 disabled={isLoading}
                 className={`rounded-md ${
