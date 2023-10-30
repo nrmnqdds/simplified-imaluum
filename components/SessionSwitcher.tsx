@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, Fragment, useTransition } from "react";
-import { useCookiesProvider } from "../app/context/cookies-provider";
+import { useEffect, useState, useTransition } from "react";
 import React from "react";
 import { redirect } from "next/navigation";
 
 export default function SessionSwitcher({ onUpdateCurrentSchedule }) {
   const [loading, setLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
-  const { cookies } = useCookiesProvider();
 
   const [sessionsList, setSessionsList] = useState({ sessionList: [] });
   const [session, setSession] = useState("");
