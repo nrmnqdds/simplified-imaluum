@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from "axios";
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
@@ -11,22 +10,23 @@ export async function GET(request: Request) {
 
   const cookieStore = cookies();
 
-  // Create a Axios instance with cookies
-  const axiosInstance = axios.create({
+  const cookieStrings = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
+
+  // Send a GET request to the website
+  const response = await fetch(url, {
     headers: {
-      Cookie: cookieStore
-        .getAll()
-        .map((cookie) => `${cookie.name}=${cookie.value}`)
-        .join("; "), // Use only name and value properties
+      Cookie: cookieStrings,
     },
   });
 
-  // Send a GET request to the website
-  const response: AxiosResponse = await axiosInstance.get(url);
   //   console.log("Login response status:", response.status);
 
   // Load the HTML content into Cheerio
-  const root = parse(response.data);
+  const html = await response.text();
+  const root = parse(html);
 
   const sessionBody = root.querySelectorAll(
     ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
