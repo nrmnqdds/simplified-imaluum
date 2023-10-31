@@ -9,6 +9,7 @@ import DARKDEMOPIC from "@/public/darkdemo.png";
 import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import LOGO from "@/public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
+import { ImaluumLogin } from "@utils/imaluumLogin";
 
 const Hero = () => {
   const [data, setData] = useState<iMaluumForm>({
@@ -27,14 +28,13 @@ const Hero = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    await fetch("api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.status === 200) {
+    router.prefetch("/dashboard");
+
+    await ImaluumLogin(data).then((res) => {
+      if (res === "success") {
         router.push("/dashboard");
       }
-      if (res.status === 401) {
+      if (res === "failed") {
         setLoginMessage("Invalid username or password");
       }
     });
