@@ -22,27 +22,33 @@ export async function ImaluumLogin(form: iMaluumForm) {
       followRedirect: false,
     } as GotBodyOptions<string>);
 
-    const { headers: _headers } = await got.post(IMALUUM_LOGIN_PAGE_2, {
-      cookieJar,
-      body: payload.toString(),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      followRedirect: false,
-    } as GotBodyOptions<string>);
-
-    const { headers: __headers } = await got(_headers["location"], {
-      cookieJar,
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
-    } as GotBodyOptions<string>);
+    await got
+      .post(IMALUUM_LOGIN_PAGE_2, {
+        cookieJar,
+        body: payload.toString(),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        followRedirect: false,
+      } as GotBodyOptions<string>)
+      .then(async (res) => {
+        await got(res.headers["location"], {
+          cookieJar,
+          https: { rejectUnauthorized: false },
+          followRedirect: false,
+        } as GotBodyOptions<string>);
+      });
 
     cookieJar.store.getAllCookies((err: Error, _cookies: string[]) => {
       // console.log("cookies", cookies);
       _cookies.forEach((cookie: any) => {
         const cookieName = cookie.key;
         const cookieValue = cookie.value;
-        if (cookieName === "MOD_AUTH_CAS") {
+        if (
+          cookieName === "MOD_AUTH_CAS" ||
+          cookieName === "laravel_session" ||
+          cookieName === "XSRF_TOKEN"
+        ) {
           cookies().set(cookieName, cookieValue);
         }
       });
