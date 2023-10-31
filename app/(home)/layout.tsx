@@ -47,10 +47,71 @@ export default function HomeLayout({
 }) {
   const pathname = usePathname();
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [currentTime, setCurrentTime] = useState<string>("00:00:00 AM");
+
+  const getDate = () => {
+    const date = new Date();
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const day = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const dateNum = date.getDate();
+    const suffix = getSuffix(dateNum);
+    const year = date.getFullYear();
+
+    return `${day}. ${month} ${dateNum}${suffix}, ${year}`;
+  };
+
+  const getSuffix = (dateNum: number) => {
+    if (dateNum >= 11 && dateNum <= 13) {
+      return "th";
+    }
+    switch (dateNum % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const date = new Date();
+      const hours = date.getHours() % 12 || 12;
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      const amOrPm = date.getHours() >= 12 ? "PM" : "AM";
+      setCurrentTime(`${hours}:${minutes}:${seconds} ${amOrPm}`);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const studentData = useStudent();
+  useEffect(() => {
+    if (studentData) {
+      setIsLoading(false);
+    }
+  }, [studentData]);
 
   return (
     <Fragment>
@@ -256,7 +317,15 @@ export default function HomeLayout({
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form className="relative flex flex-1" action="#" method="GET">
+              <div className="relative flex items-center gap-5 flex-1">
+                <h1 className="text-zinc-900 dark:text-slate-100 font-bold">
+                  {getDate()}
+                </h1>
+                <h2 className="text-zinc-900 dark:text-slate-100 font-bold">
+                  {currentTime}
+                </h2>
+              </div>
+              {/* <form className="relative flex flex-1" action="#" method="GET">
                 <label htmlFor="search-field" className="sr-only">
                   Search
                 </label>
@@ -271,7 +340,7 @@ export default function HomeLayout({
                   type="search"
                   name="search"
                 />
-              </form>
+              </form> */}
               <div className="flex items-center gap-x-4 lg:gap-x-6">
                 {/* Separator */}
                 <div
@@ -283,36 +352,36 @@ export default function HomeLayout({
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
-                    {/* {isLoading ? (
+                    {isLoading ? (
                       <>
                         <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
-                        <div className="h-4 w-16 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
+                        <div className="h-8 w-32 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
                         <ChevronDownIcon
                           className="ml-2 h-5 w-5 text-gray-400"
                           aria-hidden="true"
                         />
                       </>
-                    ) : ( */}
-                    <>
-                      <img
-                        className="h-8 w-8 rounded-full bg-gray-50"
-                        src={studentData?.imageURL}
-                        alt=""
-                      />
-                      <span className="hidden lg:flex lg:items-center">
-                        <span
-                          className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
-                          aria-hidden="true"
-                        >
-                          {studentData?.name}
-                        </span>
-                        <ChevronDownIcon
-                          className="ml-2 h-5 w-5 text-gray-400"
-                          aria-hidden="true"
+                    ) : (
+                      <>
+                        <img
+                          className="h-8 w-8 rounded-full bg-gray-50"
+                          src={studentData?.imageURL}
+                          alt=""
                         />
-                      </span>
-                    </>
-                    {/* )} */}
+                        <span className="hidden lg:flex lg:items-center">
+                          <span
+                            className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
+                            aria-hidden="true"
+                          >
+                            {studentData?.name}
+                          </span>
+                          <ChevronDownIcon
+                            className="ml-2 h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </>
+                    )}
                   </Menu.Button>
                   <Transition
                     as={Fragment}
@@ -323,22 +392,11 @@ export default function HomeLayout({
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <Link
-                              href={item.href}
-                              className={classNames(
-                                active ? "bg-gray-50" : "",
-                                "block px-3 py-1 text-sm leading-6 text-gray-900"
-                              )}
-                            >
-                              {item.name}
-                            </Link>
-                          )}
-                        </Menu.Item>
-                      ))}
+                    <Menu.Items
+                      onClick={() => fetch("api/auth/logout")}
+                      className="absolute cursor-pointer px-3 right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md text-zinc-900 bg-white hover:bg-slate-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
+                    >
+                      Log out
                     </Menu.Items>
                   </Transition>
                 </Menu>

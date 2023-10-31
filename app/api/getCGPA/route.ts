@@ -1,12 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
+import { tabletojson } from "tabletojson";
 
-export async function GET(request: Request) {
-  //   const { session } = await request.json();
+export const runtime = "edge";
+export const preferredRegion = "sin1";
 
+export async function GET(request: NextRequest) {
   const url = `https://imaluum.iium.edu.my/MyAcademic/result`;
-  console.log("getcgpaurl", url);
 
   const cookieStore = cookies();
 
@@ -15,16 +16,12 @@ export async function GET(request: Request) {
     .map((cookie) => `${cookie.name}=${cookie.value}`)
     .join("; ");
 
-  // Send a GET request to the website
   const response = await fetch(url, {
     headers: {
       Cookie: cookieStrings,
     },
   });
 
-  //   console.log("Login response status:", response.status);
-
-  // Load the HTML content into Cheerio
   const html = await response.text();
   const root = parse(html);
 
@@ -41,38 +38,56 @@ export async function GET(request: Request) {
     sessionList.push({ sessionName, sessionQuery });
   });
 
-  return NextResponse.json({ sessionList });
+  // console.log("sessionList", sessionList);
 
-  // async function fetchgpa(element: any) {
-  //   const response: AxiosResponse = await axiosInstance.get(
-  //     url + element.sessionQuery
-  //   );
-  //   const $ = load(response.data);
+  const cgpaPromises = sessionList.map(({ sessionQuery }) =>
+    cgpaChart(sessionQuery, cookieStrings)
+  );
 
-  //   const gpaValue = $("td:contains('Grade Point Average(GPA)')")
-  //     .next("td")
-  //     .text();
-  //   const cgpaValue = $("td:contains('Cummulative Grade Point Average (CGPA)')")
-  //     .next("td")
-  //     .text();
+  const results = await Promise.all(cgpaPromises);
 
-  //   console.log("GPA:", gpaValue);
-  //   console.log("CGPA:", cgpaValue);
-  // }
+  console.log("results", results);
+  // const gpaValues = results.map((result) => result.gpaValue);
+  // const cgpaValues = results.map((result) => result.cgpaValue);
 
-  //   sessionList.forEach((element) => {
-  //     fetchgpa(element.sessionQuery);
-  //   });
+  // return NextResponse.json({ gpaValues, cgpaValues });
 
-  //   // Find the GPA and CGPA values
-  //   const gpaValue = $("td:contains('Grade Point Average(GPA)')")
-  //     .next("td")
-  //     .text();
-  //   const cgpaValue = $("td:contains('Cummulative Grade Point Average (CGPA)')")
-  //     .next("td")
-  //     .text();
+  return NextResponse.json({ message: "success" });
+}
 
-  // Now you can use gpaValue and cgpaValue as needed
-  //   console.log("GPA:", gpaValue);
-  //   console.log("CGPA:", cgpaValue);
+async function cgpaChart(sessionQuery: string, cookieStrings: string) {
+  const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
+
+  await fetch(url, {
+    headers: {
+      Cookie: cookieStrings,
+    },
+  })
+    .then((response) => response.text())
+    .then((html) => parse(html))
+    .then((root) => {
+      const resultTable = root.querySelector(
+        "table.table.table-hover"
+      ).outerHTML;
+
+      const tableJSON = tabletojson.convert(resultTable);
+
+      try {
+        const cgpaValue = tableJSON[0][tableJSON[0].length - 1]["Credit Hour"]
+          .split("\n")[2]
+          .trim();
+        const gpaValue = tableJSON[0][tableJSON[0].length - 1]["Subject Name"]
+          .split("\n")[2]
+          .trim();
+
+        // console.log("cgpaValue", cgpaValue);
+        // console.log("gpaValue", gpaValue);
+
+        return gpaValue;
+      } catch (e) {
+        console.log(e);
+        // return { gpaValue: "N/A", cgpaValue: "N/A" };
+        return "N/A";
+      }
+    });
 }
