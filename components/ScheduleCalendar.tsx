@@ -163,10 +163,10 @@ export default function ScheduleCalendar({
             ))}
           </div>
           <div className="flex flex-1 pt-2">
-            {days.map((day) => (
+            {days.map((day, index) => (
               <div
                 className="flex-1 min-w-[81px] flex flex-col relative"
-                key={`scheduleline${day.day}`}
+                key={`scheduleline${day.day}${index}`}
               >
                 {hours24.map((hour, index) => (
                   <div

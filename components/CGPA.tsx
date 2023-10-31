@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCookiesProvider } from "../app/context/cookies-provider";
+import { useCookiesProvider } from "@/app/context/cookies-provider";
 
-const CGPA = ({ className }) => {
+const CGPA = ({ className = "" }) => {
   const [loading, setLoading] = useState(true);
-  const { cookies } = useCookiesProvider();
-  const [sessionsList, setSessionsList] = useState({ sessionList: [] });
   const [session, setSession] = useState("");
-  // useEffect(() => {
-  //   async function getSession() {
-  //     const response = await fetch(`api/getCGPA`);
+  useEffect(() => {
+    async function getSession() {
+      const response = await fetch(`api/getCGPA`);
 
-  //     setLoading(false);
-  //   }
-  //   getSession();
-  // }, [cookies]);
+      setLoading(false);
+    }
+    getSession();
+  }, []);
 
   return (
     <div className={`flex items-center justify-center ${className}`}>
