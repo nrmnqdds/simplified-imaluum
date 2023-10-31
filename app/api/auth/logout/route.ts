@@ -1,12 +1,10 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
   cookies().delete("MOD_AUTH_CAS");
-  cookies().delete("laravel_session");
-  cookies().delete("XSRF-TOKEN");
 
   return NextResponse.redirect("/");
 }
