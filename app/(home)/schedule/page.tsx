@@ -1,23 +1,27 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import { currentCalendar } from "@/store/modules/calendar";
-import ScheduleCalendar from "@components/ScheduleCalendar";
-import getThisWeek from "@utils/getThisWeek";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Timetable from "@/components/schedule";
+import SessionSwitcher from "@/components/SessionSwitcher";
 
 const Page = () => {
-  const { days } = useSelector(currentCalendar);
-  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
-  const [timeIndex, setTimeIndex] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [events, setEvents] = useState<TimetableEvent[]>();
+
+  useEffect(() => {
+    if (events) {
+      // console.log("events", events);
+      setIsLoading(false);
+    }
+  }, [events]);
 
   return (
-    <div className="flex-1 min-h-screen">
-      <ScheduleCalendar
-        days={getThisWeek(days)}
-        setTimeIndex={setTimeIndex}
-        setIsDeleteOpen={setIsDeleteOpen}
-      />
+    <div className="flex-1 min-h-screen ">
+      <div className="w-fit p-2">
+        <SessionSwitcher setEvents={setEvents} />
+      </div>
+
+      <Timetable events={isLoading ? [] : events} />
     </div>
   );
 };

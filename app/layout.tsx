@@ -1,8 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "./context/theme-provider";
-import { CookiesProvider } from "./context/cookies-provider";
-import ScheduleProvider from "./context/schedule-provider";
+import { ThemeProvider } from "./context/ThemeProvider";
 import { Metadata } from "next";
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 
@@ -20,9 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <ScheduleProvider>
-            <CookiesProvider>{children}</CookiesProvider>
-          </ScheduleProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
