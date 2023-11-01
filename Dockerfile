@@ -1,11 +1,11 @@
-FROM oven/bun:latest
+FROM node:18.18.0-slim
 
 WORKDIR /usr/app
 
 COPY . .
 
-RUN bun install --production
+RUN npm ci --omit=dev
 
-RUN bun run build
+RUN npm run build
 
-CMD ["bun", "start"]
+CMD ["npm", "start"]
