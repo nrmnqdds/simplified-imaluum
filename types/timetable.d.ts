@@ -1,25 +1,19 @@
-type CourseSchedule = {
-  course: Course;
-  section: number;
-  session: string;
-  semester: number;
-  venues: string[];
-  lecturers: string[];
-  week_times: WeekTime[];
+type Subject = {
+  id: string;
+  courseCode: string;
+  courseName: string;
+  section: string;
+  chr: string;
   color: string;
+  timestamps: WeekTime;
+  venue: string;
+  lecturer: string;
 };
 
 type WeekTime = {
   start: string;
   end: string;
   day: number;
-};
-
-type TimetableEvent = {
-  title: string;
-  color: string;
-  weekTime: WeekTime;
-  onClick: () => void;
 };
 
 type TimetableConfig = {

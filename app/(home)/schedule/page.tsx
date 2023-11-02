@@ -6,7 +6,7 @@ import SessionSwitcher from "@/components/SessionSwitcher";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [events, setEvents] = useState<TimetableEvent[]>();
+  const [events, setEvents] = useState<Subject[]>();
 
   useEffect(() => {
     if (events) {
