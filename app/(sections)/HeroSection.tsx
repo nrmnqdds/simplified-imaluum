@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ThemeSwitcher } from "@components/ThemeSwitcher";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import DARKDEMOPIC from "@/public/darkdemo.png";
 import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import LOGO from "@/public/logo-landing-page.png";
 import { useRouter } from "next/navigation";
-import { ImaluumLogin } from "@utils/imaluumLogin";
+import { ImaluumLogin } from "@/utils/imaluumLogin";
 
 const Hero = () => {
   const [data, setData] = useState<iMaluumForm>({
@@ -33,6 +33,7 @@ const Hero = () => {
     await ImaluumLogin(data).then((res) => {
       if (res === "success") {
         router.push("/dashboard");
+        // console.log("success");
       }
       if (res === "failed") {
         setLoginMessage("Invalid username or password");
@@ -128,8 +129,8 @@ const Hero = () => {
             onSubmit={handleSubmit}
             className="mt-10 flex flex-col items-center gap-y-6"
           >
-            <div className="flex flex-col md:flex-row gap-3">
-              <div className="sm:col-span-4">
+            <div className="flex flex-col md:flex-row gap-3 w-full">
+              <div className="sm:col-span-4 flex-1">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 dark:text-slate-100 text-zinc-900"
@@ -157,7 +158,7 @@ const Hero = () => {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 flex-1">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 dark:text-slate-100 text-zinc-900"
@@ -182,7 +183,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-row gap-3 items-center justify-start pl-10 lg:pl-0 w-full">
+            <div className="flex flex-row gap-3 items-center justify-center md:justify-start w-full">
               <button
                 disabled={isLoading}
                 className={`rounded-md ${
