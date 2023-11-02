@@ -19,9 +19,6 @@
     ],
     "target": "es5",
     "paths": {
-      "@components/*": ["./components/*"],
-      "@utils/*": ["./utils/*"],
-      "@store/*": ["./store/*"],
       "@/*": ["./*"]
     }
   },
