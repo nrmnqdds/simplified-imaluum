@@ -32,7 +32,7 @@ export default function TimetableRow({
       </div>
       <div
         className="absolute left-8 right-0 h-full
-          flex flex-row"
+          flex flex-row ml-5"
       >
         {[...Array(numberOfDays)].map((day, index) => (
           <div

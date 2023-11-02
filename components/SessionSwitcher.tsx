@@ -32,7 +32,7 @@ export default function SessionSwitcher({ setEvents }) {
       if (response.ok) {
         const responseData = await response.json();
         setSessionsList(responseData);
-        if (responseData.sessionList.length > 1) {
+        if (responseData.sessionList.length >= 1) {
           setSession(responseData.sessionList[0].sessionQuery);
         }
       } else {
