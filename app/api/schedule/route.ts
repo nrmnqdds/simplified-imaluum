@@ -1,8 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
+import moment from "moment";
 
 export const runtime = "edge";
+export const preferredRegion = "sin1";
 
 export async function POST(request: NextRequest) {
   const { session } = await request.json();
@@ -27,15 +29,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(`Failed to fetch data from ${url}`);
   }
 
-  // Read the response data as text
   const html = await response.text();
   const root = parse(html);
-  // console.log("root", root.toString());
 
   const table = root.querySelector(".box-body table.table.table-hover");
-  // console.log("table", table.toString());
   const rows = table.querySelectorAll("tr");
-  // console.log("rows", rows.toString());
 
   const schedule = [];
 
@@ -64,6 +62,10 @@ export async function POST(request: NextRequest) {
       const splitDays = days.length > 1 ? [...days] : days;
 
       const time = tds[6].textContent.trim().replace(/ /gi, "").split("-");
+      const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
+      const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
+      // const timestamps = [{ start, end, day: days[0] }]
+
       const venue = tds[7].textContent.trim();
       const lecturer = tds[8].textContent.trim();
 
@@ -75,8 +77,7 @@ export async function POST(request: NextRequest) {
           courseName,
           section,
           chr,
-          days: splitDay,
-          time,
+          timestamps: [{ start, end, day: splitDay }],
           venue,
           lecturer,
         });
