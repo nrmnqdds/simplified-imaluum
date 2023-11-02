@@ -340,7 +340,7 @@ export default function HomeLayout({
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <div className="relative flex items-center gap-5 flex-1">
+              <div className="relative flex items-center gap-5 flex-1 text-xs md:text-sm">
                 <h1 className="text-zinc-900 dark:text-slate-100 font-bold">
                   {getDate()}
                 </h1>
