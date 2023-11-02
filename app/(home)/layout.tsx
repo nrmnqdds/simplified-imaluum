@@ -24,7 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import LOGO from "@/public/logo-landing-page.png";
 import Image from "next/image";
-import { ThemeSwitcher } from "@components/ThemeSwitcher";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import useStudent from "@/hooks/useStudent";
 
 const navigation = [
@@ -46,10 +46,23 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentTime, setCurrentTime] = useState<string>("00:00:00 AM");
+
+  // Check if MOD_AUTH_CAS cookie is present
+  useEffect(() => {
+    fetch("api/auth/verify", {
+      method: "GET",
+    }).then(async (res) => {
+      const response = await res.json();
+      if (response.message === "not okay") {
+        router.replace("/");
+      }
+    });
+  }, [router]);
 
   const getDate = () => {
     const date = new Date();
@@ -112,6 +125,16 @@ export default function HomeLayout({
       setIsLoading(false);
     }
   }, [studentData]);
+
+  const handleLogout = () => {
+    fetch("api/auth/logout", {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.ok) {
+        router.replace("/");
+      }
+    });
+  };
 
   return (
     <Fragment>
@@ -355,7 +378,7 @@ export default function HomeLayout({
                     {isLoading ? (
                       <>
                         <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
-                        <div className="h-8 w-32 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
+                        <div className="h-5 w-48 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
                         <ChevronDownIcon
                           className="ml-2 h-5 w-5 text-gray-400"
                           aria-hidden="true"
@@ -393,7 +416,7 @@ export default function HomeLayout({
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items
-                      onClick={() => fetch("api/auth/logout")}
+                      onClick={handleLogout}
                       className="absolute cursor-pointer px-3 right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md text-zinc-900 bg-white hover:bg-slate-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                     >
                       Log out
@@ -404,9 +427,7 @@ export default function HomeLayout({
             </div>
           </div>
 
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">{children}</div>
-          </main>
+          <main className="lg:overflow-x-hidden">{children}</main>
         </div>
       </div>
     </Fragment>
