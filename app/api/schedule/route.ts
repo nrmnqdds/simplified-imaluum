@@ -69,6 +69,8 @@ export async function POST(request: NextRequest) {
       const venue = tds[7].textContent.trim();
       const lecturer = tds[8].textContent.trim();
 
+      const color = "";
+
       // Add each split day as a separate entry in the schedule
       splitDays.forEach((splitDay: any, index: number) => {
         schedule.push({
@@ -79,6 +81,7 @@ export async function POST(request: NextRequest) {
           chr,
           timestamps: [{ start, end, day: splitDay }],
           venue,
+          color,
           lecturer,
         });
       });

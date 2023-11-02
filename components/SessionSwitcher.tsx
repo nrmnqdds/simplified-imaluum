@@ -60,10 +60,8 @@ export default function SessionSwitcher({ setEvents }) {
 
             const mappedEvents = responseData.schedule.map(
               (event: any, index: number) => {
-                const title = event.courseCode;
-                let color = titleToColorMap[title];
-
-                if (!color) {
+                let _color = titleToColorMap[event.courseCode];
+                if (!_color) {
                   // If no color assigned for this title, find an available color
                   const availableColors = predefinedColors.filter(
                     (c) => !Object.values(titleToColorMap).includes(c)
@@ -74,29 +72,27 @@ export default function SessionSwitcher({ setEvents }) {
                     const randomColorIndex = Math.floor(
                       Math.random() * availableColors.length
                     );
-                    color = availableColors[randomColorIndex];
+                    _color = availableColors[randomColorIndex];
                   } else {
                     // If all colors have been used, assign a random color from predefinedColors
                     const randomColorIndex = Math.floor(
                       Math.random() * predefinedColors.length
                     );
-                    color = predefinedColors[randomColorIndex];
+                    _color = predefinedColors[randomColorIndex];
                   }
 
                   // Store the assigned color for this title
-                  titleToColorMap[title] = color;
+                  titleToColorMap[event.courseCode] = _color;
                 }
-
                 return {
-                  title,
-                  color,
-                  weekTime: event.timestamps,
-                  onClick: event.onClick,
+                  ...responseData.schedule[index],
+                  color: _color,
                 };
               }
             );
 
             setEvents(mappedEvents);
+            // console.log("events", mappedEvents);
           }
         } else {
           console.error("Error fetching user data");

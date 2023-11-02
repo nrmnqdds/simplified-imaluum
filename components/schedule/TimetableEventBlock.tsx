@@ -2,9 +2,9 @@ import moment from "moment";
 import { useState, useEffect } from "react";
 
 interface TimetableEventBlockProps {
-  event: TimetableEvent;
+  event: Subject;
   config: TimetableConfig;
-  onClick: () => void;
+  onClick?: (event: Subject) => void;
 }
 
 export default function TimetableEventBlock({
@@ -12,10 +12,8 @@ export default function TimetableEventBlock({
   config,
   onClick,
 }: TimetableEventBlockProps) {
-  const [hovering, setHovering] = useState(false);
-
-  const startMoment = moment(event.weekTime[0].start, "HH:mm:ss");
-  const endMoment = moment(event.weekTime[0].end, "HH:mm:ss");
+  const startMoment = moment(event.timestamps[0].start, "HH:mm:ss");
+  const endMoment = moment(event.timestamps[0].end, "HH:mm:ss");
   const numberOfDays = config.endDay - config.startDay + 1;
 
   const top =
@@ -35,8 +33,8 @@ export default function TimetableEventBlock({
 
   const left =
     "calc(" +
-    (100 / numberOfDays) * (event.weekTime[0].day - config.startDay) +
-    "% + 2px)";
+    (100 / numberOfDays) * (event.timestamps[0].day - config.startDay) +
+    "% )";
 
   const width = "calc(" + 100 / numberOfDays + "% - 5px)";
 
@@ -49,17 +47,12 @@ export default function TimetableEventBlock({
         left,
         width,
       }}
-      onClick={onClick}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
+      onClick={() => onClick(event)}
     >
-      <p className="text-[8px] md:text-xs font-bold">{event.title}</p>
-      <p
-        className="text-[8px] md:text-xs font-bold"
-        style={{ color: event.color[hovering ? 600 : 500] }}
-      >
-        {moment(event.weekTime[0].start, "HH:mm:ss").format("h:mma")} -{" "}
-        {moment(event.weekTime[0].end, "HH:mm:ss").format("h:mma")}
+      <p className="text-[8px] md:text-xs font-bold">{event.courseCode}</p>
+      <p className="text-[8px] md:text-xs font-bold">
+        {moment(event.timestamps[0].start, "HH:mm:ss").format("h:mma")} -{" "}
+        {moment(event.timestamps[0].end, "HH:mm:ss").format("h:mma")}
       </p>
     </button>
   );
