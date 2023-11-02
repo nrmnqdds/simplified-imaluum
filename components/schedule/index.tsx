@@ -53,7 +53,7 @@ export default function Timetable({ events }: TimetableProps) {
           numberOfDays={config.endDay - config.startDay + 1}
         />
       ))}
-      <div className="absolute top-0 bottom-0 left-0 -right-px pl-8">
+      <div className="absolute top-0 bottom-0 left-0 -right-px pl-14">
         <div className="relative w-full h-full">
           {getEvents().map((event, index) => (
             <TimetableEventBlock
