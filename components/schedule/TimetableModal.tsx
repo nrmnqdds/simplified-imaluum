@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
@@ -12,12 +12,6 @@ export default function TimetableModal({
   setOpenModal: (open: boolean) => void;
   currentSubject?: Subject;
 }) {
-  useEffect(() => {
-    if (currentSubject) {
-      console.log("currentSubject", currentSubject);
-    }
-  }, [currentSubject]);
-
   return (
     <Transition.Root show={openModal} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenModal}>
@@ -89,6 +83,12 @@ export default function TimetableModal({
                         Section:{" "}
                       </span>
                       {currentSubject?.section}
+                    </p>
+                    <p className="text-sm text-zinc-800">
+                      <span className="text-sm text-zinc-900 font-bold">
+                        Credit Hour:{" "}
+                      </span>
+                      {currentSubject?.chr}
                     </p>
                     <p className="text-sm text-zinc-800">
                       <span className="text-sm text-zinc-900 font-bold">

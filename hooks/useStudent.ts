@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const useStudent = () => {
-  const [student, setStudent] = useState<Student>();
+  const [student, setStudent] = useState<StudentInfo>();
 
   useEffect(() => {
     (async function () {

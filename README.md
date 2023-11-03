@@ -12,7 +12,6 @@ Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'lu
 ![swappy-20231024_235051](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/98cc8548-b75b-47ca-93eb-cc12c547e284)
 ![swappy-20231024_235251](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/33ee032f-d23c-4665-8671-77dbf5408def)
 
-
 ## Features 🚀
 
 ✨ **Modern and Intuitive Design**: We've completely revamped the user interface, incorporating modern design principles to ensure an engaging and aesthetically pleasing experience for all users.
@@ -65,9 +64,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Designed with ❤️ by [Qagura](https://q4gura.vercel.app) <!-- Replace with your actual website URL -->
+Designed with ❤️ by [Qagura](https://q4gura.vercel.app)
 
-This app is on Heroku! [Link to website](https://simple-imaluum-20b408afaba6.herokuapp.com/)
-
-[![GitHub Stars](https://img.shields.io/github/stars/qryskalyst20/simplified-imaluum.svg)](https://github.com/your-username/simplified-i-maluum/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/qryskalyst20/simplified-imaluum.svg)](https://github.com/your-username/simplified-i-maluum/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/network/members)

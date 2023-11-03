@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -24,7 +24,9 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import LOGO from "@/public/logo-landing-page.png";
 import Image from "next/image";
+import { getDate, getSuffix } from "@/utils/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { ImaluumProvider, ImaluumContext } from "../context/ImaluumProvider";
 import useStudent from "@/hooks/useStudent";
 
 const navigation = [
@@ -47,6 +49,7 @@ export default function HomeLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const studentData = useStudent();
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,48 +67,6 @@ export default function HomeLayout({
     });
   }, [router]);
 
-  const getDate = () => {
-    const date = new Date();
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const day = days[date.getDay()];
-    const month = months[date.getMonth()];
-    const dateNum = date.getDate();
-    const suffix = getSuffix(dateNum);
-    const year = date.getFullYear();
-
-    return `${day}. ${month} ${dateNum}${suffix}, ${year}`;
-  };
-
-  const getSuffix = (dateNum: number) => {
-    if (dateNum >= 11 && dateNum <= 13) {
-      return "th";
-    }
-    switch (dateNum % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  };
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       const date = new Date();
@@ -119,13 +80,6 @@ export default function HomeLayout({
     return () => clearInterval(intervalId);
   }, []);
 
-  const studentData = useStudent();
-  useEffect(() => {
-    if (studentData) {
-      setIsLoading(false);
-    }
-  }, [studentData]);
-
   const handleLogout = () => {
     fetch("api/auth/logout", {
       method: "DELETE",
@@ -136,8 +90,14 @@ export default function HomeLayout({
     });
   };
 
+  useEffect(() => {
+    if (studentData) {
+      setIsLoading(false);
+    }
+  }, [studentData]);
+
   return (
-    <Fragment>
+    <ImaluumProvider>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -389,9 +349,9 @@ export default function HomeLayout({
                         <img
                           className="h-8 w-8 rounded-full bg-gray-50"
                           src={studentData?.imageURL}
-                          alt=""
+                          alt="gambarstudent"
                         />
-                        <span className="hidden lg:flex lg:items-center">
+                        <span className="hidden md:flex lg:items-center">
                           <span
                             className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
                             aria-hidden="true"
@@ -430,6 +390,6 @@ export default function HomeLayout({
           <main className="lg:overflow-x-hidden">{children}</main>
         </div>
       </div>
-    </Fragment>
+    </ImaluumProvider>
   );
 }
