@@ -35,11 +35,26 @@ const useImaluum = () => {
     }
   }
 
+  async function getCGPA() {
+    const response = await fetch(`api/getCGPA`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setData((prevData) => ({
+      ...prevData,
+      cgpa: data,
+    }));
+  }
+
   useEffect(() => {
     if (!data) {
       (async function () {
         // await getStudent();
         await getSchedule();
+        await getCGPA();
       })();
     }
   }, [data]);

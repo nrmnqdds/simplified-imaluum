@@ -38,56 +38,58 @@ export async function GET(request: NextRequest) {
     sessionList.push({ sessionName, sessionQuery });
   });
 
+  sessionList.pop();
+  sessionList.reverse();
   // console.log("sessionList", sessionList);
 
-  const cgpaPromises = sessionList.map(({ sessionQuery }) =>
-    cgpaChart(sessionQuery, cookieStrings)
+  const cgpaPromises = sessionList.map(({ sessionQuery, sessionName }) =>
+    cgpaChart(sessionQuery, sessionName, cookieStrings)
   );
 
-  const results = await Promise.all(cgpaPromises);
+  const results: any[] = await Promise.all(cgpaPromises);
 
-  console.log("results", results);
+  // console.log("results from GET", results);
   // const gpaValues = results.map((result) => result.gpaValue);
   // const cgpaValues = results.map((result) => result.cgpaValue);
 
   // return NextResponse.json({ gpaValues, cgpaValues });
 
-  return NextResponse.json({ message: "success" });
+  return NextResponse.json(results);
 }
 
-async function cgpaChart(sessionQuery: string, cookieStrings: string) {
-  const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
+const cgpaChart = async (
+  sessionQuery: string,
+  sessionName: string,
+  cookieStrings: string
+) => {
+  try {
+    const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
 
-  await fetch(url, {
-    headers: {
-      Cookie: cookieStrings,
-    },
-  })
-    .then((response) => response.text())
-    .then((html) => parse(html))
-    .then((root) => {
-      const resultTable = root.querySelector(
-        "table.table.table-hover"
-      ).outerHTML;
-
-      const tableJSON = tabletojson.convert(resultTable);
-
-      try {
-        const cgpaValue = tableJSON[0][tableJSON[0].length - 1]["Credit Hour"]
-          .split("\n")[2]
-          .trim();
-        const gpaValue = tableJSON[0][tableJSON[0].length - 1]["Subject Name"]
-          .split("\n")[2]
-          .trim();
-
-        // console.log("cgpaValue", cgpaValue);
-        // console.log("gpaValue", gpaValue);
-
-        return gpaValue;
-      } catch (e) {
-        console.log(e);
-        // return { gpaValue: "N/A", cgpaValue: "N/A" };
-        return "N/A";
-      }
+    const response = await fetch(url, {
+      headers: {
+        Cookie: cookieStrings,
+      },
     });
-}
+
+    const html = await response.text();
+    const root = parse(html);
+
+    const resultTable = root.querySelector("table.table.table-hover").outerHTML;
+
+    const tableJSON = tabletojson.convert(resultTable);
+
+    const cgpaValue = tableJSON[0][tableJSON[0].length - 1]["Credit Hour"]
+      .split("\n")[2]
+      .trim();
+    const gpaValue = tableJSON[0][tableJSON[0].length - 1]["Subject Name"]
+      .split("\n")[2]
+      .trim();
+
+    // console.log("results", { gpaValue, cgpaValue });
+
+    return { sessionName, gpaValue, cgpaValue };
+  } catch (e) {
+    console.log(e);
+    return { gpaValue: "N/A", cgpaValue: "N/A" };
+  }
+};
