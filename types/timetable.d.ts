@@ -1,4 +1,5 @@
 type Subject = {
+  sessionName?: any;
   id: string;
   courseCode: string;
   courseName: string;
@@ -21,4 +22,11 @@ type TimetableConfig = {
   endDay: number;
   startHour: number;
   endHour: number;
+};
+
+type Courses = {
+  schedule?: any;
+  sessionName: string;
+  sessionQuery: string;
+  subjects: Subject[];
 };
