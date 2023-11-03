@@ -1,8 +1,15 @@
+"use client";
+
 import Disciplinary from "@/components/Disciplinary";
 import Advertisement from "@/components/Advertisements";
 import CGPA from "@/components/CGPA";
+import { ImaluumContext } from "@/app/context/ImaluumProvider";
+import { useContext, useEffect, useState } from "react";
 
 const Page = () => {
+  // const [data, setData] = useState<ImaluumData>();
+  // const context = useContext(ImaluumContext);
+
   return (
     <div className="min-h-screen flex flex-col py-10 px-4 sm:px-6 lg:px-8">
       <div className="grid auto-rows-[192px] grid-cols-3 gap-2">
