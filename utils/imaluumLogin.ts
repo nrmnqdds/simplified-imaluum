@@ -40,17 +40,15 @@ export async function ImaluumLogin(form: iMaluumForm) {
             https: { rejectUnauthorized: false },
             followRedirect: false,
           } as GotBodyOptions<string>);
+        })
+        .then(async () => {
+          await got(IMALUUM_HOME_PAGE, {
+            cookieJar,
+            https: { rejectUnauthorized: false },
+            followRedirect: false,
+          } as GotBodyOptions<string>);
         });
     });
-
-    // macam tak important je?
-    // .then(async () => {
-    //   await got(IMALUUM_HOME_PAGE, {
-    //     cookieJar,
-    //     https: { rejectUnauthorized: false },
-    //     followRedirect: false,
-    //   } as GotBodyOptions<string>);
-    // });
 
     cookieJar.store.getAllCookies((err: Error, _cookies: string[]) => {
       // console.log("cookies", _cookies);
@@ -65,6 +63,9 @@ export async function ImaluumLogin(form: iMaluumForm) {
           cookies().set({
             name: cookieName,
             value: cookieValue,
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+            secure: true,
+            httpOnly: true,
           });
         }
       });

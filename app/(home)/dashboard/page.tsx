@@ -3,18 +3,18 @@
 import Disciplinary from "@/components/Disciplinary";
 import Advertisement from "@/components/Advertisements";
 import CGPA from "@/components/CGPA";
-import { ImaluumContext } from "@/app/context/ImaluumProvider";
-import { Fragment, useContext, useEffect, useState } from "react";
+import ImaluumClient from "@/utils/imaluumClient";
+import { Fragment, useEffect, useState } from "react";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const context = useContext(ImaluumContext);
+  const { cgpa } = ImaluumClient() || {};
 
   useEffect(() => {
-    if (context?.cgpa) {
+    if (cgpa) {
       setIsLoading(false);
     }
-  }, [context]);
+  }, [cgpa]);
 
   return (
     <Fragment>
@@ -68,12 +68,12 @@ const Page = () => {
               <div className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
                 Coming Soon
               </div>
-              <div className="relative row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
-                {/* <CGPA context={context} /> */}
-                Coming Soon
+              <div className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
+                <CGPA context={cgpa} />
+                {/* Coming Soon */}
               </div>
               <div className="flex flex-col gap-2 row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 overflow-y-scroll scrollbar-hide">
-                {context?.cgpa.map((cgpa, index) => {
+                {cgpa?.map((cgpa, index) => {
                   return (
                     <div
                       key={index}

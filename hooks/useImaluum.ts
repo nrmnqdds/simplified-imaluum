@@ -9,12 +9,13 @@ const useImaluum = () => {
     try {
       const res = await fetch("api/student", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       const studentData = await res.json();
-      setData((prevData) => ({
-        ...prevData,
-        info: studentData,
-      }));
+
+      return studentData;
     } catch (error) {
       console.error("Error fetching student data:", error);
     }
@@ -24,12 +25,13 @@ const useImaluum = () => {
     try {
       const res = await fetch("api/schedule2", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       const scheduleData = await res.json();
-      setData((prevData) => ({
-        ...prevData,
-        courses: scheduleData,
-      }));
+
+      return scheduleData;
     } catch (error) {
       console.error("Error fetching schedule data:", error);
     }
@@ -42,24 +44,34 @@ const useImaluum = () => {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    setData((prevData) => ({
-      ...prevData,
-      cgpa: data,
-    }));
+    const cgpadata = await response.json();
+
+    return cgpadata;
   }
 
   useEffect(() => {
     if (!data) {
       (async function () {
-        // await getStudent();
-        await getSchedule();
-        await getCGPA();
+        await Promise.all([getSchedule(), getCGPA(), getStudent()]).then(
+          (result) => {
+            if (result[0] && result[1] && result[2]) {
+              setData({
+                ...data,
+                // info: result[0],
+                courses: result[0],
+                cgpa: result[1],
+                info: result[2],
+              });
+            }
+          }
+        );
       })();
     }
   }, [data]);
 
-  return data;
+  if (data) {
+    return data;
+  }
 };
 
 export default useImaluum;

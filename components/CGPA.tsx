@@ -1,43 +1,71 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LineChart, Line, YAxis, XAxis, Tooltip } from "recharts";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-const CGPA = ({ context }: { context: ImaluumData }) => {
-  const [data, setData] = useState<Cgpa[]>();
-  const { width } = useWindowDimensions();
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
 
-  // useEffect(() => {
-  //   console.log("width", width);
-  // }, [width]);
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false,
+      position: "top" as const,
+    },
+    title: {
+      display: false,
+      text: "Chart.js Line Chart",
+    },
+  },
+};
 
-  useEffect(() => {
-    if (context) {
-      // console.log(context.cgpa);
-      setData(context.cgpa);
-    }
-  }, [context]);
+const CGPA = ({ context }: { context: Cgpa[] }) => {
+  // const [data, setData] = useState<Cgpa[]>();
+
+  const data = {
+    labels: context?.map((cgpa) => cgpa.sessionName),
+    datasets: [
+      {
+        label: "CGPA",
+        data: context?.map((cgpa) => cgpa.cgpaValue),
+        fill: true,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+      {
+        label: "GPA",
+        data: context?.map((cgpa) => cgpa.gpaValue),
+        fill: true,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
 
   return (
-    <div className="absolute flex items-center justify-center">
-      <LineChart width={width - (width - 600)} height={170} data={data}>
-        <XAxis dataKey="sessionName" />
-        <YAxis />
-        <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="cgpaValue"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="gpaValue"
-          stroke="#40e0d0"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
+    <div className="flex items-center justify-center h-full w-full ">
+      <Line width="100%" options={options} data={data} />
     </div>
   );
 };

@@ -22,15 +22,15 @@ const predefinedColors = [
   "bg-stone-200 text-stone-700 border-stone-500 hover:bg-stone-300 hover:text-stone-800",
 ];
 
-export default function SessionSwitcher2({ setEvents, context }) {
-  const [selected, setSelected] = useState(context?.courses[0].sessionName);
+export default function SessionSwitcher2({ setEvents, courses }) {
+  const [selected, setSelected] = useState(courses[0]?.sessionName);
   const [coloredEvents, setColoredEvents] = useState<Subject[]>();
 
   useEffect(() => {
     const titleToColorMap = {}; // Map event titles to colors
 
-    if (context && context.courses) {
-      const mappedEvents = context.courses.map((course) => {
+    if (courses) {
+      const mappedEvents = courses.map((course) => {
         const eventsWithColor = course?.schedule.map((event) => {
           let _color = titleToColorMap[event.courseCode];
           if (!_color) {
@@ -67,7 +67,7 @@ export default function SessionSwitcher2({ setEvents, context }) {
 
       setColoredEvents(mappedEvents);
     }
-  }, [context, setEvents]);
+  }, [courses, setEvents]);
 
   useEffect(() => {
     // console.log("selected", selected);
@@ -85,7 +85,7 @@ export default function SessionSwitcher2({ setEvents, context }) {
       {({ open }) => (
         <>
           <div className="relative mt-2">
-            <Listbox.Button className="relative w-full cursor-default rounded-md bg-green-600 py-2 pl-3 pr-10 text-left text-slate-100 shadow-sm ring-1 ring-inset ring-green-300 focus:outline-none focus:ring-2 focus:ring-green-600 sm:text-sm sm:leading-6">
+            <Listbox.Button className="relative w-full cursor-pointer rounded-md bg-green-600 py-2 pl-3 pr-10 text-left text-slate-100 shadow-sm ring-1 ring-inset ring-green-300 focus:outline-none focus:ring-2 focus:ring-green-600 sm:text-sm sm:leading-6">
               <span className="block truncate">{selected}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
@@ -103,13 +103,13 @@ export default function SessionSwitcher2({ setEvents, context }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-green-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {context?.courses.map((course, index) => (
+                {courses?.map((course, index) => (
                   <Listbox.Option
                     key={index}
                     className={({ active }) =>
                       classNames(
                         active ? "bg-green-600 text-white" : "text-gray-900",
-                        "relative cursor-default select-none py-2 pl-3 pr-9"
+                        "relative cursor-pointer select-none py-2 pl-3 pr-9"
                       )
                     }
                     value={course.sessionName}

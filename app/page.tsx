@@ -6,9 +6,22 @@ import Feature from "./(sections)/FeatureSection";
 import Hero from "./(sections)/HeroSection";
 import Footer from "./(sections)/Footer";
 import Testimonial from "./(sections)/TestimonialSection";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [show, handleShow] = useState<Boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch("api/auth/verify", {
+      method: "GET",
+    }).then(async (res) => {
+      const response = await res.json();
+      if (response.message === "yes cookie") {
+        router.replace("/dashboard");
+      }
+    });
+  }, [router]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
