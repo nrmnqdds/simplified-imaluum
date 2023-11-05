@@ -7,7 +7,7 @@ const useStudent = () => {
 
   useEffect(() => {
     (async function () {
-      const res = await fetch("/api/student", {
+      await fetch("/api/student", {
         method: "POST",
       })
         .then((res) => res.json())
@@ -15,7 +15,9 @@ const useStudent = () => {
     })();
   }, []);
 
-  return student;
+  if (student) {
+    return student;
+  }
 };
 
 export default useStudent;

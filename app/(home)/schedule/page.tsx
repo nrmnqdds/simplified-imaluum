@@ -4,33 +4,33 @@ import { useState, useEffect, useContext } from "react";
 import Timetable from "@/components/schedule";
 // import SessionSwitcher from "@/components/SessionSwitcher";
 import SessionSwitcher2 from "@/components/SessionSwitcher2";
-import { ImaluumContext } from "@/app/context/ImaluumProvider";
+import ImaluumClient from "@/utils/imaluumClient";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [courses, setCourses] = useState<Courses[]>();
+  const [subjects, setSubjects] = useState<Courses[]>();
 
-  const context = useContext(ImaluumContext);
+  const { courses } = ImaluumClient() || {};
 
   useEffect(() => {
-    if (courses) {
-      // console.log("events", courses);
+    if (subjects) {
+      // console.log("events", subjects);
       setIsLoading(false);
     }
-  }, [courses]);
+  }, [subjects]);
 
   return (
     <div className="flex-1 min-h-screen ">
-      {!context ? (
+      {!courses ? (
         <div>Loading...</div>
       ) : (
         <div className="w-fit p-2">
           {/* <SessionSwitcher setEvents={setEvents} /> */}
-          <SessionSwitcher2 context={context} setEvents={setCourses} />
+          <SessionSwitcher2 courses={courses} setEvents={setSubjects} />
         </div>
       )}
 
-      <Timetable events={isLoading ? [] : courses[0].schedule} />
+      <Timetable events={isLoading ? [] : subjects[0].schedule} />
     </div>
   );
 };

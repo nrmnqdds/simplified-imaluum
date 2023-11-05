@@ -85,7 +85,7 @@ const getSchedule = async (sessionQuery: string, sessionName: string) => {
   const root = parse(html);
 
   const table = root.querySelector(".box-body table.table.table-hover");
-  const rows = table.querySelectorAll("tr");
+  const rows = table?.querySelectorAll("tr");
 
   const schedule = [];
 
