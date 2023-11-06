@@ -13,17 +13,6 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("api/auth/verify", {
-      method: "GET",
-    }).then(async (res) => {
-      const response = await res.json();
-      if (response.message === "yes cookie") {
-        router.replace("/dashboard");
-      }
-    });
-  }, [router]);
-
-  useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 300) {
         handleShow(true);
