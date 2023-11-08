@@ -52,16 +52,18 @@ const testimonials = [
       {
         body: "It's finger licking good!",
         author: {
-          name: "ABDULLAH FAWWAZ",
-          handle: "2215387",
+          name: "FADZWAN",
+          handle: "2116337",
           imageUrl:
-            "https://italeemc.iium.edu.my/pluginfile.php/16124/user/icon/remui/f1?rev=136619",
+            "https://italeemc.iium.edu.my/pluginfile.php/16873/user/icon/remui/f1?rev=77362",
         },
       },
       // More testimonials...
     ],
   ],
 ];
+
+//https://italeemc.iium.edu.my/pluginfile.php/16873/user/icon/remui/f1?rev=77362
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
