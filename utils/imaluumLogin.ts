@@ -40,15 +40,17 @@ export async function ImaluumLogin(form: iMaluumForm) {
             https: { rejectUnauthorized: false },
             followRedirect: false,
           } as GotBodyOptions<string>);
-        })
-        .then(async () => {
-          await got(IMALUUM_HOME_PAGE, {
-            cookieJar,
-            https: { rejectUnauthorized: false },
-            followRedirect: false,
-          } as GotBodyOptions<string>);
         });
     });
+
+    // macam tak penting je ni
+    // .then(async () => {
+    //       await got(IMALUUM_HOME_PAGE, {
+    //         cookieJar,
+    //         https: { rejectUnauthorized: false },
+    //         followRedirect: false,
+    //       } as GotBodyOptions<string>);
+    //     });
 
     cookieJar.store.getAllCookies((err: Error, _cookies: string[]) => {
       // console.log("cookies", _cookies);
