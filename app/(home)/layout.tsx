@@ -8,6 +8,7 @@ import {
   Cog6ToothIcon,
   HomeIcon,
   XMarkIcon,
+  FlagIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { usePathname, useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ import useStudent from "@/hooks/useStudent";
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   { name: "Class Timetable", href: "/schedule", icon: CalendarIcon },
+  { name: "Exam Results", href: "/result", icon: FlagIcon },
 ];
 const userNavigation = [
   { name: "Profile", href: "#" },

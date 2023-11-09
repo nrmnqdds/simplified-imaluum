@@ -23,7 +23,7 @@ const useImaluum = () => {
 
   async function getSchedule() {
     try {
-      const res = await fetch("api/schedule2", {
+      const res = await fetch("api/v2/schedule", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
