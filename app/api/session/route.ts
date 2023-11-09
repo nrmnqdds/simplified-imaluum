@@ -2,8 +2,6 @@ import { NextResponse, NextRequest } from "next/server";
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 
-export const runtime = "edge";
-
 export async function POST(request: NextRequest) {
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule`;
 

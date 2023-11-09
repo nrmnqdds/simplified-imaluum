@@ -3,9 +3,6 @@ import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import moment from "moment";
 
-export const runtime = "edge";
-export const preferredRegion = "sin1";
-
 export async function POST(request: NextRequest) {
   const { session } = await request.json();
 
