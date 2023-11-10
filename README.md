@@ -52,7 +52,7 @@ Contributions are welcome and encouraged! Whether you're a developer, designer, 
 2. Create a new branch for your feature or bug fix: `git checkout -b feature-name`.
 3. Make your modifications and enhancements.
 4. Commit and push your changes.
-5. Submit a pull request detailing your changes and improvements.
+5. Submit a pull request to **dev** detailing your changes and improvements.
 
 ## Feedback 💬
 
