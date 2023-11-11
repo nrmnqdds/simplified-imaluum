@@ -28,7 +28,7 @@ const ProfileDropdown = () => {
         {!info ? (
           <>
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
-            <div className="h-5 w-48 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
+            <div className="hidden md:block h-5 w-48 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
             <ChevronDownIcon
               className="ml-2 h-5 w-5 text-gray-400"
               aria-hidden="true"

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 
-export const runtime = "edge";
-
 export async function GET(request: Request) {
   try {
     const url = "https://souq.iium.edu.my/embeded";
