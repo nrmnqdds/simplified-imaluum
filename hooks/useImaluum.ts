@@ -7,8 +7,8 @@ const useImaluum = () => {
 
   async function getStudent() {
     try {
-      const res = await fetch("api/student", {
-        method: "POST",
+      const res = await fetch("/api/student", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
@@ -23,8 +23,8 @@ const useImaluum = () => {
 
   async function getSchedule() {
     try {
-      const res = await fetch("api/v2/schedule", {
-        method: "POST",
+      const res = await fetch("/api/v2/schedule", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,29 +37,29 @@ const useImaluum = () => {
     }
   }
 
-  async function getCGPA() {
-    const response = await fetch(`api/getCGPA`, {
+  async function getResult() {
+    const response = await fetch(`/api/result`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const cgpadata = await response.json();
+    const results = await response.json();
 
-    return cgpadata;
+    return results;
   }
 
   useEffect(() => {
     if (!data) {
       (async function () {
-        await Promise.all([getSchedule(), getCGPA(), getStudent()]).then(
+        await Promise.all([getSchedule(), getResult(), getStudent()]).then(
           (result) => {
             if (result[0] && result[1] && result[2]) {
               setData({
                 ...data,
                 // info: result[0],
                 courses: result[0],
-                cgpa: result[1],
+                results: result[1],
                 info: result[2],
               });
             }

@@ -8,7 +8,7 @@ const useStudent = () => {
   useEffect(() => {
     (async function () {
       await fetch("/api/student", {
-        method: "POST",
+        method: "GET",
       })
         .then((res) => res.json())
         .then((data) => setStudent(data));
