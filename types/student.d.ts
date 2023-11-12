@@ -9,8 +9,18 @@ type Cgpa = {
   cgpaValue: string;
 };
 
+type Result = {
+  sessionName: string;
+  gpaValue: string;
+  cgpaValue: string;
+  sessionName: string;
+  courseCode: string;
+  courseName: string;
+  courseGrade: string;
+};
+
 type ImaluumData = {
   info: StudentInfo;
   courses: Courses[];
-  cgpa: Cgpa[];
+  results: Results[];
 };
