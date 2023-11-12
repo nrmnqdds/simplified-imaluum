@@ -8,13 +8,13 @@ import { Fragment, useEffect, useState } from "react";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { cgpa } = ImaluumClient() || {};
+  const { results } = ImaluumClient() || {};
 
   useEffect(() => {
-    if (cgpa) {
+    if (results) {
       setIsLoading(false);
     }
-  }, [cgpa]);
+  }, [results]);
 
   return (
     <Fragment>
@@ -69,11 +69,11 @@ const Page = () => {
                 Coming Soon
               </div>
               <div className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
-                <CGPA context={cgpa} />
+                <CGPA context={results} />
                 {/* Coming Soon */}
               </div>
               <div className="flex flex-col gap-2 row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 overflow-y-scroll scrollbar-hide">
-                {cgpa?.map((cgpa, index) => {
+                {results?.map((result, index) => {
                   return (
                     <div
                       key={index}
@@ -83,19 +83,19 @@ const Page = () => {
                         <span className="font-bold text-zinc-900 dark:text-slate-100">
                           Session:{" "}
                         </span>
-                        {cgpa.sessionName}
+                        {result.sessionName}
                       </p>
                       <p>
                         <span className="font-bold text-zinc-900 dark:text-slate-100">
                           GPA:{" "}
                         </span>
-                        {cgpa.gpaValue}
+                        {result.gpaValue}
                       </p>
                       <p>
                         <span className="font-bold text-zinc-900 dark:text-slate-100">
                           CGPA:{" "}
                         </span>
-                        {cgpa.cgpaValue}
+                        {result.cgpaValue}
                       </p>
                     </div>
                   );
