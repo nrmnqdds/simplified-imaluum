@@ -3,7 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import Timetable from "@/components/schedule";
 // import SessionSwitcher from "@/components/SessionSwitcher";
-import SessionSwitcher2 from "@/components/SessionSwitcher2";
+import ScheduleSwitcher from "@/components/ScheduleSwitcher";
 import ImaluumClient from "@/utils/imaluumClient";
 
 const Page = () => {
@@ -26,7 +26,7 @@ const Page = () => {
       ) : (
         <div className="w-fit p-2">
           {/* <SessionSwitcher setEvents={setEvents} /> */}
-          <SessionSwitcher2 courses={courses} setEvents={setSubjects} />
+          <ScheduleSwitcher courses={courses} setEvents={setSubjects} />
         </div>
       )}
 
