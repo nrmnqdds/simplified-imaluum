@@ -36,6 +36,7 @@ const ProfileDropdown = () => {
           </>
         ) : (
           <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-8 w-8 rounded-full bg-gray-50"
               src={info?.imageURL}
