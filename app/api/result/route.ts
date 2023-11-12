@@ -1,12 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextResponse, NextRequest } from "next/server";
 import { parse } from "node-html-parser";
+import { cookies } from "next/headers";
 import { tabletojson } from "tabletojson";
 
 export async function GET(request: NextRequest) {
-  const url = "https://imaluum.iium.edu.my/MyAcademic/result";
+  const url = `https://imaluum.iium.edu.my/MyAcademic/result`;
 
-  const cookieStrings = cookies()
+  const cookieStore = cookies();
+
+  const cookieStrings = cookieStore
     .getAll()
     .map((cookie) => `${cookie.name}=${cookie.value}`)
     .join("; ");
@@ -35,8 +37,60 @@ export async function GET(request: NextRequest) {
 
   sessionList.pop();
   sessionList.reverse();
+  // console.log("sessionList", sessionList);
 
-  console.log("sessionList", sessionList);
+  const cgpaPromises = sessionList.map(({ sessionQuery, sessionName }) =>
+    getResult(sessionQuery, sessionName, cookieStrings)
+  );
 
-  return NextResponse.json({});
+  const results: any[] = await Promise.all(cgpaPromises);
+
+  return NextResponse.json(results);
 }
+
+const getResult = async (
+  sessionQuery: string,
+  sessionName: string,
+  cookieStrings: string
+) => {
+  try {
+    const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
+
+    const response = await fetch(url, {
+      headers: {
+        Cookie: cookieStrings,
+      },
+    });
+
+    const html = await response.text();
+    const root = parse(html);
+
+    const resultTable = root.querySelector("table.table.table-hover").outerHTML;
+
+    const tableJSON = tabletojson.convert(resultTable).flat();
+    // console.log("tableJSON", tableJSON);
+
+    const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
+      .split("\n")[2]
+      .trim();
+    const gpaValue = tableJSON[tableJSON.length - 1]["Subject Name"]
+      .split("\n")[2]
+      .trim();
+
+    tableJSON.pop();
+
+    const result = [];
+
+    tableJSON.forEach((element) => {
+      const courseCode = element["Subject Code"].trim();
+      const courseName = element["Subject Name"].trim();
+      const courseGrade = element["Grade"].trim();
+      result.push({ courseCode, courseName, courseGrade });
+    });
+
+    return { sessionName, gpaValue, cgpaValue, result };
+  } catch (e) {
+    console.log(e);
+    return { gpaValue: "N/A", cgpaValue: "N/A" };
+  }
+};
