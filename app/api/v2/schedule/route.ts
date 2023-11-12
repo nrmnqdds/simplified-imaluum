@@ -3,7 +3,7 @@ import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import moment from "moment";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule`;
 
   const cookieStore = cookies();
