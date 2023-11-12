@@ -40,7 +40,7 @@ const options = {
   },
 };
 
-const CGPA = ({ context }: { context: Cgpa[] }) => {
+const CGPA = ({ context }: { context: Result[] }) => {
   // const [data, setData] = useState<Cgpa[]>();
 
   const data = {
