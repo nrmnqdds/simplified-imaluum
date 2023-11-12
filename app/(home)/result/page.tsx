@@ -63,7 +63,11 @@ const Page = () => {
           ))}
         </div>
       </div>
-      <ResultSwitcher courses={results} setEvents={setSubjects} />
+      {!results ? (
+        <div>Loading...</div>
+      ) : (
+        <ResultSwitcher courses={results} setEvents={setSubjects} />
+      )}
       <div className="flex flex-col items-center justify-center w-full h-full rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 mt-2">
         <div id="header" className="w-full flex flex-row mb-2 p-4">
           <div className="flex-1">
