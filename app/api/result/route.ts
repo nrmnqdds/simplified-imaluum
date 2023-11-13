@@ -68,13 +68,19 @@ const getResult = async (
     const resultTable = root.querySelector("table.table.table-hover").outerHTML;
 
     const tableJSON = tabletojson.convert(resultTable).flat();
-    // console.log("tableJSON", tableJSON);
+    console.log("tableJSON", tableJSON);
 
     const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
       .split("\n")[2]
       .trim();
     const gpaValue = tableJSON[tableJSON.length - 1]["Subject Name"]
       .split("\n")[2]
+      .trim();
+    const status = tableJSON[tableJSON.length - 1]["Subject Name"]
+      .split("\n")[3]
+      .trim();
+    const remarks = tableJSON[tableJSON.length - 1]["Subject Name"]
+      .split("\n")[4]
       .trim();
 
     tableJSON.pop();
@@ -88,7 +94,7 @@ const getResult = async (
       result.push({ courseCode, courseName, courseGrade });
     });
 
-    return { sessionName, gpaValue, cgpaValue, result };
+    return { sessionName, gpaValue, cgpaValue, status, remarks, result };
   } catch (e) {
     console.log(e);
     return { gpaValue: "N/A", cgpaValue: "N/A" };
