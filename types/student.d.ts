@@ -13,6 +13,8 @@ type Result = {
   sessionName: string;
   gpaValue: string;
   cgpaValue: string;
+  status: string;
+  remarks: string;
   sessionName: string;
   courseCode: string;
   courseName: string;
