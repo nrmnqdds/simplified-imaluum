@@ -8,8 +8,14 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ResultSwitcher({ setEvents, courses }) {
+export default function ResultSwitcher({ setEvents, setSession, courses }) {
   const [selected, setSelected] = useState(courses[0]?.sessionName);
+
+  useEffect(() => {
+    if (selected) {
+      setSession(selected);
+    }
+  }, [selected, setSession]);
 
   useEffect(() => {
     if (courses) {
