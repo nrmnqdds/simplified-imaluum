@@ -3,6 +3,9 @@ import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { tabletojson } from "tabletojson";
 
+export const runtime = "edge";
+export const preferredRegion = "ap-southeast-1";
+
 export async function GET(request: NextRequest) {
   const url = `https://imaluum.iium.edu.my/MyAcademic/result`;
 
@@ -68,7 +71,7 @@ const getResult = async (
     const resultTable = root.querySelector("table.table.table-hover").outerHTML;
 
     const tableJSON = tabletojson.convert(resultTable).flat();
-    console.log("tableJSON", tableJSON);
+    // console.log("tableJSON", tableJSON);
 
     const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
       .split("\n")[2]
