@@ -39,3 +39,6 @@ export const getSuffix = (dateNum: number) => {
       return "th";
   }
 };
+
+export const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
