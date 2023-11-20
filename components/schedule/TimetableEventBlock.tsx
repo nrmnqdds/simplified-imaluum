@@ -40,7 +40,7 @@ export default function TimetableEventBlock({
 
   return (
     <button
-      className={`absolute rounded-md duration-150 p-1 space-y-2 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${event.color}`}
+      className={`absolute rounded-md duration-100 p-1 space-y-2 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${event.color}`}
       style={{
         top,
         height,
