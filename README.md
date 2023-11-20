@@ -3,11 +3,18 @@
 <img src="https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/2ad4fedc-1018-4779-b94a-5aae6f2944a3" width=100 />
 
 ## 🚧 **In Construction** 🚧
-
-Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly. Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
-
 > [!IMPORTANT]
 > This project is **not** associated with the official i-Ma'luum website!
+
+> [!CAUTION]
+> **Not stable yet**, if your data failed to fetched on laptop, try on your phone
+> 
+> If still not working, try do it other time, later at night or anything
+
+> [!NOTE]
+> Beta version available at https://imaluum-beta.nrmnqdds.com
+
+Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly. Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
 
 ![swappy-20231024_235051](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/98cc8548-b75b-47ca-93eb-cc12c547e284)
 ![swappy-20231024_235251](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/33ee032f-d23c-4665-8671-77dbf5408def)
