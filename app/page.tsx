@@ -6,11 +6,9 @@ import Feature from "./(sections)/FeatureSection";
 import Hero from "./(sections)/HeroSection";
 import Footer from "./(sections)/Footer";
 import Testimonial from "./(sections)/TestimonialSection";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [show, handleShow] = useState<Boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {

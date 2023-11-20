@@ -70,7 +70,9 @@ export const ImaluumProvider = ({
           height={200}
           className="animate-spin"
         />
-        <p className="text-zinc-100 text-2xl">Scraping your IC number...</p>
+        <p className="text-zinc-100 text-2xl">
+          Scraping your IC number... jkjk
+        </p>
       </div>
     </div>
   );
