@@ -71,7 +71,7 @@ export const ImaluumProvider = ({
           className="animate-spin"
         />
         <p className="text-zinc-100 text-2xl">
-          Scraping your IC number... jkjk
+          Hacking into iMaluum, please wait...
         </p>
       </div>
     </div>
