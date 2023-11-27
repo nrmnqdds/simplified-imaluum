@@ -65,7 +65,7 @@ export async function ImaluumLogin(form: iMaluumForm) {
           cookies().set({
             name: cookieName,
             value: cookieValue,
-            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+            // expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
             secure: true,
             httpOnly: true,
           });

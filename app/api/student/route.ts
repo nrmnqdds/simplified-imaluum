@@ -3,6 +3,9 @@ import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "../../constants";
 
+export const runtime = "edge";
+export const preferredRegion = "ap-southeast-1";
+
 export async function GET(request: NextRequest) {
   try {
     const url = IMALUUM_HOME_PAGE;

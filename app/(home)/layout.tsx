@@ -19,7 +19,6 @@ import { getDate } from "@/utils/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { ImaluumProvider } from "../context/ImaluumProvider";
-import useStudent from "@/hooks/useStudent";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -41,7 +40,6 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const studentData = useStudent();
   const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);

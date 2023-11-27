@@ -24,15 +24,15 @@ const Hero = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsLoading(true);
 
     router.prefetch("/dashboard");
 
-    await ImaluumLogin(data).then((res) => {
+    ImaluumLogin(data).then((res) => {
       if (res === "success") {
-        router.push("/dashboard");
+        router.replace("/dashboard");
         // console.log("success");
       }
       if (res === "failed") {

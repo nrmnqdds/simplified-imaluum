@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 
+export const runtime = "edge";
+export const preferredRegion = "ap-southeast-1";
+
 export async function GET(request: Request) {
   try {
     const url = "https://souq.iium.edu.my/embeded";
