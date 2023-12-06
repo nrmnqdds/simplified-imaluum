@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import ImaluumClient from "@/utils/imaluumClient";
-import CGPA from "@/components/CGPA";
 import ResultSwitcher from "@/components/ResultSwitcher";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
@@ -66,7 +65,6 @@ const Page = () => {
           setSession={setSession}
         />
       )}
-
       <div className="flex flex-col lg:flex-row gap-5 items-center justify-center w-full h-full rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
         <div className="flex-1 flex flex-row items-center justify-center gap-5">
           <div className="flex flex-col gap-2 items-center justify-center bg-neutral-300 p-4 font-semibold dark:bg-neutral-800 border-zinc-700 rounded-xl border">
