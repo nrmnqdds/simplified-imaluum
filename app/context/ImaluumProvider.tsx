@@ -70,9 +70,7 @@ export const ImaluumProvider = ({
           height={200}
           className="animate-spin"
         />
-        <p className="text-zinc-100 text-2xl">
-          Hacking into iMaluum, please wait...
-        </p>
+        <p className="text-zinc-100 text-2xl">Fetching data, please wait...</p>
       </div>
     </div>
   );
