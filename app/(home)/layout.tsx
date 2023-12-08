@@ -18,7 +18,7 @@ import Image from "next/image";
 import { getDate } from "@/utils/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import { ImaluumProvider } from "../context/ImaluumProvider";
+import { ImaluumProvider } from "../../context/ImaluumProvider";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
