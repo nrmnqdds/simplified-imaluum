@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { ImaluumContext } from "@/app/context/ImaluumProvider";
+import { ImaluumContext } from "@/context/ImaluumProvider";
 
 const ImaluumClient = () => {
   const context = useContext(ImaluumContext);

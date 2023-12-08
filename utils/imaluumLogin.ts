@@ -6,7 +6,7 @@ import {
   IMALUUM_LOGIN_PAGE,
   IMALUUM_LOGIN_PAGE_2,
   IMALUUM_HOME_PAGE,
-} from "@/app/constants";
+} from "@/constants";
 
 export async function ImaluumLogin(form: iMaluumForm) {
   const cookieJar = new CookieJar();
