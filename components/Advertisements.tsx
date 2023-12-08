@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useEffect, Fragment } from "react";
-import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { PiTelevisionBold } from "react-icons/pi";
 import { AiOutlineLink } from "react-icons/ai";
-
-const ScrollCarousel = dynamic(() => import("./ScrollCarouselComponent"), {
-  ssr: false,
-});
+import AdsCarousel from "./AdsCarousel";
 
 const Advertisement = ({ className }) => {
   const [ads, setAds] = useState([]);
@@ -55,9 +51,7 @@ const Advertisement = ({ className }) => {
             ))}
           </div>
         ) : (
-          <Fragment>
-            <ScrollCarousel ads={ads} />
-          </Fragment>
+          <AdsCarousel ads={ads} />
         )}
       </div>
     </section>
