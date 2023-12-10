@@ -25,10 +25,8 @@ const Hero = () => {
   const router = useRouter();
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
     setIsLoading(true);
-
-    router.prefetch("/dashboard");
+    e.preventDefault();
 
     ImaluumLogin(data).then((res) => {
       if (res === "success") {
