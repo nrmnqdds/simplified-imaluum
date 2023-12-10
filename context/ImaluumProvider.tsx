@@ -31,28 +31,68 @@ export const ImaluumProvider = ({
   const getSchedule = () => fetchData("/api/v2/schedule");
   const getResult = () => fetchData("/api/result");
 
+  const updateData = async () => {
+    try {
+      const [scheduleData, resultData, studentData] = await Promise.all([
+        getSchedule(),
+        getResult(),
+        getStudent(),
+      ]);
+
+      setData({
+        courses: scheduleData,
+        results: resultData,
+        info: studentData,
+      });
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
-        const [scheduleData, resultData, studentData] = await Promise.all([
-          getSchedule(),
-          getResult(),
-          getStudent(),
-        ]);
+        if (!data) {
+          await updateData();
+        } else {
+          const promises: Promise<void>[] = [];
 
-        setData({
-          courses: scheduleData,
-          results: resultData,
-          info: studentData,
-        });
+          if (!data.courses) {
+            promises.push(
+              getSchedule().then((scheduleData) => {
+                setData((prevData) => ({
+                  ...prevData,
+                  courses: scheduleData,
+                }));
+              })
+            );
+          }
+
+          if (!data.results) {
+            promises.push(
+              getResult().then((resultData) => {
+                setData((prevData) => ({ ...prevData, results: resultData }));
+              })
+            );
+          }
+
+          if (!data.info) {
+            promises.push(
+              getStudent().then((studentData) => {
+                setData((prevData) => ({ ...prevData, info: studentData }));
+              })
+            );
+          }
+
+          await Promise.all(promises);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    if (!data) {
-      fetchDataAsync();
-    }
+    fetchDataAsync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return data?.courses && data?.results && data?.info ? (
