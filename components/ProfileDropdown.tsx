@@ -1,10 +1,10 @@
 "use client";
 
+import ImaluumClient from "@/utils/imaluumClient";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ImaluumClient from "@/utils/imaluumClient";
+import { Fragment } from "react";
 
 const ProfileDropdown = () => {
   const { info } = ImaluumClient() || {};

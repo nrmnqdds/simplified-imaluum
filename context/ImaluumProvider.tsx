@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
-import Image from "next/image";
 import LOGO from "@/public/logo-landing-page.png";
+import Image from "next/image";
+import React, { createContext, useEffect, useState } from "react";
 
 export const ImaluumContext = createContext<ImaluumData | undefined>(undefined);
 
