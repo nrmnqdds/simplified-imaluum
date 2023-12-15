@@ -1,3 +1,5 @@
+import DARKDEMOPIC from "@/public/darkdemo.png";
+import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import {
   ArrowPathIcon,
   CloudArrowUpIcon,
@@ -7,8 +9,6 @@ import {
   ServerIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import DARKDEMOPIC from "@/public/darkdemo.png";
-import LIGHTDEMOPIC from "@/public/lightdemo.png";
 
 const features = [
   {
