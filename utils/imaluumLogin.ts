@@ -1,12 +1,17 @@
 "use server";
-import { cookies } from "next/headers";
-import got, { GotBodyOptions } from "got";
-import { CookieJar } from "tough-cookie";
 import {
+  IMALUUM_HOME_PAGE,
   IMALUUM_LOGIN_PAGE,
   IMALUUM_LOGIN_PAGE_2,
-  IMALUUM_HOME_PAGE,
 } from "@/constants";
+import got, { GotBodyOptions } from "got";
+import { cookies } from "next/headers";
+import { CookieJar } from "tough-cookie";
+
+interface CookieProps {
+  key: string;
+  value: string;
+}
 
 export async function ImaluumLogin(form: iMaluumForm) {
   const cookieJar = new CookieJar();
@@ -35,7 +40,7 @@ export async function ImaluumLogin(form: iMaluumForm) {
           followRedirect: false,
         } as GotBodyOptions<string>)
         .then(async (res) => {
-          await got(res.headers["location"], {
+          await got(res.headers.location, {
             cookieJar,
             https: { rejectUnauthorized: false },
             followRedirect: false,
@@ -52,9 +57,8 @@ export async function ImaluumLogin(form: iMaluumForm) {
     //       } as GotBodyOptions<string>);
     //     });
 
-    cookieJar.store.getAllCookies((err: Error, _cookies: string[]) => {
-      // console.log("cookies", _cookies);
-      _cookies.forEach((cookie: any) => {
+    cookieJar.store.getAllCookies((err: Error, _cookies: CookieProps[]) => {
+      for (const cookie of _cookies) {
         const cookieName = cookie.key;
         const cookieValue = cookie.value;
         if (
@@ -70,7 +74,7 @@ export async function ImaluumLogin(form: iMaluumForm) {
             httpOnly: true,
           });
         }
-      });
+      }
     });
 
     return "success";

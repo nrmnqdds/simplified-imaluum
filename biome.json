@@ -18,7 +18,9 @@
 		}
 	},
 	"formatter": {
-		"enabled": true
+		"enabled": true,
+		"indentStyle": "space",
+		"formatWithErrors": true
 	},
 	"javascript": {
 		"formatter": {
