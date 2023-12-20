@@ -14,6 +14,10 @@
 > [!NOTE]
 > Beta version available at https://imaluum-beta.nrmnqdds.com
 
+Support this project!
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/gbraad)
+
 Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly. Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
 
 ![swappy-20231024_235051](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/98cc8548-b75b-47ca-93eb-cc12c547e284)
@@ -70,8 +74,6 @@ We value your feedback! If you have any suggestions, feature requests, or encoun
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-Designed with ❤️ by [Qagura](https://q4gura.vercel.app)
 
 [![GitHub Stars](https://img.shields.io/github/stars/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/network/members)
