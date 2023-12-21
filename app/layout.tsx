@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "../context/ThemeProvider";
 import { Metadata } from "next";
 
@@ -18,6 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
+        <Script
+          src="https://beamanalytics.b-cdn.net/beam.min.js"
+          data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
+          async
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </ThemeProvider>
