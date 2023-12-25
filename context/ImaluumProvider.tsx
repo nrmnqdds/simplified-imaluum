@@ -60,10 +60,7 @@ export const ImaluumProvider = ({
           if (!data.courses) {
             promises.push(
               getSchedule().then((scheduleData) => {
-                setData((prevData) => ({
-                  ...prevData,
-                  courses: scheduleData,
-                }));
+                setData({ ...data, courses: scheduleData });
               })
             );
           }
@@ -71,7 +68,7 @@ export const ImaluumProvider = ({
           if (!data.results) {
             promises.push(
               getResult().then((resultData) => {
-                setData((prevData) => ({ ...prevData, results: resultData }));
+                setData({ ...data, results: resultData });
               })
             );
           }
@@ -79,7 +76,7 @@ export const ImaluumProvider = ({
           if (!data.info) {
             promises.push(
               getStudent().then((studentData) => {
-                setData((prevData) => ({ ...prevData, info: studentData }));
+                setData({ ...data, info: studentData });
               })
             );
           }
