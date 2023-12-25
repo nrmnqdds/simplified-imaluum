@@ -2,7 +2,7 @@
 
 import Advertisement from "@/components/Advertisements";
 import CGPA from "@/components/CGPA";
-import ImaluumClient from "@/utils/imaluumClient";
+import ImaluumClient from "@/lib/imaluumClient";
 import { Fragment } from "react";
 
 const Page = () => {

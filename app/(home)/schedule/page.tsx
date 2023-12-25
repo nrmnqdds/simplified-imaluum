@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Timetable from "@/components/schedule";
 import ScheduleSwitcher from "@/components/ScheduleSwitcher";
-import ImaluumClient from "@/utils/imaluumClient";
+import ImaluumClient from "@/lib/imaluumClient";
 
 const Page = () => {
   const [subjects, setSubjects] = useState<Courses[]>();

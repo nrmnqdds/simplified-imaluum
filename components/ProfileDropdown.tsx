@@ -1,6 +1,6 @@
 "use client";
 
-import ImaluumClient from "@/utils/imaluumClient";
+import ImaluumClient from "@/lib/imaluumClient";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";

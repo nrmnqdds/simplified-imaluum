@@ -15,7 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import LOGO from "@/public/logo-landing-page.png";
 import Image from "next/image";
-import { getDate } from "@/utils/time";
+import { getDate } from "@/lib/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { ImaluumProvider } from "../../context/ImaluumProvider";

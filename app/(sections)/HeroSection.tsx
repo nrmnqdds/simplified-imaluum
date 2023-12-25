@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import DARKDEMOPIC from "@/public/darkdemo.png";
 import LIGHTDEMOPIC from "@/public/lightdemo.png";
 import LOGO from "@/public/logo-landing-page.png";
-import { ImaluumLogin } from "@/utils/imaluumLogin";
+import { ImaluumLogin } from "@/lib/imaluumLogin";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,21 +24,19 @@ const Hero = () => {
 
   const router = useRouter();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     setIsLoading(true);
     e.preventDefault();
 
-    ImaluumLogin(data).then((res) => {
-      if (res === "success") {
-        router.replace("/dashboard");
-        // console.log("success");
-      }
-      if (res === "failed") {
-        setLoginMessage("Invalid username or password");
-      }
-    });
+    const res = await ImaluumLogin(data);
 
-    setIsLoading(false);
+    if (res.success) {
+      router.replace("/dashboard");
+      // console.log("success");
+    } else {
+      setLoginMessage("Invalid username or password");
+      setIsLoading(false);
+    }
   };
 
   return (
