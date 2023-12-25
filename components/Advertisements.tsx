@@ -6,7 +6,14 @@ import { AiOutlineLink } from "react-icons/ai";
 import { PiTelevisionBold } from "react-icons/pi";
 import AdsCarousel from "./AdsCarousel";
 
-const Advertisement = ({ className }) => {
+type AdsType = {
+  structuredData: {
+    adsImg: string;
+    adsLink: string;
+  }[];
+};
+
+const Advertisement = ({ className }: { className: string }) => {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -51,6 +58,7 @@ const Advertisement = ({ className }) => {
             ))}
           </div>
         ) : (
+          //@ts-ignore
           <AdsCarousel ads={ads} />
         )}
       </div>

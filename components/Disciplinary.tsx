@@ -1,4 +1,4 @@
-const Disciplinary = ({ className }) => {
+const Disciplinary = ({ className }: { className: string }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <h1>Coming soon</h1>

@@ -40,13 +40,13 @@ export async function GET(request: NextRequest) {
   for (const element of sessionBody) {
     // Removed the unnecessary parameters
     const row = element;
-    const sessionName = row.querySelector("a").textContent.trim();
-    const sessionQuery = row.querySelector("a").getAttribute("href");
+    const sessionName = row.querySelector("a")?.textContent.trim();
+    const sessionQuery = row.querySelector("a")?.getAttribute("href");
     sessionList.push({ sessionName, sessionQuery });
   }
 
   const schedulePromises = sessionList.map(({ sessionQuery, sessionName }) =>
-    getSchedule(sessionQuery, sessionName)
+    getSchedule(sessionQuery as string, sessionName as string)
   );
 
   const results = await Promise.all(schedulePromises);
@@ -87,7 +87,7 @@ const getSchedule = async (sessionQuery: string, sessionName: string) => {
 
   const schedule = [];
 
-  for (const row of rows) {
+  for (const row of rows ?? []) {
     const tds = row.querySelectorAll("td");
 
     // Check if tds array has enough elements

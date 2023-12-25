@@ -65,7 +65,7 @@ const testimonials = [
 
 //https://italeemc.iium.edu.my/pluginfile.php/16873/user/icon/remui/f1?rev=77362
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 

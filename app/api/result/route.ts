@@ -30,8 +30,8 @@ export async function GET(request: NextRequest) {
 
   for (const element of sessionBody) {
     const row = element;
-    const sessionName = row.querySelector("a").textContent.trim();
-    const sessionQuery = row.querySelector("a").getAttribute("href");
+    const sessionName = row.querySelector("a")?.textContent.trim();
+    const sessionQuery = row.querySelector("a")?.getAttribute("href");
     sessionList.push({ sessionName, sessionQuery });
   }
 
@@ -39,8 +39,11 @@ export async function GET(request: NextRequest) {
   sessionList.reverse();
   // console.log("sessionList", sessionList);
 
+  if (sessionList.length === 0)
+    return NextResponse.json({ gpaValue: "N/A", cgpaValue: "N/A" });
+
   const cgpaPromises = sessionList.map(({ sessionQuery, sessionName }) =>
-    getResult(sessionQuery, sessionName, cookieStrings)
+    getResult(sessionQuery as string, sessionName as string, cookieStrings)
   );
 
   const results: any[] = await Promise.all(cgpaPromises);
@@ -65,9 +68,11 @@ const getResult = async (
     const html = await response.text();
     const root = parse(html);
 
-    const resultTable = root.querySelector("table.table.table-hover").outerHTML;
+    const resultTable = root.querySelector(
+      "table.table.table-hover"
+    )?.outerHTML;
 
-    const tableJSON = tabletojson.convert(resultTable).flat();
+    const tableJSON = tabletojson.convert(resultTable as string).flat();
     // console.log("tableJSON", tableJSON);
 
     const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
