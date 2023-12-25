@@ -1,13 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ImaluumClient from "@/utils/imaluumClient";
+import ImaluumClient from "@/lib/imaluumClient";
 import ResultSwitcher from "@/components/ResultSwitcher";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
+type SortedSubjectType = {
+  courseCode: string;
+  courseName: string;
+  courseGrade: string;
+};
+
 const Page = () => {
   const { results } = ImaluumClient() || {};
-  const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState<SortedSubjectType[]>([]);
   const [session, setSession] = useState<string>("");
   const [notes, setNotes] = useState({
     remarks: "",
@@ -17,10 +23,10 @@ const Page = () => {
 
   useEffect(() => {
     if (session) {
-      const tempRemarks = results.filter(
+      const tempRemarks = results?.filter(
         (result) => result.sessionName === session
       )[0].remarks;
-      const tempStatus = results.filter(
+      const tempStatus = results?.filter(
         (result) => result.sessionName === session
       )[0].status;
       setNotes({
@@ -166,6 +172,7 @@ const isPassed = (grade: string) => {
     case "C+":
     case "C":
     case "C-":
+    case "PA":
       return true;
     default:
       return false;
