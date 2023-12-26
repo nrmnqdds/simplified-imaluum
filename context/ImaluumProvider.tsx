@@ -14,7 +14,9 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { setResult } = useResult();
   const { setSchedule } = useSchedule();
 
-  const matricNo = sessionStorage.getItem("matricNo");
+  if (typeof window !== "undefined") {
+    const matricNo = sessionStorage.getItem("matricNo");
+  }
 
   const profileData = useQuery({
     queryKey: ["profile"],
