@@ -5,21 +5,12 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
+import { ImaluumLogout } from "@/lib/server/auth";
 
 const ProfileDropdown = () => {
   const { profile } = useProfile();
 
   const router = useRouter();
-
-  const handleLogout = () => {
-    fetch("api/auth/logout", {
-      method: "DELETE",
-    }).then((res) => {
-      if (res.ok) {
-        router.replace("/");
-      }
-    });
-  };
 
   return (
     <Menu as="div" className="relative">
@@ -36,7 +27,6 @@ const ProfileDropdown = () => {
           </>
         ) : (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-8 w-8 rounded-full bg-gray-50"
               src={profile?.imageURL}
@@ -67,7 +57,12 @@ const ProfileDropdown = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          onClick={handleLogout}
+          onClick={async () => {
+            const res = await ImaluumLogout();
+            if (res.success) {
+              router.replace("/");
+            }
+          }}
           className="absolute cursor-pointer px-3 right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md text-zinc-900 bg-white hover:bg-slate-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
         >
           Log out

@@ -48,7 +48,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = (data: { username: string; password: string }) => {
-    const res = loginMutation.mutate(data);
+    loginMutation.mutate(data);
   };
   return (
     <form
@@ -101,14 +101,16 @@ const LoginForm = () => {
       <div className="flex flex-row gap-3 items-center justify-center md:justify-start w-full">
         <button
           type="submit"
-          disabled={loginMutation.isPending}
+          disabled={loginMutation.isPending || loginMutation.isSuccess}
           className={`rounded-md ${
-            loginMutation.isPending
+            loginMutation.isPending || loginMutation.isSuccess
               ? "bg-cyan-900 cursor-not-allowed hover:bg-cyan-900 dark:hover:bg-cyan-900"
               : "dark:bg-cyan-500 bg-cyan-600"
           } px-6 py-2.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300`}
         >
-          {loginMutation.isPending ? "Loading..." : "Log In"}
+          {loginMutation.isPending || loginMutation.isSuccess
+            ? "Loading..."
+            : "Log In"}
         </button>
         <Link
           href="#feature"

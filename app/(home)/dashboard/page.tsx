@@ -3,18 +3,9 @@
 import Advertisement from "@/components/Advertisements";
 import CGPA from "@/components/CGPA";
 import useResult from "@/hooks/useResult";
-import { useEffect } from "react";
 
 const DashboardPage = () => {
   const { result } = useResult();
-
-  useEffect(() => {
-    if (result) {
-      console.log(result);
-    } else {
-      console.log("no result");
-    }
-  }, [result]);
 
   return (
     <div className="min-h-screen flex flex-col py-10 px-4 sm:px-6 lg:px-8">
