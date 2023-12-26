@@ -8,7 +8,11 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ResultSwitcher({ setEvents, setSession, courses }) {
+export default function ResultSwitcher({
+  setEvents,
+  setSession,
+  courses,
+}: { setEvents: any; setSession: any; courses: any }) {
   const [selected, setSelected] = useState(courses[0]?.sessionName);
 
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function ResultSwitcher({ setEvents, setSession, courses }) {
 
   useEffect(() => {
     if (courses) {
-      courses.map((course) => {
+      courses.map((course: any) => {
         if (course.sessionName === selected) {
           setEvents(course.result);
         }
@@ -50,7 +54,7 @@ export default function ResultSwitcher({ setEvents, setSession, courses }) {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-green-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {courses?.map((course, index) => (
+                {courses?.map((course: any, index: number) => (
                   <Listbox.Option
                     key={index}
                     className={({ active }) =>

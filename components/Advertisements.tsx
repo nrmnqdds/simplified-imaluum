@@ -1,24 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { GetAds } from "@/lib/server/ads-scraper";
 import { AiOutlineLink } from "react-icons/ai";
 import { PiTelevisionBold } from "react-icons/pi";
 import AdsCarousel from "./AdsCarousel";
+import { useQuery } from "@tanstack/react-query";
 
-const Advertisement = ({ className }) => {
-  const [ads, setAds] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    async function getAds() {
-      const response = await fetch("api/ads");
-      const data = await response.json();
-      setAds(data);
-      // console.log("ads from client", data);
-      setLoading(false);
-    }
-    getAds();
-  }, []);
+const Advertisement = ({ className }: { className: string }) => {
+  const { data: ads, isLoading: loading } = useQuery({
+    queryKey: ["ads"],
+    queryFn: async () => {
+      const data = await GetAds();
+      if (data.success) {
+        return data.data;
+      }
+      console.log("error: ", data.error);
+    },
+    retry: 3,
+  });
 
   return (
     <section className={className}>
@@ -51,6 +51,7 @@ const Advertisement = ({ className }) => {
             ))}
           </div>
         ) : (
+          //@ts-ignore
           <AdsCarousel ads={ads} />
         )}
       </div>

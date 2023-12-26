@@ -1,14 +1,18 @@
-import { NextResponse } from "next/server";
+"use server";
+
 import { parse } from "node-html-parser";
 
-export async function GET(request: Request) {
+export async function GetAds() {
   try {
     const url = "https://souq.iium.edu.my/embeded";
 
     const response = await fetch(url);
 
     if (!response.ok) {
-      return NextResponse.json(`Failed to fetch data from ${url}`);
+      return {
+        success: false,
+        error: `Failed to fetch data from ${url}`,
+      };
     }
 
     const html = await response.text();
@@ -30,9 +34,15 @@ export async function GET(request: Request) {
       });
     }
 
-    return NextResponse.json({ structuredData });
+    return {
+      success: true,
+      data: structuredData,
+    };
   } catch (error) {
     console.error("Error fetching data:", error);
-    return NextResponse.error();
+    return {
+      success: false,
+      error: "Error fetching data",
+    };
   }
 }

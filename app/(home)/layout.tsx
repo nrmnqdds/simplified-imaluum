@@ -15,10 +15,10 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import LOGO from "@/public/logo-landing-page.png";
 import Image from "next/image";
-import { getDate } from "@/utils/time";
+import { getDate } from "@/lib/client/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import { ImaluumProvider } from "../../context/ImaluumProvider";
+import ImaluumProvider from "@/context/ImaluumProvider";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -44,18 +44,6 @@ export default function HomeLayout({
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<string>("00:00:00 AM");
-
-  // Check if MOD_AUTH_CAS cookie is present
-  useEffect(() => {
-    fetch("api/auth/verify", {
-      method: "GET",
-    }).then(async (res) => {
-      const response = await res.json();
-      if (response.message === "not cookie") {
-        router.replace("/");
-      }
-    });
-  }, [router]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

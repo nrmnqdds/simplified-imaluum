@@ -1,31 +1,22 @@
 "use client";
 
-import ImaluumClient from "@/utils/imaluumClient";
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
-import { Fragment } from "react";
+import useProfile from "@/hooks/useProfile";
+import { ImaluumLogout } from "@/lib/server/auth";
 
 const ProfileDropdown = () => {
-  const { info } = ImaluumClient() || {};
+  const { profile } = useProfile();
 
   const router = useRouter();
-
-  const handleLogout = () => {
-    fetch("api/auth/logout", {
-      method: "DELETE",
-    }).then((res) => {
-      if (res.ok) {
-        router.replace("/");
-      }
-    });
-  };
 
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="-m-1.5 flex items-center p-1.5">
         <span className="sr-only">Open user menu</span>
-        {!info ? (
+        {!profile ? (
           <>
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
             <div className="hidden md:block h-5 w-48 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
@@ -36,10 +27,9 @@ const ProfileDropdown = () => {
           </>
         ) : (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-8 w-8 rounded-full bg-gray-50"
-              src={info?.imageURL}
+              src={profile?.imageURL}
               alt="gambarstudent"
             />
             <span className="hidden md:flex lg:items-center">
@@ -47,7 +37,7 @@ const ProfileDropdown = () => {
                 className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
                 aria-hidden="true"
               >
-                {info?.name}
+                {profile?.name}
               </span>
               <ChevronDownIcon
                 className="ml-2 h-5 w-5 text-gray-400"
@@ -67,7 +57,12 @@ const ProfileDropdown = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          onClick={handleLogout}
+          onClick={async () => {
+            const res = await ImaluumLogout();
+            if (res.success) {
+              router.replace("/");
+            }
+          }}
           className="absolute cursor-pointer px-3 right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md text-zinc-900 bg-white hover:bg-slate-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
         >
           Log out
