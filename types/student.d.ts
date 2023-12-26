@@ -1,6 +1,7 @@
 type StudentInfo = {
   name: string;
   imageURL: string;
+  matricNo: string;
 };
 
 type Cgpa = {
@@ -15,10 +16,11 @@ type Result = {
   cgpaValue: string;
   status: string;
   remarks: string;
-  sessionName: string;
-  courseCode: string;
-  courseName: string;
-  courseGrade: string;
+  result: {
+    courseCode: string;
+    courseName: string;
+    courseGrade: string;
+  }[];
 };
 
 type ImaluumData = {
