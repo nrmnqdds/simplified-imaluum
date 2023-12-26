@@ -14,10 +14,12 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { setResult } = useResult();
   const { setSchedule } = useSchedule();
 
+  const matricNo = sessionStorage.getItem("matricNo");
+
   const profileData = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const data = await GetUserProfile(profile.matricNo as string);
+      const data = await GetUserProfile(matricNo as string);
       if (data.success) {
         setProfile(data.data);
         return data.data;

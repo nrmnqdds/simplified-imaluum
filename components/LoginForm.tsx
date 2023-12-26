@@ -39,8 +39,9 @@ const LoginForm = () => {
     mutationFn: ImaluumLogin,
     onSuccess: (data) => {
       if (data.success) {
-        router.replace("/dashboard");
         setProfile({ ...profile, matricNo: data.matricNo });
+        sessionStorage.setItem("matricNo", data.matricNo);
+        router.replace("/dashboard");
       } else {
         console.log("error");
       }
