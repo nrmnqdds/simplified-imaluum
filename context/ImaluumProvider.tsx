@@ -8,12 +8,11 @@ import { GetResult } from "@/lib/server/result-scraper";
 import { GetSchedule } from "@/lib/server/schedule-scraper";
 import { useQuery } from "@tanstack/react-query";
 import LottiePlayer from "@/components/LottiePlayer";
-import { useEffect } from "react";
 
-const NewImaluumProvider = ({ children }: { children: React.ReactNode }) => {
+const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { profile, setProfile } = useProfile();
-  const { result, setResult } = useResult();
-  const { schedule, setSchedule } = useSchedule();
+  const { setResult } = useResult();
+  const { setSchedule } = useSchedule();
 
   const profileData = useQuery({
     queryKey: ["profile"],
@@ -55,26 +54,6 @@ const NewImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     retry: 3,
   });
 
-  useEffect(() => {
-    if (schedule) {
-      console.log("schedule: ", schedule);
-    } else {
-      console.log("no schedule");
-    }
-
-    if (result) {
-      console.log("result: ", result);
-    } else {
-      console.log("no result");
-    }
-
-    if (profile) {
-      console.log("profile: ", profile);
-    } else {
-      console.log("no profile");
-    }
-  }, [schedule, result, profile]);
-
   return profileData.isSuccess &&
     resultData.isSuccess &&
     scheduleData.isSuccess ? (
@@ -88,4 +67,4 @@ const NewImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default NewImaluumProvider;
+export default ImaluumProvider;
