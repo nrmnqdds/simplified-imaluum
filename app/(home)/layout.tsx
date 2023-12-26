@@ -18,7 +18,7 @@ import Image from "next/image";
 import { getDate } from "@/lib/client/time";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import NewImaluumProvider from "@/context/NewImaluumProvider";
+import ImaluumProvider from "@/context/ImaluumProvider";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -59,7 +59,7 @@ export default function HomeLayout({
   }, []);
 
   return (
-    <NewImaluumProvider>
+    <ImaluumProvider>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -315,6 +315,6 @@ export default function HomeLayout({
           </main>
         </div>
       </div>
-    </NewImaluumProvider>
+    </ImaluumProvider>
   );
 }
