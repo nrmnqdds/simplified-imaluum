@@ -73,3 +73,21 @@ export async function ImaluumLogin(form: {
     };
   }
 }
+
+export async function ImaluumLogout() {
+  try {
+    cookies().delete("MOD_AUTH_CAS");
+    cookies().delete("XSRF-TOKEN");
+    cookies().delete("laravel_session");
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: "Error logging out",
+    };
+  }
+}
