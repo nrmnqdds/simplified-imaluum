@@ -3,20 +3,28 @@
 import useProfile from "@/hooks/useProfile";
 import useResult from "@/hooks/useResult";
 import useSchedule from "@/hooks/useSchedule";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { GetUserProfile } from "@/lib/server/profile-scraper";
 import { GetResult } from "@/lib/server/result-scraper";
 import { GetSchedule } from "@/lib/server/schedule-scraper";
-import { useQuery } from "@tanstack/react-query";
 import LottiePlayer from "@/components/LottiePlayer";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
-  const { profile, setProfile } = useProfile();
+  const [matricNo, setMatricNo] = useState<string | null>(null);
+  const { setProfile } = useProfile();
   const { setResult } = useResult();
   const { setSchedule } = useSchedule();
+  const router = useRouter();
 
-  if (typeof window !== "undefined") {
-    const matricNo = sessionStorage.getItem("matricNo");
-  }
+  useEffect(() => {
+    if (sessionStorage.getItem("matricNo") === null) {
+      router.push("/");
+    }
+
+    setMatricNo(sessionStorage.getItem("matricNo"));
+  }, [router]);
 
   const profileData = useQuery({
     queryKey: ["profile"],
