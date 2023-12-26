@@ -36,6 +36,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
       console.log("error: ", data.error);
     },
+    enabled: matricNo !== null,
     retry: 3,
   });
 
