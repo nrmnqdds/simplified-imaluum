@@ -4,14 +4,17 @@ import got from "got";
 import { cookies } from "next/headers";
 import { CookieJar } from "tough-cookie";
 
-export async function ImaluumLogin(form: iMaluumForm) {
+export async function ImaluumLogin(form: {
+  username: string;
+  password: string;
+}) {
   const cookieJar = new CookieJar();
 
   const payload = new URLSearchParams({
     username: form.username,
     password: form.password,
-    execution: form.execution,
-    _eventId: form._eventId,
+    execution: "e1s1",
+    _eventId: "submit",
     geolocation: "",
   });
 
@@ -49,7 +52,7 @@ export async function ImaluumLogin(form: iMaluumForm) {
     }
 
     for (const cookie of cookieStore) {
-      console.log(cookie);
+      // console.log(cookie);
       if (cookie.key === "MOD_AUTH_CAS") {
         console.log("Found cookie");
         cookies().set("MOD_AUTH_CAS", cookie.value);
@@ -59,6 +62,7 @@ export async function ImaluumLogin(form: iMaluumForm) {
     }
     return {
       success: true,
+      matricNo: form.username,
     };
   } catch (err) {
     console.log(err);
@@ -66,6 +70,24 @@ export async function ImaluumLogin(form: iMaluumForm) {
     return {
       success: false,
       message: "Invalid username or password",
+    };
+  }
+}
+
+export async function ImaluumLogout() {
+  try {
+    cookies().delete("MOD_AUTH_CAS");
+    cookies().delete("XSRF-TOKEN");
+    cookies().delete("laravel_session");
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: "Error logging out",
     };
   }
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ImaluumClient from "@/lib/imaluumClient";
 import ResultSwitcher from "@/components/ResultSwitcher";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import useResult from "@/hooks/useResult";
 
 type SortedSubjectType = {
   courseCode: string;
@@ -12,7 +12,7 @@ type SortedSubjectType = {
 };
 
 const Page = () => {
-  const { results } = ImaluumClient() || {};
+  const { result } = useResult();
   const [subjects, setSubjects] = useState<SortedSubjectType[]>([]);
   const [session, setSession] = useState<string>("");
   const [notes, setNotes] = useState({
@@ -23,10 +23,10 @@ const Page = () => {
 
   useEffect(() => {
     if (session) {
-      const tempRemarks = results?.filter(
+      const tempRemarks = result?.filter(
         (result) => result.sessionName === session
       )[0].remarks;
-      const tempStatus = results?.filter(
+      const tempStatus = result?.filter(
         (result) => result.sessionName === session
       )[0].status;
       setNotes({
@@ -34,7 +34,7 @@ const Page = () => {
         status: tempStatus,
       });
     }
-  }, [session, results]);
+  }, [session, result]);
 
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -62,11 +62,11 @@ const Page = () => {
 
   return (
     <main className="flex-1 flex flex-col gap-2 min-h-screen px-2">
-      {!results ? (
+      {!result ? (
         <div>Loading...</div>
       ) : (
         <ResultSwitcher
-          courses={results}
+          courses={result}
           setEvents={setSubjects}
           setSession={setSession}
         />

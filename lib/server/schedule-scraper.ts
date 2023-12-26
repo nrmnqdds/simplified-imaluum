@@ -1,62 +1,9 @@
-import moment from "moment";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+"use server";
+
 import { parse } from "node-html-parser";
-
-export async function GET(request: NextRequest) {
-  const url = "https://imaluum.iium.edu.my/MyAcademic/schedule";
-
-  const cookieStore = cookies();
-
-  const cookieStrings = cookieStore
-    .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`)
-    .join("; "); // Join the cookie strings
-
-  const response = await fetch(url, {
-    headers: {
-      Cookie: cookieStrings,
-    },
-  });
-
-  if (!response.ok) {
-    return NextResponse.json(`Failed to fetch data from ${url}`);
-  }
-
-  const html = await response.text();
-
-  const root = parse(html);
-  // console.log("root", root);
-
-  // Corrected selector to target the session elements
-  const sessionBody = root.querySelectorAll(
-    ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
-  );
-
-  // console.log("sessionBody", sessionBody);
-
-  const sessionList = [];
-
-  for (const element of sessionBody) {
-    // Removed the unnecessary parameters
-    const row = element;
-    const sessionName = row.querySelector("a")?.textContent.trim();
-    const sessionQuery = row.querySelector("a")?.getAttribute("href");
-    sessionList.push({ sessionName, sessionQuery });
-  }
-
-  const schedulePromises = sessionList.map(({ sessionQuery, sessionName }) =>
-    getSchedule(sessionQuery as string, sessionName as string)
-  );
-
-  const results = await Promise.all(schedulePromises);
-
-  //   if (results) {
-  //     console.log("results", results);
-  //   }
-
-  return NextResponse.json(results);
-}
+import { cookies } from "next/headers";
+import { IMALUUM_SCHEDULE_PAGE } from "@/constants";
+import moment from "moment";
 
 const getSchedule = async (sessionQuery: string, sessionName: string) => {
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule${sessionQuery}`;
@@ -76,7 +23,10 @@ const getSchedule = async (sessionQuery: string, sessionName: string) => {
   });
 
   if (!response.ok) {
-    return NextResponse.json(`Failed to fetch data from ${url}`);
+    return {
+      success: false,
+      error: `Failed to fetch data from ${url}`,
+    };
   }
 
   const html = await response.text();
@@ -140,3 +90,74 @@ const getSchedule = async (sessionQuery: string, sessionName: string) => {
 
   return { sessionQuery, sessionName, schedule };
 };
+
+export async function GetSchedule() {
+  const url = IMALUUM_SCHEDULE_PAGE;
+
+  const cookieStore = cookies();
+
+  const cookieStrings = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; "); // Join the cookie strings
+
+  const response = await fetch(url, {
+    headers: {
+      Cookie: cookieStrings,
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      success: false,
+      error: `Failed to fetch data from ${url}`,
+    };
+  }
+
+  const html = await response.text();
+
+  const root = parse(html);
+  // console.log("root", root);
+
+  // Corrected selector to target the session elements
+  const sessionBody = root.querySelectorAll(
+    ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
+  );
+
+  // console.log("sessionBody", sessionBody);
+
+  const sessionList = [];
+
+  for (const element of sessionBody) {
+    // Removed the unnecessary parameters
+    const row = element;
+    const sessionName = row.querySelector("a")?.textContent.trim();
+    const sessionQuery = row.querySelector("a")?.getAttribute("href");
+    sessionList.push({ sessionName, sessionQuery });
+  }
+
+  const schedulePromises = sessionList.map(({ sessionQuery, sessionName }) =>
+    getSchedule(sessionQuery as string, sessionName as string)
+  );
+
+  const results = await Promise.all(schedulePromises);
+
+  //   if (results) {
+  //     console.log("results", results);
+  //   }
+
+  const resultData: any[] = [];
+
+  results.map((result) => {
+    resultData.push({
+      schedule: result.schedule,
+      sessionName: result.sessionName,
+      sessionQuery: result.sessionQuery,
+    });
+  });
+
+  return {
+    success: true,
+    data: resultData,
+  };
+}
