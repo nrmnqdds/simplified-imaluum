@@ -1,13 +1,13 @@
 "use client";
 
-import ImaluumClient from "@/lib/imaluumClient";
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
-import { Fragment } from "react";
+import useProfile from "@/hooks/useProfile";
 
 const ProfileDropdown = () => {
-  const { info } = ImaluumClient() || {};
+  const { profile } = useProfile();
 
   const router = useRouter();
 
@@ -25,7 +25,7 @@ const ProfileDropdown = () => {
     <Menu as="div" className="relative">
       <Menu.Button className="-m-1.5 flex items-center p-1.5">
         <span className="sr-only">Open user menu</span>
-        {!info ? (
+        {!profile ? (
           <>
             <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-zinc-600 animate-pulse" />
             <div className="hidden md:block h-5 w-48 rounded-sm bg-gray-200 dark:bg-zinc-600 animate-pulse ml-4" />
@@ -39,7 +39,7 @@ const ProfileDropdown = () => {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-8 w-8 rounded-full bg-gray-50"
-              src={info?.imageURL}
+              src={profile?.imageURL}
               alt="gambarstudent"
             />
             <span className="hidden md:flex lg:items-center">
@@ -47,7 +47,7 @@ const ProfileDropdown = () => {
                 className="ml-4 text-sm font-semibold leading-6 text-zinc-800 dark:text-slate-200"
                 aria-hidden="true"
               >
-                {info?.name}
+                {profile?.name}
               </span>
               <ChevronDownIcon
                 className="ml-2 h-5 w-5 text-gray-400"
