@@ -1,9 +1,12 @@
 "use client";
 
 import { AreaChart, Area, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import useResult from "@/hooks/useResult";
 
-const CGPA = ({ context }: { context: Result[] }) => {
-  const data = context?.map((cgpa) => {
+const CGPAChart = () => {
+  const { result } = useResult();
+
+  const data = result?.map((cgpa) => {
     return {
       name: cgpa.sessionName,
       CGPA: cgpa.cgpaValue,
@@ -67,4 +70,4 @@ const CGPA = ({ context }: { context: Result[] }) => {
   );
 };
 
-export default CGPA;
+export default CGPAChart;
