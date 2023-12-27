@@ -60,6 +60,7 @@ const ProfileDropdown = () => {
           onClick={async () => {
             const res = await ImaluumLogout();
             if (res.success) {
+              sessionStorage.removeItem("matricNo");
               router.replace("/");
             }
           }}
