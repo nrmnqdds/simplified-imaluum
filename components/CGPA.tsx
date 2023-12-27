@@ -1,70 +1,68 @@
 "use client";
 
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Filler,
-  Legend,
-  LineElement,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
-
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-      position: "top" as const,
-    },
-    title: {
-      display: false,
-      text: "Chart.js Line Chart",
-    },
-  },
-};
+import { AreaChart, Area, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const CGPA = ({ context }: { context: Result[] }) => {
-  // const [data, setData] = useState<Cgpa[]>();
-
-  const data = {
-    labels: context?.map((cgpa) => cgpa.sessionName),
-    datasets: [
-      {
-        label: "CGPA",
-        data: context?.map((cgpa) => cgpa.cgpaValue),
-        fill: true,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-      {
-        label: "GPA",
-        data: context?.map((cgpa) => cgpa.gpaValue),
-        fill: true,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  };
+  const data = context?.map((cgpa) => {
+    return {
+      name: cgpa.sessionName,
+      CGPA: cgpa.cgpaValue,
+      GPA: cgpa.gpaValue,
+    };
+  });
 
   return (
     <div className="flex items-center justify-center h-full w-full ">
-      <Line width="100%" options={options} data={data} />
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          width={500}
+          height={400}
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                return (
+                  <div className="rounded-lg border bg-background p-2 shadow-sm bg-zinc-100 dark:bg-zinc-900">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex flex-col">
+                        <span className="text-[0.70rem] uppercase text-muted-foreground">
+                          CGPA
+                        </span>
+                        <span className="font-bold text-muted-foreground">
+                          {payload[0].value}
+                        </span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[0.70rem] uppercase text-muted-foreground">
+                          GPA
+                        </span>
+                        <span className="font-bold">{payload[1].value}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return null;
+            }}
+          />
+          <YAxis />
+          <Area
+            type="monotone"
+            dataKey="CGPA"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+          <Area type="monotone" dataKey="GPA" stroke="#8884d8" fill="#8884d8" />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
 };
