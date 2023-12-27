@@ -16,12 +16,12 @@ const DashboardPage = () => {
         <Card className="overflow-y-scroll scrollbar-hide">
           <CGPAScrollList />
         </Card>
-        <div className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
+        <Card className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
           Coming Soon
-        </div>
-        <div className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
+        </Card>
+        <Card className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
           Coming Soon
-        </div>
+        </Card>
       </div>
 
       <Advertisement className={"w-full h-fit flex flex-col"} />
