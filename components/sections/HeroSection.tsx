@@ -74,7 +74,7 @@ const Hero = () => {
                 What&apos;s new
               </span>
               <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-zinc-800 dark:text-slate-200">
-                <span>Just shipped v1.0</span>
+                <span>Just shipped v2.0</span>
                 <ChevronRightIcon
                   className="h-5 w-5 text-zinc-500"
                   aria-hidden="true"
