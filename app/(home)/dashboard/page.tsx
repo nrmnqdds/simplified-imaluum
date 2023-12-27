@@ -1,30 +1,12 @@
-import Advertisement from "@/components/Advertisements";
-import CGPAChart from "@/components/dashboard/CGPAChart";
-import Card from "@/components/dashboard/card";
-import CGPAScrollList from "@/components/dashboard/CGPAScrollList";
+import Advertisement from "@/components/dashboard/Advertisements";
+import BentoLayout from "@/components/dashboard/bento";
 
 const DashboardPage = () => {
   return (
     <div className="min-h-screen flex flex-col py-10 px-4 sm:px-6 lg:px-8">
-      <div className="grid auto-rows-[192px] grid-cols-3 gap-2">
-        <Card>Coming Soon</Card>
-        <Card>Coming Soon</Card>
-        <Card>Coming Soon</Card>
-        <Card className="col-span-2">
-          <CGPAChart />
-        </Card>
-        <Card className="overflow-y-scroll scrollbar-hide">
-          <CGPAScrollList />
-        </Card>
-        <Card className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
-          Coming Soon
-        </Card>
-        <Card className="row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900 col-span-2">
-          Coming Soon
-        </Card>
-      </div>
+      <BentoLayout />
 
-      <Advertisement className={"w-full h-fit flex flex-col"} />
+      <Advertisement className="w-full h-fit flex flex-col" />
     </div>
   );
 };
