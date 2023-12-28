@@ -14,7 +14,13 @@ const CGPAChart = () => {
     };
   });
 
-  return (
+  return result === null ? (
+    <div className="w-full h-full flex items-center justify-center">
+      <h1 className="text-white font-bold text-center text-xs sm:text-lg">
+        You have not taken any exams yet!
+      </h1>
+    </div>
+  ) : (
     <div className="flex items-center justify-center h-full w-full ">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart

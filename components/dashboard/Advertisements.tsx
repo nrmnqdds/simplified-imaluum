@@ -15,7 +15,6 @@ const Advertisement = ({ className }: { className: string }) => {
       if (data.success) {
         return data.data;
       }
-      console.log("error: ", data.error);
     },
     retry: 3,
   });

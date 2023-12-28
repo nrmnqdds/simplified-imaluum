@@ -4,7 +4,13 @@ import useResult from "@/hooks/useResult";
 
 const CGPAScrollList = () => {
   const { result } = useResult();
-  return (
+  return result === null ? (
+    <div className="w-full h-full flex items-center justify-center">
+      <h1 className="text-white font-bold text-center text-xs sm:text-lg">
+        You have not taken any exams yet!
+      </h1>
+    </div>
+  ) : (
     <>
       {result?.map((result, index) => {
         return (
