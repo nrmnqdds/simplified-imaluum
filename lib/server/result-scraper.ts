@@ -6,13 +6,12 @@ import { IMALUUM_RESULT_PAGE } from "@/constants";
 import got from "got";
 import { tabletojson } from "tabletojson";
 
-const cookieStore = cookies();
-
-const cookieStrings = cookieStore
-  .getAll()
-  .map((cookie) => `${cookie.name}=${cookie.value}`)
-  .join("; ");
-
+/**
+ * A helper function to get the result from a single session
+ * @param {string} sessionQuery
+ * @param {string} sessionName
+ * @returns {Result} An object containing the result for a single session
+ */
 const getResult = async (
   sessionQuery: string,
   sessionName: string
@@ -22,7 +21,7 @@ const getResult = async (
   try {
     const response = await got(url, {
       headers: {
-        Cookie: cookieStrings,
+        Cookie: cookies().toString(),
       },
       https: { rejectUnauthorized: false },
       followRedirect: false,
@@ -74,7 +73,7 @@ export async function GetResult(): Promise<{
   try {
     const response = await got(IMALUUM_RESULT_PAGE, {
       headers: {
-        Cookie: cookieStrings,
+        Cookie: cookies().toString(),
       },
       https: { rejectUnauthorized: false },
       followRedirect: false,

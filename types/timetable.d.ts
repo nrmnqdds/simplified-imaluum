@@ -25,8 +25,7 @@ type TimetableConfig = {
 };
 
 type Courses = {
-  schedule?: any;
+  schedule: Subject[];
   sessionName: string;
   sessionQuery: string;
-  subjects: Subject[];
 };

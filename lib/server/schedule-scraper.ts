@@ -6,20 +6,26 @@ import { IMALUUM_SCHEDULE_PAGE } from "@/constants";
 import got from "got";
 import moment from "moment";
 
-const cookieStore = cookies();
-
-const cookieStrings = cookieStore
-  .getAll()
-  .map((cookie) => `${cookie.name}=${cookie.value}`)
-  .join("; ");
-
-const getSchedule = async (sessionQuery: string, sessionName: string) => {
+/**
+ * A helper function to get the schedule from a single session
+ * @param {string} sessionQuery
+ * @param {string} sessionName
+ * @returns {Promise<{sessionQuery: string, sessionName: string, schedule: Subject[]}>} An object containing the schedule for a single session
+ */
+const getSchedule = async (
+  sessionQuery: string,
+  sessionName: string
+): Promise<{
+  sessionQuery: string;
+  sessionName: string;
+  schedule: Subject[];
+}> => {
   const url = `https://imaluum.iium.edu.my/MyAcademic/schedule${sessionQuery}`;
 
   try {
     const response = await got(url, {
       headers: {
-        Cookie: cookieStrings,
+        Cookie: cookies().toString(),
       },
       https: { rejectUnauthorized: false },
       followRedirect: false,
@@ -89,16 +95,16 @@ const getSchedule = async (sessionQuery: string, sessionName: string) => {
 
 /**
  * A server function to scrape the exam result from i-maaluum
- * @returns {Promise<{success: boolean, data: any[]}>} A promise that resolves to an object containing the success status and the data or null if theres no data
+ * @returns {Promise<{success: boolean, data: Courses[]}>} A promise that resolves to an object containing the success status and the data or null if theres no data
  */
 export async function GetSchedule(): Promise<{
   success: boolean;
-  data: any[];
+  data: Courses[];
 }> {
   try {
     const response = await got(IMALUUM_SCHEDULE_PAGE, {
       headers: {
-        Cookie: cookieStrings,
+        Cookie: cookies().toString(),
       },
       https: { rejectUnauthorized: false },
       followRedirect: false,
