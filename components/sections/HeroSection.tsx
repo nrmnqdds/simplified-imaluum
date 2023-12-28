@@ -97,16 +97,20 @@ const Hero = () => {
             <Image
               src={LIGHTDEMOPIC}
               alt="App screenshot"
-              width={1232}
-              height={242}
-              className="rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 dark:hidden block"
+              width={0}
+              height={0}
+              priority
+              sizes="100%"
+              className="rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 dark:hidden object-contain w-[1232px] h-auto block"
             />
             <Image
               src={DARKDEMOPIC}
               alt="App screenshot"
-              width={1232}
-              height={242}
-              className="rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 hidden dark:block"
+              width={0}
+              height={0}
+              priority
+              sizes="100%"
+              className="rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 hidden object-contain w-[1232px] h-auto dark:block"
             />
           </div>
         </div>

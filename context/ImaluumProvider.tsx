@@ -34,7 +34,6 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         setProfile(data.data);
         return data.data;
       }
-      console.log("error: ", data.error);
     },
     enabled: matricNo !== null,
     retry: 3,
@@ -45,11 +44,9 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     queryFn: async () => {
       const data = await GetResult();
       if (data.success) {
-        // @ts-ignore
         setResult(data.data);
         return data.data;
       }
-      console.log("error: ", data.error);
     },
     retry: 3,
   });
@@ -62,7 +59,6 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         setSchedule(data.data);
         return data.data;
       }
-      console.log("error: ", data.error);
     },
     retry: 3,
   });

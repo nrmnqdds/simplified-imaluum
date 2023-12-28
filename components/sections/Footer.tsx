@@ -51,14 +51,14 @@ const Footer = () => {
               key={item.name}
               href={item.href}
               target="_blank"
-              className="text-gray-400 hover:text-gray-500"
+              className="text-zinc-800 dark:text-slate-200 hover:text-zinc-900 dark:hover:text-slate-100"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
             </Link>
           ))}
         </div>
-        <p className="mt-10 text-center text-xs leading-5 text-gray-500">
+        <p className="mt-10 text-center text-xs leading-5 text-zinc-800 dark:text-slate-200">
           &copy; {new Date().getFullYear()} Qagura. All rights reserved.
         </p>
       </div>

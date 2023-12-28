@@ -1,38 +1,31 @@
 "use server";
 
 import { parse } from "node-html-parser";
+import got from "got";
 
 export async function GetAds() {
   try {
     const url = "https://souq.iium.edu.my/embeded";
 
-    const response = await fetch(url);
+    const response = await got(url, {
+      https: { rejectUnauthorized: false },
+      followRedirect: false,
+    });
 
-    if (!response.ok) {
-      return {
-        success: false,
-        error: `Failed to fetch data from ${url}`,
-      };
-    }
-
-    const html = await response.text();
-
-    const root = parse(html);
+    const root = parse(response.body);
     const articles = root.querySelectorAll(
       'div[style*="width:100%; clear:both;height:100px"]'
     );
 
-    const structuredData = [];
+    const structuredData = articles.map((element) => {
+      const adsImg = element.querySelector("img").getAttribute("src");
+      const adsLink = element.querySelector("a").getAttribute("href");
 
-    for (const element of articles) {
-      const adsImg = element.querySelector("img")?.getAttribute("src") || "";
-      const adsLink = element.querySelector("a")?.getAttribute("href") || "";
-
-      structuredData.push({
+      return {
         adsImg,
         adsLink,
-      });
-    }
+      };
+    });
 
     return {
       success: true,
@@ -40,9 +33,6 @@ export async function GetAds() {
     };
   } catch (error) {
     console.error("Error fetching data:", error);
-    return {
-      success: false,
-      error: "Error fetching data",
-    };
+    throw new Error("Failed to fetch data");
   }
 }

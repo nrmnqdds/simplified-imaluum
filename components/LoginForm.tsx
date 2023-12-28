@@ -9,6 +9,7 @@ import { ImaluumLogin } from "@/lib/server/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -49,7 +50,11 @@ const LoginForm = () => {
   });
 
   const onSubmit = (data: { username: string; password: string }) => {
-    loginMutation.mutate(data);
+    toast.promise(loginMutation.mutateAsync(data), {
+      loading: "Logging in...",
+      success: "Logged in successfully.",
+      error: "Invalid credentials.",
+    });
   };
   return (
     <form
@@ -107,7 +112,7 @@ const LoginForm = () => {
             loginMutation.isPending || loginMutation.isSuccess
               ? "bg-cyan-900 cursor-not-allowed hover:bg-cyan-900 dark:hover:bg-cyan-900"
               : "dark:bg-cyan-500 bg-cyan-600"
-          } px-6 py-2.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300`}
+          } px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700 dark:hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 dark:focus-visible:outline-cyan-300`}
         >
           {loginMutation.isPending || loginMutation.isSuccess
             ? "Loading..."

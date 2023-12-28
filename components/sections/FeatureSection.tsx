@@ -61,7 +61,7 @@ const Feature = () => {
           <p className="mt-2 text-3xl font-bold tracking-tight text-zinc-800 dark:text-slate-200 sm:text-4xl">
             i-Ma&apos;luum, but on steroid!
           </p>
-          <p className="mt-6 text-lg leading-8 text-zinc-600">
+          <p className="mt-6 text-lg leading-8 text-zinc-800 dark:text-slate-200">
             Bored with the old i-Ma&apos;luum? Try this one! It&apos;s more
             user-friendly and has a lot of features that you will love.
           </p>

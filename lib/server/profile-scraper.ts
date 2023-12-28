@@ -3,33 +3,30 @@
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "@/constants";
+import got from "got";
+
+const cookieStore = cookies();
+
+const cookieStrings = cookieStore
+  .getAll()
+  .map((cookie) => `${cookie.name}=${cookie.value}`)
+  .join("; ");
 
 export async function GetUserProfile(username: string) {
   try {
-    const cookieStore = cookies();
-    // console.log("cookieStore", cookieStore);
-
-    const cookieStrings = cookieStore
-      .getAll()
-      .map((cookie) => `${cookie.name}=${cookie.value}`)
-      .join("; ");
-
-    const response = await fetch(IMALUUM_HOME_PAGE, {
+    const response = await got(IMALUUM_HOME_PAGE, {
       headers: {
         Cookie: cookieStrings,
       },
+      https: { rejectUnauthorized: false },
+      followRedirect: false,
     });
 
     if (!response.ok) {
-      return {
-        success: false,
-        error: `Failed to fetch data from ${IMALUUM_HOME_PAGE}`,
-      };
+      throw new Error("Failed to fetch user profile");
     }
 
-    const html = await response.text();
-
-    const root = parse(html);
+    const root = parse(response.body);
     const hiddenTextSelector = root.querySelector(
       ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
     );
@@ -52,6 +49,6 @@ export async function GetUserProfile(username: string) {
       },
     };
   } catch (err) {
-    console.log(err);
+    throw new Error("Failed to fetch user profile");
   }
 }
