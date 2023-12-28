@@ -3,31 +3,36 @@
 import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { IMALUUM_RESULT_PAGE } from "@/constants";
+import got from "got";
 import { tabletojson } from "tabletojson";
+
+const cookieStore = cookies();
+
+const cookieStrings = cookieStore
+  .getAll()
+  .map((cookie) => `${cookie.name}=${cookie.value}`)
+  .join("; ");
 
 const getResult = async (
   sessionQuery: string,
-  sessionName: string,
-  cookieStrings: string
+  sessionName: string
 ): Promise<Result> => {
-  try {
-    const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
+  const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
 
-    const response = await fetch(url, {
+  try {
+    const response = await got(url, {
       headers: {
         Cookie: cookieStrings,
       },
+      https: { rejectUnauthorized: false },
+      followRedirect: false,
     });
 
-    const html = await response.text();
-    const root = parse(html);
+    const root = parse(response.body);
 
-    const resultTable = root.querySelector(
-      "table.table.table-hover"
-    )?.outerHTML;
+    const resultTable = root.querySelector("table.table.table-hover").outerHTML;
 
     const tableJSON = tabletojson.convert(resultTable as string).flat();
-    // console.log("tableJSON", tableJSON);
 
     const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
       .split("\n")[2]
@@ -54,82 +59,65 @@ const getResult = async (
     return { sessionName, gpaValue, cgpaValue, status, remarks, result };
   } catch (e) {
     console.log(e);
-    return {
-      sessionName: "N/A",
-      gpaValue: "N/A",
-      cgpaValue: "N/A",
-      status: "N/A",
-      remarks: "N/A",
-      result: [{ courseCode: "N/A", courseName: "N/A", courseGrade: "N/A" }],
-    };
+    throw new Error("Failed to fetch result");
   }
 };
 
-export async function GetResult() {
-  const url = IMALUUM_RESULT_PAGE;
+/**
+ * A server function to scrape the exam result from i-maaluum
+ * @returns {Promise<{success: boolean, data: Result[]}>} A promise that resolves to an object containing the success status and the data or null if theres no data
+ */
+export async function GetResult(): Promise<{
+  success: boolean;
+  data: Result[];
+}> {
+  try {
+    const response = await got(IMALUUM_RESULT_PAGE, {
+      headers: {
+        Cookie: cookieStrings,
+      },
+      https: { rejectUnauthorized: false },
+      followRedirect: false,
+    });
 
-  const cookieStore = cookies();
+    const root = parse(response.body);
 
-  const cookieStrings = cookieStore
-    .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`)
-    .join("; ");
+    const sessionBody = root.querySelectorAll(
+      ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
+    );
 
-  const response = await fetch(url, {
-    headers: {
-      Cookie: cookieStrings,
-    },
-  });
+    const sessionList = [];
 
-  if (!response.ok) {
-    return {
-      success: false,
-      error: `Failed to fetch data from ${url}`,
-    };
-  }
+    for (const element of sessionBody) {
+      const row = element;
+      const sessionName = row.querySelector("a")?.textContent.trim();
+      const sessionQuery = row.querySelector("a")?.getAttribute("href");
+      sessionList.push({ sessionName, sessionQuery });
+    }
 
-  const html = await response.text();
-  const root = parse(html);
+    sessionList.pop();
+    sessionList.reverse();
+    if (sessionList.length === 0) {
+      // must return null, dont throw error
+      // assuming the student is 1st year 1st sem and havent taken any exams yet
+      return {
+        success: true,
+        data: null,
+      };
+    }
 
-  const sessionBody = root.querySelectorAll(
-    ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
-  );
-
-  const sessionList = [];
-
-  for (const element of sessionBody) {
-    const row = element;
-    const sessionName = row.querySelector("a")?.textContent.trim();
-    const sessionQuery = row.querySelector("a")?.getAttribute("href");
-    sessionList.push({ sessionName, sessionQuery });
-  }
-
-  sessionList.pop();
-  sessionList.reverse();
-  if (sessionList.length === 0)
-    // console.log("sessionList", sessionList);
+    const results: Result[] = await Promise.all(
+      sessionList.map(({ sessionQuery, sessionName }) =>
+        getResult(sessionQuery as string, sessionName as string)
+      )
+    );
 
     return {
       success: true,
-      data: {
-        sessionName: "N/A",
-        gpaValue: "N/A",
-        cgpaValue: "N/A",
-        status: "N/A",
-        remarks: "N/A",
-        result: [{ courseCode: "N/A", courseName: "N/A", courseGrade: "N/A" }],
-      },
+      data: results,
     };
-
-  const cgpaPromises = sessionList.map(({ sessionQuery, sessionName }) =>
-    getResult(sessionQuery as string, sessionName as string, cookieStrings)
-  );
-
-  const results: Result[] = await Promise.all(cgpaPromises);
-
-  // console.log("results: ", results);
-  return {
-    success: true,
-    data: results,
-  };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw new Error("Failed to fetch data");
+  }
 }
