@@ -4,6 +4,7 @@ import Script from "next/script";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { QueryProvider } from "@/context/QueryProvider";
 import { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400", display: "swap" });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
+            <Toaster />
           </ThemeProvider>
         </QueryProvider>
       </body>
