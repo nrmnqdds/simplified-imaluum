@@ -5,7 +5,6 @@ const featuredTestimonial = {
     handle: "2211003",
     imageUrl:
       "https://italeemc.iium.edu.my/pluginfile.php/22311/user/icon/remui/f1?rev=136257",
-    logoUrl: "https://tailwindui.com/img/logos/savvycal-logo-gray-900.svg",
   },
 };
 const testimonials = [
@@ -123,11 +122,6 @@ const Testimonial = () => {
                 </div>
                 <div className="text-gray-600 dark:text-gray-400">{`@${featuredTestimonial.author.handle}`}</div>
               </div>
-              <img
-                className="h-10 w-auto flex-none"
-                src={featuredTestimonial.author.logoUrl}
-                alt=""
-              />
             </figcaption>
           </figure>
           {testimonials.map((columnGroup, columnGroupIdx) => (
