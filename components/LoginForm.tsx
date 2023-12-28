@@ -9,6 +9,7 @@ import { ImaluumLogin } from "@/lib/server/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import useProfile from "@/hooks/useProfile";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -49,7 +50,11 @@ const LoginForm = () => {
   });
 
   const onSubmit = (data: { username: string; password: string }) => {
-    loginMutation.mutate(data);
+    toast.promise(loginMutation.mutateAsync(data), {
+      loading: "Logging in...",
+      success: "Logged in successfully.",
+      error: "Invalid credentials.",
+    });
   };
   return (
     <form

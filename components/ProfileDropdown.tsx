@@ -6,6 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 import useProfile from "@/hooks/useProfile";
 import { ImaluumLogout } from "@/lib/server/auth";
+import toast from "react-hot-toast";
 
 const ProfileDropdown = () => {
   const { profile } = useProfile();
@@ -61,6 +62,7 @@ const ProfileDropdown = () => {
             const res = await ImaluumLogout();
             if (res.success) {
               sessionStorage.removeItem("matricNo");
+              toast.success("Logged out successfully.");
               router.replace("/");
             }
           }}
