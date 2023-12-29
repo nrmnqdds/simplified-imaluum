@@ -1,7 +1,8 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 type ScheduleProps = {
-  schedule?: any;
+  schedule: Subject[];
   sessionName: string;
   sessionQuery: string;
 };
@@ -11,9 +12,17 @@ type ScheduleType = {
   setSchedule: (schedule: ScheduleProps[]) => void;
 };
 
-const useSchedule = create<ScheduleType>((set) => ({
-  schedule: null,
-  setSchedule: (schedule) => set({ schedule }),
-}));
+const useSchedule = create(
+  persist<ScheduleType>(
+    (set) => ({
+      schedule: null,
+      setSchedule: (schedule) => set({ schedule }),
+    }),
+    {
+      name: "schedule-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
 
 export default useSchedule;
