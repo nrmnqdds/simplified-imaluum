@@ -64,7 +64,7 @@ const ProfileDropdown = () => {
           onClick={async () => {
             const res = await ImaluumLogout();
             if (res.success) {
-              sessionStorage.removeItem("matricNo");
+              sessionStorage.clear();
               queryCache.clear();
               toast.success("Logged out successfully.");
               router.replace("/");
