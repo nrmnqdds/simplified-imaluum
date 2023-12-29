@@ -40,7 +40,6 @@ const LoginForm = () => {
     mutationFn: ImaluumLogin,
     onSuccess: (data) => {
       setProfile({ ...profile, matricNo: data.matricNo });
-      sessionStorage.setItem("matricNo", data.matricNo);
       router.replace("/dashboard");
     },
   });
