@@ -5,18 +5,18 @@ import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "@/constants";
 import got from "got";
 
-const cookieStore = cookies();
-
-const cookieStrings = cookieStore
-  .getAll()
-  .map((cookie) => `${cookie.name}=${cookie.value}`)
-  .join("; ");
-
-export async function GetUserProfile(username: string) {
+/**
+ * A server function to get the user profile
+ * @param {string} username
+ * @returns {Promise<{ success: boolean; data: StudentInfo }>} An object containing the user profile
+ */
+export async function GetUserProfile(
+  username: string
+): Promise<{ success: boolean; data: StudentInfo }> {
   try {
     const response = await got(IMALUUM_HOME_PAGE, {
       headers: {
-        Cookie: cookieStrings,
+        Cookie: cookies().toString(),
       },
       https: { rejectUnauthorized: false },
       followRedirect: false,
