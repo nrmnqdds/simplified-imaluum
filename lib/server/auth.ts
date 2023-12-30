@@ -64,11 +64,7 @@ export async function ImaluumLogin(form: {
     };
   } catch (err) {
     console.log(err);
-
-    return {
-      success: false,
-      message: "Invalid username or password",
-    };
+    throw new Error("Error logging in");
   }
 }
 
