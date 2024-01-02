@@ -1,5 +1,5 @@
-import DARKDEMOPIC from "@/public/darkdemo.png";
-import LIGHTDEMOPIC from "@/public/lightdemo.png";
+import DARKDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule.png";
+import LIGHTDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule (1).png";
 import {
   ArrowPathIcon,
   CloudArrowUpIcon,

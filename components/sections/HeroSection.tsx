@@ -1,6 +1,6 @@
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import DARKDEMOPIC from "@/public/darkdemo.png";
-import LIGHTDEMOPIC from "@/public/lightdemo.png";
+import DARKDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule.png";
+import LIGHTDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule (1).png";
 import LOGO from "@/public/logo-landing-page.png";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
