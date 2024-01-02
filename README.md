@@ -1,6 +1,6 @@
 # Welcome to Simplified i-Ma'luum 🌟
 
-<img src="https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/2ad4fedc-1018-4779-b94a-5aae6f2944a3" width=100 />
+<img src="https://github.com/nrmnqdds/simplified-imaluum/assets/65181897/2ad4fedc-1018-4779-b94a-5aae6f2944a3" width=100 />
 
 ## 🚧 **In Construction** 🚧
 > [!IMPORTANT]
@@ -20,8 +20,8 @@ Support this project!
 
 Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'luum", designed with a focus on providing an enhanced user experience through a beautiful UI and intuitive navigation. This project aims to simplify the way users interact with the university's online information system, making it more accessible and user-friendly. Inspired by the original i-Ma'luum website, designed for an enhanced user experience.
 
-![swappy-20231024_235051](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/98cc8548-b75b-47ca-93eb-cc12c547e284)
-![swappy-20231024_235251](https://github.com/qryskalyst20/simplified-imaluum/assets/65181897/33ee032f-d23c-4665-8671-77dbf5408def)
+
+[demo](https://github.com/nrmnqdds/simplified-imaluum/assets/65181897/126caa42-d05f-4278-856b-cb7a60213972)
 
 ## Features 🚀
 
@@ -42,7 +42,7 @@ Simplified i-Ma'luum is a stunning recreation of the university website "i-Ma'lu
 1. **Clone the Repository**:
 
    ```
-   git clone https://github.com/qryskalyst20/simplified-i-maluum.git
+   git clone https://github.com/nrmnqdds/simplified-i-maluum.git
    ```
 
 2. **Navigate to the Project Directory**:
@@ -75,5 +75,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-[![GitHub Stars](https://img.shields.io/github/stars/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/qryskalyst20/simplified-imaluum.svg)](https://github.com/qryskalyst20/simplified-imaluum/network/members)
+[![GitHub Stars](https://img.shields.io/github/stars/nrmnqdds/simplified-imaluum.svg)](https://github.com/nrmnqdds/simplified-imaluum/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/nrmnqdds/simplified-imaluum.svg)](https://github.com/nrmnqdds/simplified-imaluum/network/members)
