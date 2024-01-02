@@ -1,22 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone();
+  const cookie = req.cookies.get("MOD_AUTH_CAS");
 
-  if (
-    !req.cookies.has("MOD_AUTH_CAS") &&
-    req.url !== url.pathname.replace(/\/$/, "")
-  ) {
-    url.pathname = url.pathname.replace(/\/$/, "");
-    return NextResponse.rewrite(url);
+  if (!cookie && req.nextUrl.pathname !== "/") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (
-    req.cookies.has("MOD_AUTH_CAS") &&
-    req.url === url.pathname.replace(/\/$/, "")
-  ) {
-    console.log(req.cookies.get("MOD_AUTH_CAS"));
-    url.pathname = "/dashboard";
-    return NextResponse.rewrite(url);
+  if (cookie && req.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 }
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};
