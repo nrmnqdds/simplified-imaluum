@@ -1,5 +1,5 @@
-import DARKDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule.png";
 import LIGHTDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule (1).png";
+import DARKDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule.png";
 import {
   ArrowPathIcon,
   CloudArrowUpIcon,
@@ -9,6 +9,7 @@ import {
   ServerIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import { ContainerScroll } from "../ui/container-scroll-animation";
 
 const features = [
   {
@@ -53,7 +54,7 @@ const Feature = () => {
       id="feature"
       className="bg-slate-100 dark:bg-zinc-900 py-24 sm:py-32"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 md:hidden">
         <div className="mx-auto max-w-2xl sm:text-center">
           <h2 className="text-base font-semibold leading-7 dark:text-cyan-500 text-cyan-600">
             Everything you need
@@ -68,7 +69,7 @@ const Feature = () => {
         </div>
       </div>
       <div className="relative overflow-hidden pt-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 md:hidden">
           <Image
             src={LIGHTDEMOPIC}
             alt="App screenshot"
@@ -87,8 +88,20 @@ const Feature = () => {
             <div className="absolute -inset-x-20 bottom-0 bg-gradient-to-t from-slate-100 dark:from-zinc-900 pt-[7%]" />
           </div>
         </div>
+        <ContainerScroll
+          titleComponent={
+            <>
+              <h1 className="text-4xl font-semibold text-cyan-600">
+                Everything you need <br />
+                <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none text-foreground">
+                  i-Ma&apos;luum on steroid!
+                </span>
+              </h1>
+            </>
+          }
+        />
       </div>
-      <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+      <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-0 lg:px-8">
         <dl className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base leading-7 text-gray-600 dark:text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
           {features.map((feature) => (
             <div key={feature.name} className="relative pl-9">

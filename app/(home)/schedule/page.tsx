@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import Timetable from "@/components/schedule";
 import ScheduleSwitcher from "@/components/ScheduleSwitcher";
+import Timetable from "@/components/schedule";
 import useSchedule from "@/hooks/useSchedule";
+import { useState } from "react";
 
 const Page = () => {
   const [subjects, setSubjects] = useState<Courses[]>();
@@ -11,14 +11,9 @@ const Page = () => {
 
   return (
     <div className="flex-1 min-h-screen">
-      {!schedule ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="w-fit p-2">
-          {/* <SessionSwitcher setEvents={setEvents} /> */}
-          <ScheduleSwitcher courses={schedule} setEvents={setSubjects} />
-        </div>
-      )}
+      <div className="w-fit p-2">
+        <ScheduleSwitcher courses={schedule} setEvents={setSubjects} />
+      </div>
       <Timetable events={!subjects ? [] : subjects[0].schedule} />
     </div>
   );

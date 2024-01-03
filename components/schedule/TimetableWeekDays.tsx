@@ -10,12 +10,7 @@ export default function TimetableWeekDays({
   endDay,
 }: TimetableWeekDaysProps) {
   return (
-    <div
-      className="duration-300
-        top-16 left-0 md:left-64 right-0 xl:right-96 h-8 pl-10
-        bg-slate-100
-        border-b border-slate-200 dark:border-zinc-600 dark:bg-zinc-900"
-    >
+    <div className="duration-300 top-16 left-0 md:left-64 right-0 xl:right-96 h-8 pl-10 bg-card border-b border-border">
       <div className="w-full h-full flex flex-row">
         {days.slice(startDay, endDay + 1).map((day, index) => (
           <div
@@ -23,7 +18,7 @@ export default function TimetableWeekDays({
             className="flex-1 h-full
               flex flex-col items-center justify-center"
           >
-            <p className="text-slate-500 text-xs font-bold">{day}</p>
+            <p className="text-foreground text-xs font-bold">{day}</p>
           </div>
         ))}
       </div>

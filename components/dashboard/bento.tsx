@@ -1,10 +1,10 @@
 import CGPAChart from "@/components/dashboard/CGPAChart";
-import Card from "@/components/dashboard/card";
 import CGPAScrollList from "@/components/dashboard/CGPAScrollList";
+import Card from "@/components/dashboard/card";
 
 const BentoLayout = () => {
   return (
-    <div className="grid auto-rows-[192px] grid-cols-3 gap-2">
+    <div className="grid auto-rows-[20vh] grid-cols-3 gap-2">
       <Card>Coming Soon</Card>
       <Card>Coming Soon</Card>
       <Card>Coming Soon</Card>

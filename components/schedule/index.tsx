@@ -1,4 +1,4 @@
-import range from "@/lib/client/range";
+import range from "@/lib/common/range";
 import moment from "moment";
 import { Fragment, useState } from "react";
 import TimetableEventBlock from "./TimetableEventBlock";

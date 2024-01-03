@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ResultSwitcher from "@/components/ResultSwitcher";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import useResult from "@/hooks/useResult";
 import LottiePlayer from "@/components/LottiePlayer";
+import { ResultSwitcher } from "@/components/ResultSwitcher";
 
 type SortedSubjectType = {
   courseCode: string;
@@ -62,7 +62,7 @@ const Page = () => {
   const failedCount = subjects.length - passedCount;
 
   return (
-    <main className="flex-1 flex flex-col gap-2 min-h-screen px-2 bg-zinc-900">
+    <main className="flex-1 flex flex-col gap-2 min-h-screen px-2">
       {!result ? (
         <div className="h-[500px] w-full flex flex-col items-center justify-center">
           <LottiePlayer
@@ -80,9 +80,9 @@ const Page = () => {
             setSession={setSession}
           />
 
-          <div className="flex flex-col lg:flex-row gap-5 items-center justify-center w-full h-full rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
+          <div className="flex flex-col lg:flex-row gap-5 items-center justify-center w-full h-full rounded-xl border border-border p-4 bg-background">
             <div className="flex-1 flex flex-row items-center justify-center gap-5">
-              <div className="flex flex-col gap-2 items-center justify-center bg-neutral-300 p-4 font-semibold dark:bg-neutral-800 border-zinc-700 rounded-xl border">
+              <div className="flex flex-col gap-2 items-center justify-center bg-card p-4 font-semibold border-border rounded-xl border">
                 <h1 className="text-zinc-300 text-xs lg:text-sm">
                   Subjects Taken:
                 </h1>
@@ -100,13 +100,13 @@ const Page = () => {
               </div>
             </div>
             <div className="flex-1 flex flex-row items-center justify-center gap-5">
-              <div className="flex flex-col gap-2 items-center justify-center bg-neutral-300 p-4 font-semibold dark:bg-neutral-800 border-zinc-700 rounded-xl border">
+              <div className="flex flex-col gap-2 items-center justify-center p-4 font-semibold bg-card border-border rounded-xl border">
                 <h1 className="text-zinc-300 text-xs lg:text-sm">Status:</h1>
                 <p className="text-zinc-100 text-sm lg:text-xl">
                   {notes.status}
                 </p>
               </div>
-              <div className="flex flex-col gap-2 items-center justify-center bg-neutral-300 p-4 font-semibold dark:bg-neutral-800 border-zinc-700 rounded-xl border">
+              <div className="flex flex-col gap-2 items-center justify-center bg-card p-4 font-semibold border-border rounded-xl border">
                 <h1 className="text-zinc-300 text-xs lg:text-sm">Remarks:</h1>
                 <p className="text-zinc-100 text-sm lg:text-xl">
                   {notes.remarks}
@@ -115,7 +115,7 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full h-full rounded-xl border-2 border-slate-400/10 bg-neutral-200 p-4 dark:bg-neutral-900">
+          <div className="flex flex-col items-center justify-center w-full h-full rounded-xl border border-border bg-background p-4">
             <div id="header" className="w-full flex flex-row mb-2 p-4">
               <div className="flex-1 w-fit flex items-center justify-start text-xs sm:text-sm">
                 <p className="zinc-100 lg:pl-24">Subject Code</p>
@@ -130,7 +130,7 @@ const Page = () => {
                 <button
                   name="sort-button"
                   type="button"
-                  className="flex items-center justify-center bg-zinc-800 p-2 rounded-md active:border-slate-400 border border-slate-400/10"
+                  className="flex items-center justify-center bg-card p-2 rounded-md active:border-slate-400 border border-border"
                   onClick={toggleSortOrder}
                 >
                   <ChevronUpDownIcon
@@ -147,7 +147,7 @@ const Page = () => {
                 <div
                   key={index}
                   id="subjects"
-                  className="w-full flex flex-row bg-neutral-300 p-4 dark:bg-neutral-800 border-zinc-700 rounded-xl border"
+                  className="w-full flex flex-row bg-card p-4 border-border rounded-xl border"
                 >
                   <div className="flex-1 w-fit flex items-center justify-start text-xs sm:text-sm">
                     <p className="zinc-100 lg:pl-24">{subject.courseCode}</p>

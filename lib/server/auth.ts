@@ -54,7 +54,11 @@ export async function ImaluumLogin(form: {
     for (const cookie of cookieStore) {
       // console.log(cookie);
       if (cookie.key === "MOD_AUTH_CAS") {
-        cookies().set("MOD_AUTH_CAS", cookie.value);
+        cookies().set({
+          name: "MOD_AUTH_CAS",
+          value: cookie.value,
+          expires: new Date(Date.now() + 10 * 60 * 1000),
+        });
         break;
       }
     }

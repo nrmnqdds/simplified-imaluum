@@ -1,24 +1,23 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import ProfileDropdown from "@/components/ProfileDropdown";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import ImaluumProvider from "@/context/ImaluumProvider";
+import { getDate } from "@/lib/common/time";
+import LOGO from "@/public/logo-landing-page.png";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   CalendarIcon,
   Cog6ToothIcon,
+  FlagIcon,
   HomeIcon,
   XMarkIcon,
-  FlagIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import LOGO from "@/public/logo-landing-page.png";
 import Image from "next/image";
-import { getDate } from "@/lib/client/time";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import ProfileDropdown from "@/components/ProfileDropdown";
-import ImaluumProvider from "@/context/ImaluumProvider";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Fragment, useEffect, useState } from "react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -114,7 +113,7 @@ export default function HomeLayout({
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-100 dark:bg-zinc-900 px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-background px-6 pb-4">
                     <div className="flex h-32 shrink-0 items-center justify-center">
                       <Image
                         width={64}
@@ -134,16 +133,16 @@ export default function HomeLayout({
                                   href={item.href}
                                   className={classNames(
                                     pathname === item.href
-                                      ? "bg-gray-50 text-cyan-600"
-                                      : "text-gray-700 hover:text-cyan-600 hover:bg-gray-50 dark:hover:bg-zinc-800",
+                                      ? "bg-gray-50 text-primary"
+                                      : "text-gray-700 hover:text-primary hover:bg-gray-50 dark:hover:bg-zinc-800",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                   )}
                                 >
                                   <item.icon
                                     className={classNames(
                                       pathname === item.href
-                                        ? "text-cyan-600"
-                                        : "text-gray-400 group-hover:text-cyan-600",
+                                        ? "text-primary"
+                                        : "text-accent group-hover:text-primary",
                                       "h-6 w-6 shrink-0"
                                     )}
                                     aria-hidden="true"
@@ -154,18 +153,18 @@ export default function HomeLayout({
                             ))}
                           </ul>
                         </li>
-                        <li className="mt-auto">
+                        {/* <li className="mt-auto">
                           <Link
                             href="/doctor/profile"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-cyan-600"
+                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-primary"
                           >
                             <Cog6ToothIcon
-                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-cyan-600"
+                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-primary"
                               aria-hidden="true"
                             />
                             Settings
                           </Link>
-                        </li>
+                        </li> */}
                       </ul>
                     </nav>
                   </div>
@@ -178,7 +177,7 @@ export default function HomeLayout({
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-400 dark:border-zinc-600 bg-slate-100 dark:bg-zinc-900 px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-border bg-background px-6 pb-4">
             <div className="flex h-32 shrink-0 items-center justify-center">
               <Image
                 width={64}
@@ -198,16 +197,16 @@ export default function HomeLayout({
                           href={item.href}
                           className={classNames(
                             pathname === item.href
-                              ? "bg-gray-50 dark:bg-zinc-950 text-cyan-600"
-                              : "text-gray-700 dark:text-gray-500 hover:text-cyan-600 hover:bg-gray-50 dark:hover:bg-zinc-800",
+                              ? "bg-primary-foreground text-primary"
+                              : "text-accent hover:text-primary hover:bg-accent",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
                           <item.icon
                             className={classNames(
                               pathname === item.href
-                                ? "text-cyan-600"
-                                : "text-gray-400 dark:text-gray-600 group-hover:text-cyan-600",
+                                ? "text-primary"
+                                : "text-accent group-hover:text-primary",
                               "h-6 w-6 shrink-0"
                             )}
                             aria-hidden="true"
@@ -230,10 +229,10 @@ export default function HomeLayout({
 
                   {/* <Link
                     href="#"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 dark:text-gray-500 hover:bg-gray-50 hover:bg-zinc-800 hover:text-cyan-600"
+                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 dark:text-gray-500 hover:bg-gray-50 hover:bg-zinc-800 hover:text-primary"
                   >
                     <Cog6ToothIcon
-                      className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-600 group-hover:text-cyan-600"
+                      className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-600 group-hover:text-primary"
                       aria-hidden="true"
                     />
                     Settings
@@ -245,10 +244,10 @@ export default function HomeLayout({
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-400 dark:border-zinc-600 bg-slate-100 dark:bg-zinc-900 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-border bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
-              className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-500 lg:hidden"
+              className="-m-2.5 p-2.5 text-accent lg:hidden"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
@@ -263,12 +262,8 @@ export default function HomeLayout({
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
               <div className="relative flex items-center gap-5 flex-1 text-xs md:text-sm">
-                <h1 className="text-zinc-900 dark:text-slate-100 font-bold">
-                  {getDate()}
-                </h1>
-                <h2 className="text-zinc-900 dark:text-slate-100 font-bold">
-                  {currentTime}
-                </h2>
+                <h1 className="text-foreground font-bold">{getDate()}</h1>
+                <h2 className="text-foreground font-bold">{currentTime}</h2>
               </div>
               {/* <form className="relative flex flex-1" action="#" method="GET">
                 <label htmlFor="search-field" className="sr-only">
@@ -280,7 +275,7 @@ export default function HomeLayout({
                 />
                 <input
                   id="search-field"
-                  className="bg-slate-100 dark:bg-zinc-900 block h-full w-full border-0 py-0 pl-8 pr-0 text-zinc-800 dark:text-slate-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                  className="bg-background block h-full w-full border-0 py-0 pl-8 pr-0 text-zinc-800 dark:text-slate-200 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                   placeholder="Search..."
                   type="search"
                   name="search"
@@ -299,7 +294,7 @@ export default function HomeLayout({
             </div>
           </div>
 
-          <main className="lg:overflow-x-hidden">
+          <main className="lg:overflow-x-hidden bg-background">
             <Transition
               appear={true}
               show={true}

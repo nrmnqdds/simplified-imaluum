@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { GetAds } from "@/lib/server/ads-scraper";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { AiOutlineLink } from "react-icons/ai";
 import { PiTelevisionBold } from "react-icons/pi";
 import AdsCarousel from "./AdsCarousel";
-import { useQuery } from "@tanstack/react-query";
 
 const Advertisement = ({ className }: { className: string }) => {
   const { data: ads, isLoading: loading } = useQuery({
@@ -21,7 +21,7 @@ const Advertisement = ({ className }: { className: string }) => {
 
   return (
     <section className={className}>
-      <div className="my-3 flex justify-between w-full items-center">
+      <div className="my-5 flex justify-between w-full items-center">
         <h2 className="lg:text-2xl font-bold text-zinc-900 dark:text-slate-100 flex items-center gap-5">
           <PiTelevisionBold />
           SOUQ Advertisement

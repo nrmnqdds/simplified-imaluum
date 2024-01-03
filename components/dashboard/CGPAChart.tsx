@@ -66,10 +66,10 @@ const CGPAChart = () => {
           <Area
             type="monotone"
             dataKey="CGPA"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="#a4f6ce"
+            fill="#00a36c"
           />
-          <Area type="monotone" dataKey="GPA" stroke="#8884d8" fill="#8884d8" />
+          <Area type="monotone" dataKey="GPA" stroke="#a4f6ce" fill="#00a36c" />
         </AreaChart>
       </ResponsiveContainer>
     </div>
