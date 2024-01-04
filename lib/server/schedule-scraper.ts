@@ -94,7 +94,7 @@ const getSchedule = async (
 };
 
 /**
- * A server function to scrape the exam result from i-maaluum
+ * A server function to scrape the schedule from i-maaluum
  * @returns {Promise<{success: boolean, data: Courses[]}>} A promise that resolves to an object containing the success status and the data or null if theres no data
  */
 export async function GetSchedule(): Promise<{
