@@ -26,6 +26,7 @@ export default function RootLayout({
           data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
           async
         />
+        <Script src="https://webkeyz.github.io/stand-with-palestine/dist/stand-with-palestine-widget.js" />
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
