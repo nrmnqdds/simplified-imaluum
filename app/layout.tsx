@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`scrollbar-hide ${poppins.className}`}>
+    <html lang="en" className="scrollbar-hide scroll-smooth">
+      <body className={poppins.className}>
         <Script
           src="https://beamanalytics.b-cdn.net/beam.min.js"
           data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
