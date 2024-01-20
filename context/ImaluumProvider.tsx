@@ -27,17 +27,17 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     retry: 3,
   });
 
-  // const resultData = useQuery({
-  //   queryKey: ["result"],
-  //   queryFn: async () => {
-  //     const data = await GetResult();
-  //     if (data.success) {
-  //       setResult(data.data);
-  //       return data.data;
-  //     }
-  //   },
-  //   retry: 3,
-  // });
+  const resultData = useQuery({
+    queryKey: ["result"],
+    queryFn: async () => {
+      const data = await GetResult();
+      if (data.success) {
+        setResult(data.data);
+        return data.data;
+      }
+    },
+    retry: 3,
+  });
 
   const scheduleData = useQuery({
     queryKey: ["schedule"],
@@ -52,7 +52,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   return profileData.isSuccess &&
-    // resultData.isSuccess &&
+    resultData.isSuccess &&
     scheduleData.isSuccess ? (
     <>{children}</>
   ) : (
