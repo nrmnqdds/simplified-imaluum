@@ -11,6 +11,28 @@ const poppins = Poppins({ subsets: ["latin"], weight: "400", display: "swap" });
 export const metadata: Metadata = {
   title: "Simplified i-Ma'luum",
   description: "A simplified version of i-Ma'luum for students.",
+   metadataBase: new URL("https://ideaspace.nrmnqdds.com/"),
+  openGraph: {
+    type: "website",
+    url: "https://imaluum.nrmnqdds.com",
+    title: "Simplified i-Ma'luum",
+    description: "A simplified version of i-Ma'luum for students.",
+    siteName: "Simplified i-Ma'luum",
+    images: [
+      {
+        url: "https://opengraph.b-cdn.net/production/documents/48b8d2e9-05b8-4031-a6df-d9f67c593a12.png?token=FYcQmGL_FJVfTNVPl0p3ZLE_BIL6mV2ov1UcB79F1yg&height=591&width=1200&expires=33242072632",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@nrmnqdds",
+    creator: "@nrmnqdds",
+    title: "Simplified i-Ma'luum",
+    description: "A simplified version of i-Ma'luum for students.",
+    images:
+      "https://opengraph.b-cdn.net/production/documents/48b8d2e9-05b8-4031-a6df-d9f67c593a12.png?token=FYcQmGL_FJVfTNVPl0p3ZLE_BIL6mV2ov1UcB79F1yg&height=591&width=1200&expires=33242072632",
+  },
 };
 
 export default function RootLayout({
