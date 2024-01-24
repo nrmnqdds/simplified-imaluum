@@ -11,6 +11,17 @@ const poppins = Poppins({ subsets: ["latin"], weight: "400", display: "swap" });
 export const metadata: Metadata = {
   title: "Simplified i-Ma'luum",
   description: "A simplified version of i-Ma'luum for students.",
+  keywords: [
+    "imaluum",
+    "i-ma'luum",
+    "i-ma'luum simplified",
+    "simplified i-ma'luum",
+    "simplified imaluum",
+    "simplified iium",
+    "i-ma'luum for students",
+    "imaluum for students",
+    "open source imaluum",
+  ],
   metadataBase: new URL("https://imaluum.nrmnqdds.com/"),
   openGraph: {
     type: "website",
