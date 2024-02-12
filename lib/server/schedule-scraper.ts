@@ -62,6 +62,8 @@ const getSchedule = async (
         // Split the days array if it has more than one item
         const splitDays = days.length > 1 ? [...days] : days;
         const time = tds[6].textContent.trim().replace(/ /gi, "").split("-");
+
+        if (time.length === 0) continue;
         const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
         const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
         const venue = tds[7].textContent.trim();
