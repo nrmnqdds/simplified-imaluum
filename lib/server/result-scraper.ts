@@ -4,7 +4,6 @@ import { parse } from "node-html-parser";
 import { cookies } from "next/headers";
 import { IMALUUM_RESULT_PAGE } from "@/constants";
 import got from "got";
-import { tabletojson } from "tabletojson";
 
 /**
  * A helper function to get the result from a single session

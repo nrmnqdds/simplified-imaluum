@@ -41,7 +41,6 @@
     "react-icons": "^4.10.1",
     "recharts": "^2.10.3",
     "sharp": "^0.32.6",
-    "tabletojson": "^4.0.1",
     "tailwind-merge": "^2.2.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "latest",
