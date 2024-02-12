@@ -12,12 +12,12 @@ import { tabletojson } from "tabletojson";
  * @param {string} sessionName
  * @returns {Result} An object containing the result for a single session
  */
+
 const getResult = async (
   sessionQuery: string,
   sessionName: string
 ): Promise<Result> => {
   const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
-
   try {
     const response = await got(url, {
       headers: {
@@ -29,36 +29,51 @@ const getResult = async (
 
     const root = parse(response.body);
 
-    const resultTable = root.querySelector("table.table.table-hover").outerHTML;
+    const table = root.querySelector(".box-body table.table.table-hover");
+    const rows = table?.querySelectorAll("tr");
 
-    const tableJSON = tabletojson.convert(resultTable as string).flat();
+    if (!rows) throw new Error("Failed to fetch schedule");
 
-    const cgpaValue = tableJSON[tableJSON.length - 1]["Credit Hour"]
-      .split("\n")[2]
-      .trim();
-    const gpaValue = tableJSON[tableJSON.length - 1]["Subject Name"]
-      .split("\n")[2]
-      .trim();
-    const status = tableJSON[tableJSON.length - 1]["Subject Name"]
-      .split("\n")[3]
-      .trim();
-    const remarks = tableJSON[tableJSON.length - 1]["Subject Name"]
-      .split("\n")[4]
-      .trim();
+    const result = [];
 
-    tableJSON.pop();
+    const tds = rows[rows.length - 1].querySelectorAll("td");
 
-    const result = tableJSON.map((element: any) => {
-      const courseCode = element["Subject Code"].trim();
-      const courseName = element["Subject Name"].trim();
-      const courseGrade = element.Grade.trim();
-      return { courseCode, courseName, courseGrade };
-    });
+    const neutralized1 = tds[1].textContent.trim().split(/\s{2,}/);
+    const gpaValue = neutralized1[2];
+    const status = neutralized1[3];
+    const remarks = neutralized1[4];
 
-    return { sessionName, gpaValue, cgpaValue, status, remarks, result };
-  } catch (e) {
-    console.log(e);
-    throw new Error("Failed to fetch result");
+    const neutralized2 = tds[3].textContent.trim().split(/\s{2,}/);
+    const cgpaValue = neutralized2[2];
+
+    // Remove the last row
+    rows.pop();
+
+    for (const row of rows) {
+      const tds = row.querySelectorAll("td");
+
+      // Check if tds array has enough elements
+      if (tds.length >= 4) {
+        const courseCode = tds[0].textContent.trim();
+        const courseName = tds[1].textContent.trim();
+        const courseGrade = tds[2].textContent.trim();
+        const courseCredit = tds[3].textContent.trim();
+        result.push({ courseCode, courseName, courseGrade, courseCredit });
+      }
+    }
+
+    return {
+      sessionQuery,
+      sessionName,
+      result,
+      gpaValue,
+      cgpaValue,
+      status,
+      remarks,
+    };
+  } catch (err) {
+    console.log("err", err);
+    throw new Error("Failed to fetch schedule");
   }
 };
 

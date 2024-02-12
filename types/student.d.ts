@@ -12,6 +12,7 @@ type Cgpa = {
 
 type Result = {
   sessionName: string;
+  sessionQuery: string;
   gpaValue: string;
   cgpaValue: string;
   status: string;
