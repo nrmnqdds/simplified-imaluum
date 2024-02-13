@@ -65,7 +65,9 @@ const LoginForm = () => {
     });
   };
 
-  return (
+  return profile ? (
+    <Button onClick={() => router.push("/dashboard")}>Next</Button>
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-10">
         <div className="flex flex-row items-center justify-center gap-2">

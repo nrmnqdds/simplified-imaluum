@@ -12,19 +12,21 @@ import Image from "next/image";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { profile, setProfile } = useProfile();
-  const { setResult } = useResult();
-  const { setSchedule } = useSchedule();
+  const { result, setResult } = useResult();
+  const { schedule, setSchedule } = useSchedule();
 
   const profileData = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
       const data = await GetUserProfile(profile.matricNo as string);
       if (data.success) {
-        setProfile(data.data);
+        const password = profile.password;
+        setProfile({ ...data.data, password });
         return data.data;
       }
     },
     retry: 3,
+    enabled: !profile.imageURL,
   });
 
   const resultData = useQuery({
@@ -37,6 +39,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: 3,
+    enabled: !result,
   });
 
   const scheduleData = useQuery({
@@ -49,11 +52,10 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: 3,
+    enabled: !schedule,
   });
 
-  return profileData.isSuccess &&
-    resultData.isSuccess &&
-    scheduleData.isSuccess ? (
+  return profile && result && schedule ? (
     <>{children}</>
   ) : (
     <div className="w-full h-screen bg-background flex items-center justify-center">

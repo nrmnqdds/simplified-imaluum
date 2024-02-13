@@ -53,10 +53,10 @@ export default function ProfileDropdown() {
           onClick={async () => {
             const res = await ImaluumLogout();
             if (res.success) {
-              sessionStorage.clear();
+              localStorage.clear();
               queryCache.clear();
               toast.success("Logged out successfully.");
-              router.replace("/");
+              router.push("/");
             }
           }}
         >
