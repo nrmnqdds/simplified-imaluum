@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type ProfileType = {
   profile: StudentInfo | null | undefined;
@@ -18,7 +18,7 @@ const useProfile = create(
     }),
     {
       name: "profile-storage",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

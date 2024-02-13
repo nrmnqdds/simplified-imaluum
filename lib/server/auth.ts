@@ -1,9 +1,9 @@
 "use server";
 import { IMALUUM_CAS_PAGE, IMALUUM_LOGIN_PAGE } from "@/constants";
+import * as Sentry from "@sentry/nextjs";
 import got from "got";
 import { cookies } from "next/headers";
 import { CookieJar } from "tough-cookie";
-import * as Sentry from "@sentry/nextjs";
 
 export async function ImaluumLogin(form: {
   username: string;
@@ -64,7 +64,6 @@ export async function ImaluumLogin(form: {
             cookies().set({
               name: "MOD_AUTH_CAS",
               value: cookie.value,
-              expires: new Date(Date.now() + 10 * 60 * 1000),
             });
             break;
           }

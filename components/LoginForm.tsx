@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -15,8 +16,8 @@ import useProfile from "@/hooks/useProfile";
 import { ImaluumLogin } from "@/lib/server/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
@@ -31,6 +32,7 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const [checked, setChecked] = useState(false);
   const { profile, setProfile } = useProfile();
   const router = useRouter();
 
@@ -45,18 +47,24 @@ const LoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: ImaluumLogin,
     onSuccess: (data) => {
-      setProfile({ ...profile, matricNo: data.matricNo });
+      setProfile({
+        ...profile,
+        matricNo: data.matricNo,
+        password: form.getValues("password"),
+      });
       router.replace("/dashboard");
     },
   });
 
   const onSubmit = (data: { username: string; password: string }) => {
+    // console.log(data, checked);
     toast.promise(loginMutation.mutateAsync(data), {
       loading: "Logging in...",
       success: "Logged in successfully.",
       error: "Invalid credentials.",
     });
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-10">
@@ -87,6 +95,19 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="terms"
+            checked={checked}
+            onCheckedChange={() => setChecked(!checked)}
+          />
+          <label
+            htmlFor="terms"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Remember Me
+          </label>
         </div>
         <Button
           type="submit"

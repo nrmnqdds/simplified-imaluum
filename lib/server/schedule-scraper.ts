@@ -1,11 +1,11 @@
 "use server";
 
-import { parse } from "node-html-parser";
-import { cookies } from "next/headers";
 import { IMALUUM_SCHEDULE_PAGE } from "@/constants";
+import * as Sentry from "@sentry/nextjs";
 import got from "got";
 import moment from "moment";
-import * as Sentry from "@sentry/nextjs";
+import { cookies } from "next/headers";
+import { parse } from "node-html-parser";
 
 /**
  * A helper function to get the schedule from a single session
@@ -13,7 +13,7 @@ import * as Sentry from "@sentry/nextjs";
  * @param {string} sessionName
  * @returns {Promise<{sessionQuery: string, sessionName: string, schedule: Subject[]}>} An object containing the schedule for a single session
  */
-const getScheduleFromSession = async (
+export const getScheduleFromSession = async (
   sessionQuery: string,
   sessionName: string
 ): Promise<{
