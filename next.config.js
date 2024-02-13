@@ -28,7 +28,7 @@ const nextConfig = {
 };
 
 const sentryWebpackPluginOptions = {
-  //bnew fix
+  //bnew fix2
   // Additional config options for the Sentry webpack plugin. Keep in mind that
   // the following options are set automatically, and overriding them is not
   // recommended:
