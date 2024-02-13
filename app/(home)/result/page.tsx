@@ -190,6 +190,7 @@ const isPassed = (grade: string) => {
     case "C":
     case "C-":
     case "PA":
+    case "EX":
       return true;
     default:
       return false;
