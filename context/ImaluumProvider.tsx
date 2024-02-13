@@ -15,7 +15,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { result, setResult } = useResult();
   const { schedule, setSchedule } = useSchedule();
 
-  const profileData = useQuery({
+  useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
       const data = await GetUserProfile(profile.matricNo as string);
@@ -29,7 +29,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     enabled: !profile.imageURL,
   });
 
-  const resultData = useQuery({
+  useQuery({
     queryKey: ["result"],
     queryFn: async () => {
       const data = await GetResult();
@@ -42,7 +42,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     enabled: !result,
   });
 
-  const scheduleData = useQuery({
+  useQuery({
     queryKey: ["schedule"],
     queryFn: async () => {
       const data = await GetSchedule();
