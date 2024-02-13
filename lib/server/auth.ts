@@ -64,6 +64,7 @@ export async function ImaluumLogin(form: {
             cookies().set({
               name: "MOD_AUTH_CAS",
               value: cookie.value,
+              expires: new Date("9999-12-31T23:59:59.999Z"), // Set expiry date to infinity
             });
             break;
           }
