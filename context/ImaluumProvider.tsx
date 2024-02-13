@@ -26,7 +26,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: 3,
-    enabled: !profile.imageURL,
+    enabled: !result,
   });
 
   useQuery({
