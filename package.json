@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "biome": "npx @biomejs/biome"
+    "biome": "npx @biomejs/biome",
+    "postinstall": "lefthook install"
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.6.9",
@@ -29,6 +30,7 @@
     "clsx": "^2.1.0",
     "framer-motion": "^10.17.4",
     "got": "^14.0.0",
+    "lefthook": "^1.6.1",
     "lucide-react": "^0.303.0",
     "moment": "^2.29.4",
     "next": "^14.0.4",
