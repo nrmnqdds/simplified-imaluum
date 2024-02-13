@@ -5,6 +5,7 @@ import Footer from "@/components/sections/Footer";
 import Hero from "@/components/sections/HeroSection";
 import Testimonial from "@/components/sections/TestimonialSection";
 import LenisSmoothScroll from "@/context/LenisProvider";
+// import Script from "next/script";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Feature />
         <Testimonial />
       </main>
+      {/* <Script src="https://webkeyz.github.io/stand-with-palestine/dist/stand-with-palestine-widget.js" /> */}
       <Footer />
     </LenisSmoothScroll>
   );

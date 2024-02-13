@@ -1,10 +1,12 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
   "organizeImports": {
-    "enabled": false
+    "enabled": true,
+    "ignore": ["/node_modules/**", "/.next/**"]
   },
   "linter": {
     "enabled": true,
+    "ignore": ["/node_modules/**", "/.next/**"],
     "rules": {
       "recommended": true,
       "suspicious": {
@@ -18,6 +20,7 @@
     }
   },
   "formatter": {
+    "ignore": ["/node_modules/**", "/.next/**"],
     "enabled": true,
     "indentStyle": "space",
     "formatWithErrors": true

@@ -13,6 +13,16 @@ jobs:
       - name: Setup Biome
         uses: biomejs/setup-biome@v1
         with:
-          version: 1.2.2
+          version: latest
+
+      - name: Import Sorting
+        run: biome check --apply-unsafe .
+
+      - name: Format Code
+        run: biome format --write .
+
+      - name: Lint Code
+        run: biome lint .
+
       - name: Run Biome
         run: biome ci .
