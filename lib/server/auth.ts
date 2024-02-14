@@ -120,6 +120,7 @@ export async function ImaluumLogout() {
     cookies().delete("MOD_AUTH_CAS");
     cookies().delete("XSRF-TOKEN");
     cookies().delete("laravel_session");
+    cookies().delete("imaluum-session");
 
     return {
       success: true,
