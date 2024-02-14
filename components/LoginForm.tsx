@@ -5,7 +5,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -13,9 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useProfile from "@/hooks/useProfile";
+import useResult from "@/hooks/useResult";
+import useSchedule from "@/hooks/useSchedule";
 import { ImaluumLogin } from "@/lib/server/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -33,6 +35,8 @@ const formSchema = z.object({
 
 const LoginForm = () => {
   const { profile, setProfile } = useProfile();
+  const { result } = useResult();
+  const { schedule } = useSchedule();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,10 +73,11 @@ const LoginForm = () => {
     );
   };
 
-  // return profile ? (
-  //   <Button onClick={() => router.push("/dashboard")}>Next</Button>
-  // ) : (
-  return (
+  return profile && result?.length > 0 && schedule?.length > 0 ? (
+    <Link href="/dashboard">
+      <Button className="mt-10">Go to dashboard</Button>
+    </Link>
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-10">
         <div className="flex flex-row items-center justify-center gap-2">
