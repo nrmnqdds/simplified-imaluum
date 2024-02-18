@@ -3,6 +3,12 @@
 import ScheduleSwitcher from "@/components/ScheduleSwitcher";
 import Timetable from "@/components/schedule";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import useSchedule from "@/hooks/useSchedule";
 import { cn } from "@/lib/common/cn";
 import { getScheduleFromSession } from "@/lib/server/schedule-scraper";
@@ -15,12 +21,6 @@ const Page = () => {
   const { schedule, setSchedule } = useSchedule();
 
   const queryClient = useQueryClient();
-
-  // useEffect(() => {
-  //   if (subjects) {
-  //     console.log("subjects: ", subjects[0].sessionQuery);
-  //   }
-  // }, [subjects]);
 
   const refetchData = useQuery({
     queryKey: ["schedule"],
@@ -50,23 +50,33 @@ const Page = () => {
     <div className="flex-1 min-h-screen">
       <div className="w-fit p-2 flex gap-5">
         <ScheduleSwitcher courses={schedule} setEvents={setSubjects} />
-        <Button
-          type="button"
-          onClick={() => {
-            queryClient.invalidateQueries();
-            refetchData.refetch();
-          }}
-          disabled={refetchData.isRefetching}
-        >
-          <span
-            className={cn(
-              "text-white",
-              refetchData.isRefetching && "animate-spin"
-            )}
-          >
-            <IoReload />
-          </span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                type="button"
+                onClick={() => {
+                  queryClient.invalidateQueries();
+                  refetchData.refetch();
+                }}
+                disabled={refetchData.isRefetching || refetchData.isFetching}
+              >
+                <span
+                  className={cn(
+                    "text-white",
+                    (refetchData.isRefetching || refetchData.isFetching) &&
+                      "animate-spin"
+                  )}
+                >
+                  <IoReload />
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Refetch current session</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <Timetable events={!subjects ? [] : subjects[0].schedule} />
     </div>

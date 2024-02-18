@@ -59,7 +59,7 @@ export const getScheduleFromSession = async (
 
         await ImaluumLogin({
           username: creds.username,
-          password: creds.password,
+          password: atob(creds.password),
         });
       }
 

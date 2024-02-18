@@ -55,7 +55,11 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     enabled: !schedule,
   });
 
-  return profile && result.length > 0 && schedule.length > 0 ? (
+  return profile &&
+    result &&
+    result.length > 0 &&
+    schedule &&
+    schedule.length > 0 ? (
     <>{children}</>
   ) : (
     <div className="w-full h-screen bg-background flex items-center justify-center">

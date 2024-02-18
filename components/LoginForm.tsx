@@ -54,7 +54,7 @@ const LoginForm = () => {
       setProfile({
         ...profile,
         matricNo: data.matricNo,
-        password: form.getValues("password"),
+        password: btoa(form.getValues("password")),
       });
       router.replace("/dashboard");
     },
@@ -73,7 +73,11 @@ const LoginForm = () => {
     );
   };
 
-  return profile && result?.length > 0 && schedule?.length > 0 ? (
+  return profile &&
+    result &&
+    result.length > 0 &&
+    schedule &&
+    schedule.length > 0 ? (
     <Link href="/dashboard">
       <Button className="mt-10">Go to dashboard</Button>
     </Link>
