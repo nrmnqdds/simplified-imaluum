@@ -10,8 +10,6 @@ const CGPAChart = () => {
     (cgpa) => cgpa.cgpaValue && cgpa.gpaValue
   );
 
-  console.log(filteredResult);
-
   const data = filteredResult?.map((cgpa) => {
     return {
       name: cgpa.sessionName,
