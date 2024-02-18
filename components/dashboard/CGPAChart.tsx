@@ -1,12 +1,18 @@
 "use client";
 
-import { AreaChart, Area, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import useResult from "@/hooks/useResult";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 
 const CGPAChart = () => {
   const { result } = useResult();
 
-  const data = result?.map((cgpa) => {
+  const filteredResult = result?.filter(
+    (cgpa) => cgpa.cgpaValue && cgpa.gpaValue
+  );
+
+  console.log(filteredResult);
+
+  const data = filteredResult?.map((cgpa) => {
     return {
       name: cgpa.sessionName,
       CGPA: cgpa.cgpaValue,

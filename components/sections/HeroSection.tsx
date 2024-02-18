@@ -8,6 +8,7 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import LogoutButton from "../LogoutButton";
 
 const Hero = () => {
   return (
@@ -93,12 +94,12 @@ const Hero = () => {
           </p>
 
           {cookies().get("imaluum-session") ? (
-            <div className="flex flex-row gap-5">
+            <div className="flex flex-row gap-5 mt-10">
               <Link href="/dashboard">
-                <Button className="mt-10">Go to dashboard</Button>
+                <Button className="">Go to dashboard</Button>
               </Link>
 
-              <Button className="bg-red-500">Logout</Button>
+              <LogoutButton />
             </div>
           ) : (
             <LoginForm />

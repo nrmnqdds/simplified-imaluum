@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
+import LogoutButton from "./LogoutButton";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -78,12 +79,12 @@ const LoginForm = () => {
     result.length > 0 &&
     schedule &&
     schedule.length > 0 ? (
-    <div className="flex flex-row gap-5">
+    <div className="flex flex-row gap-5 mt-10">
       <Link href="/dashboard">
-        <Button className="mt-10">Go to dashboard</Button>
+        <Button>Go to dashboard</Button>
       </Link>
 
-      <Button className="bg-red-500">Logout</Button>
+      <LogoutButton />
     </div>
   ) : (
     <Form {...form}>
