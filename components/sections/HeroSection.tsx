@@ -93,9 +93,13 @@ const Hero = () => {
           </p>
 
           {cookies().get("imaluum-session") ? (
-            <Link href="/dashboard">
-              <Button className="mt-10">Go to dashboard</Button>
-            </Link>
+            <div className="flex flex-row gap-5">
+              <Link href="/dashboard">
+                <Button className="mt-10">Go to dashboard</Button>
+              </Link>
+
+              <Button className="bg-red-500">Logout</Button>
+            </div>
           ) : (
             <LoginForm />
           )}

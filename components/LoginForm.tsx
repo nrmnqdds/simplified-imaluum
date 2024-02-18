@@ -78,9 +78,13 @@ const LoginForm = () => {
     result.length > 0 &&
     schedule &&
     schedule.length > 0 ? (
-    <Link href="/dashboard">
-      <Button className="mt-10">Go to dashboard</Button>
-    </Link>
+    <div className="flex flex-row gap-5">
+      <Link href="/dashboard">
+        <Button className="mt-10">Go to dashboard</Button>
+      </Link>
+
+      <Button className="bg-red-500">Logout</Button>
+    </div>
   ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-10">
