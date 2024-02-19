@@ -12,8 +12,8 @@ export default function TimetableRow({
 }: TimetableRowProps) {
   return (
     <div className="relative w-full h-16">
-      <div className="absolute w-full h-full border-b border-border" />
-      <div className="absolute left-0 w-12 h-full flex flex-col items-center justify-start border-r border-border bg-card">
+      <div className="absolute w-full h-full border-b border-border/30 sm:border-border" />
+      <div className="absolute left-0 w-12 h-full hidden sm:flex flex-col items-center justify-start border-r border-border bg-card">
         {showHour && (
           <p
             className="text-foreground text-xs font-bold mt-1
@@ -23,12 +23,15 @@ export default function TimetableRow({
           </p>
         )}
       </div>
-      <div className="absolute left-8 right-0 h-full flex flex-row ml-5">
+      <div className="absolute left-0 sm:left-8 right-0 h-full flex flex-row sm:ml-5">
         {[...Array(numberOfDays)].map((day, index) => (
           <div
             key={index}
             className={`flex-1 h-full
-              ${index !== numberOfDays - 1 && "border-r border-border"}`}
+              ${
+                index !== numberOfDays - 1 &&
+                "border-r border-border/30 sm:border-border"
+              }`}
           />
         ))}
       </div>

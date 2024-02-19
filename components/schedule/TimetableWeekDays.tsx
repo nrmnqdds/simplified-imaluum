@@ -10,7 +10,7 @@ export default function TimetableWeekDays({
   endDay,
 }: TimetableWeekDaysProps) {
   return (
-    <div className="duration-300 top-16 left-0 md:left-64 right-0 xl:right-96 h-8 pl-10 bg-card border-b border-border">
+    <div className="duration-300 top-16 left-0 md:left-64 right-0 xl:right-96 h-8 sm:pl-10 bg-card border-b border-border">
       <div className="w-full h-full flex flex-row">
         {days.slice(startDay, endDay + 1).map((day, index) => (
           <div

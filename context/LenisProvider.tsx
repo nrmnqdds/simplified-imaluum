@@ -8,9 +8,9 @@ export default function LenisSmoothScroll({
   return (
     <ReactLenis
       root
-      options={{
-        duration: 2.0,
-      }}
+      // options={{
+      //   duration: 2.0,
+      // }}
     >
       {children}
     </ReactLenis>

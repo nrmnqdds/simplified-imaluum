@@ -39,7 +39,7 @@ export default function TimetableEventBlock({
   return (
     <button
       type="button"
-      className={`absolute rounded-md duration-100 p-1 space-y-2 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${event.color}`}
+      className={`absolute rounded-md duration-100 p-1 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${event.color}`}
       style={{
         top,
         height,
@@ -48,8 +48,24 @@ export default function TimetableEventBlock({
       }}
       onClick={() => onClick(event)}
     >
-      <p className="text-[8px] md:text-xs font-bold">{event.courseCode}</p>
-      <p className="text-[8px] md:text-xs md:font-bold">
+      <p className="text-[8px] top-1 left-1 absolute flex sm:hidden">
+        {moment(event.timestamps[0].start, "HH:mm:ss").format("h:mma")}
+      </p>
+      <p className="text-[8px] bottom-1 right-1 absolute flex sm:hidden">
+        {moment(event.timestamps[0].end, "HH:mm:ss").format("h:mma")}
+      </p>
+      <p className="text-[8px] hidden sm:block md:text-xs md:font-bold">
+        {event.courseCode}
+      </p>
+      <div className="block sm:hidden">
+        <p className="text-[8px] md:text-xs font-bold">
+          {event.courseCode.split(" ")[0]}
+        </p>
+        <p className="text-[8px] md:text-xs font-bold">
+          {event.courseCode.split(" ")[1]}
+        </p>
+      </div>
+      <p className="text-[8px] hidden sm:block md:text-xs md:font-bold">
         {moment(event.timestamps[0].start, "HH:mm:ss").format("h:mma")} -{" "}
         {moment(event.timestamps[0].end, "HH:mm:ss").format("h:mma")}
       </p>

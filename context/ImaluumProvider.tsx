@@ -12,22 +12,24 @@ import Image from "next/image";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { profile, setProfile } = useProfile();
-  const { setResult } = useResult();
-  const { setSchedule } = useSchedule();
+  const { result, setResult } = useResult();
+  const { schedule, setSchedule } = useSchedule();
 
-  const profileData = useQuery({
+  useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
       const data = await GetUserProfile(profile.matricNo as string);
       if (data.success) {
-        setProfile(data.data);
+        const password = profile.password;
+        setProfile({ ...data.data, password });
         return data.data;
       }
     },
     retry: 3,
+    enabled: !profile || !profile.imageURL,
   });
 
-  const resultData = useQuery({
+  useQuery({
     queryKey: ["result"],
     queryFn: async () => {
       const data = await GetResult();
@@ -37,9 +39,10 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: 3,
+    enabled: !result,
   });
 
-  const scheduleData = useQuery({
+  useQuery({
     queryKey: ["schedule"],
     queryFn: async () => {
       const data = await GetSchedule();
@@ -49,11 +52,14 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     retry: 3,
+    enabled: !schedule,
   });
 
-  return profileData.isSuccess &&
-    resultData.isSuccess &&
-    scheduleData.isSuccess ? (
+  return profile &&
+    result &&
+    result.length > 0 &&
+    schedule &&
+    schedule.length > 0 ? (
     <>{children}</>
   ) : (
     <div className="w-full h-screen bg-background flex items-center justify-center">

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import useResult from "@/hooks/useResult";
 import LottiePlayer from "@/components/LottiePlayer";
 import { ResultSwitcher } from "@/components/ResultSwitcher";
+import useResult from "@/hooks/useResult";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useEffect, useState } from "react";
 
 type SortedSubjectType = {
   courseCode: string;
@@ -74,11 +74,13 @@ const Page = () => {
         </div>
       ) : (
         <>
-          <ResultSwitcher
-            courses={result}
-            setEvents={setSubjects}
-            setSession={setSession}
-          />
+          <div className="w-fit p-2 flex gap-5">
+            <ResultSwitcher
+              courses={result}
+              setEvents={setSubjects}
+              setSession={setSession}
+            />
+          </div>
 
           <div className="flex flex-col lg:flex-row gap-5 items-center justify-center w-full h-full rounded-xl border border-border p-4 bg-background">
             <div className="flex-1 flex flex-row items-center justify-center gap-5">

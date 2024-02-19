@@ -2,6 +2,7 @@ type StudentInfo = {
   name: string;
   imageURL: string;
   matricNo: string;
+  password?: string;
 };
 
 type Cgpa = {

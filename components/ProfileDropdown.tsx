@@ -9,15 +9,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useProfile from "@/hooks/useProfile";
 import { ImaluumLogout } from "@/lib/server/auth";
-import { QueryCache } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 
-const queryCache = new QueryCache();
-
 export default function ProfileDropdown() {
   const { profile } = useProfile();
+
+  const queryClient = useQueryClient();
 
   const router = useRouter();
   return (
@@ -53,10 +53,10 @@ export default function ProfileDropdown() {
           onClick={async () => {
             const res = await ImaluumLogout();
             if (res.success) {
-              sessionStorage.clear();
-              queryCache.clear();
+              localStorage.clear();
+              queryClient.invalidateQueries();
               toast.success("Logged out successfully.");
-              router.replace("/");
+              router.push("/");
             }
           }}
         >

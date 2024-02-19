@@ -1,10 +1,10 @@
 "use server";
 
-import { parse } from "node-html-parser";
-import { cookies } from "next/headers";
 import { IMALUUM_RESULT_PAGE } from "@/constants";
-import got from "got";
 import * as Sentry from "@sentry/nextjs";
+import got from "got";
+import { cookies } from "next/headers";
+import { parse } from "node-html-parser";
 
 /**
  * A helper function to get the result from a single session
@@ -123,7 +123,6 @@ export async function GetResult(): Promise<{
           sessionList.push({ sessionName, sessionQuery });
         }
 
-        sessionList.pop();
         sessionList.reverse();
         if (sessionList.length === 0) {
           // must return null, dont throw error
