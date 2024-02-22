@@ -114,10 +114,13 @@ const getScheduleFromSession = async (
                   color = i.color;
                 }
               }
-              color =
-                predefinedColors[
-                  Math.floor(Math.random() * predefinedColors.length)
-                ];
+
+              if (!color) {
+                color =
+                  predefinedColors[
+                    Math.floor(Math.random() * predefinedColors.length)
+                  ];
+              }
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {
@@ -176,10 +179,13 @@ const getScheduleFromSession = async (
                   color = i.color;
                 }
               }
-              color =
-                predefinedColors[
-                  Math.floor(Math.random() * predefinedColors.length)
-                ];
+
+              if (!color) {
+                color =
+                  predefinedColors[
+                    Math.floor(Math.random() * predefinedColors.length)
+                  ];
+              }
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {

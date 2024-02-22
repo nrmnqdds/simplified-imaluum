@@ -26,6 +26,7 @@ const LogoutButton = () => {
       ResultReset(); // Reset result
       ScheduleReset(); // Reset schedule
       queryClient.invalidateQueries();
+      sessionStorage.clear();
       router.refresh();
       toast.success("Logged out successfully");
     },
