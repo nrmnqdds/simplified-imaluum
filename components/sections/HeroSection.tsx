@@ -1,15 +1,11 @@
 import LoginForm from "@/components/LoginForm";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { Button } from "@/components/ui/button";
 import LIGHTDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule (1).png";
 import DARKDEMOPIC from "@/public/imaluum.nrmnqdds.com_schedule.png";
 import LOGO from "@/public/logo-landing-page.png";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import LogoutButton from "../LogoutButton";
-
 const Hero = () => {
   return (
     <section className="relative">
@@ -92,18 +88,7 @@ const Hero = () => {
             A simplified version of i-Ma&apos;luum for students. An attempt to
             make i-Ma&apos;luum more user-friendly.
           </p>
-
-          {cookies().get("imaluum-session") ? (
-            <div className="flex flex-row gap-5 mt-10">
-              <Link href="/dashboard">
-                <Button className="">Go to dashboard</Button>
-              </Link>
-
-              <LogoutButton />
-            </div>
-          ) : (
-            <LoginForm />
-          )}
+          <LoginForm />
         </div>
         <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
           <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">

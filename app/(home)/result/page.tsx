@@ -31,8 +31,8 @@ const Page = () => {
         (result) => result.sessionName === session
       )[0].status;
       setNotes({
-        remarks: tempRemarks,
-        status: tempStatus,
+        remarks: tempRemarks || "No Remarks",
+        status: tempStatus || "No Status",
       });
     }
   }, [session, result]);

@@ -1,7 +1,7 @@
 "use server";
 
-import { parse } from "node-html-parser";
 import got from "got";
+import { parse } from "node-html-parser";
 
 export async function GetAds() {
   try {
@@ -17,15 +17,30 @@ export async function GetAds() {
       'div[style*="width:100%; clear:both;height:100px"]'
     );
 
-    const structuredData = articles.map((element) => {
-      const adsImg = element.querySelector("img").getAttribute("src");
-      const adsLink = element.querySelector("a").getAttribute("href");
+    // const structuredData = articles.map((element) => {
+    //   const adsImg = element.querySelector("img").getAttribute("src");
+    //   const adsLink = element.querySelector("a").getAttribute("href");
 
-      return {
+    //   return {
+    //     adsImg,
+    //     adsLink,
+    //   };
+    // });
+
+    const structuredData: { adsImg: string; adsLink: string }[] = [];
+
+    for (const element of articles) {
+      const adsImg = element.querySelector("img")?.getAttribute("src");
+      if (!adsImg) continue;
+
+      const adsLink = element.querySelector("a")?.getAttribute("href");
+      if (!adsLink) continue;
+
+      structuredData.push({
         adsImg,
         adsLink,
-      };
-    });
+      });
+    }
 
     return {
       success: true,

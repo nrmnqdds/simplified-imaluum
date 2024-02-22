@@ -2,18 +2,18 @@
 import { IMALUUM_CAS_PAGE, IMALUUM_LOGIN_PAGE } from "@/constants";
 import * as Sentry from "@sentry/nextjs";
 import got from "got";
-import { SignJWT } from "jose";
-import { nanoid } from "nanoid";
 import { cookies } from "next/headers";
 import { CookieJar } from "tough-cookie";
 
-const secret = new Date().toISOString().split("T")[0];
-
+/**
+ *
+ * @param form
+ * @returns {Promise<{success: boolean, message?: string, matricNo?: string}>} An object containing the success status and the matric number if successful
+ */
 export async function ImaluumLogin(form: {
   username: string;
   password: string;
-  rememberMe?: boolean;
-}) {
+}): Promise<{ success: boolean; message?: string; matricNo?: string }> {
   return await Sentry.withServerActionInstrumentation(
     "imaluum-login",
     {
@@ -57,10 +57,7 @@ export async function ImaluumLogin(form: {
         const cookieStore = cookieJar.toJSON().cookies;
 
         if (cookieStore.length === 0) {
-          return {
-            success: false,
-            message: "Invalid username or password",
-          };
+          throw new Error("Invalid credentials!");
         }
 
         for (const cookie of cookieStore) {
@@ -70,32 +67,6 @@ export async function ImaluumLogin(form: {
               name: "MOD_AUTH_CAS",
               value: cookie.value,
               expires: new Date(Date.now() + 3600000),
-            });
-
-            const token = await new SignJWT({
-              username: form.username,
-              cookie: cookie.value,
-            })
-              .setProtectedHeader({ alg: "HS256" })
-              .setJti(nanoid())
-              .setIssuedAt()
-              .setIssuer("nrmnqdds")
-              .setSubject(
-                JSON.stringify({
-                  username: form.username,
-                  password: form.password,
-                })
-              )
-              .setExpirationTime("31d")
-              .sign(new TextEncoder().encode(secret));
-
-            cookies().set({
-              name: "imaluum-session",
-              value: token,
-              httpOnly: true,
-              sameSite: "strict",
-              secure: process.env.NODE_ENV === "production",
-              expires: new Date(Date.now() + 31 * 24 * 60 * 60 * 1000),
             });
 
             break;
@@ -120,7 +91,6 @@ export async function ImaluumLogout() {
     cookies().delete("MOD_AUTH_CAS");
     cookies().delete("XSRF-TOKEN");
     cookies().delete("laravel_session");
-    cookies().delete("imaluum-session");
 
     return {
       success: true,

@@ -22,12 +22,11 @@ export default function Timetable({ events }: TimetableProps) {
 
     for (const event of events) {
       // console.log("event", event);
-      if (event.timestamps[0].day < startDay)
-        startDay = event.timestamps[0].day;
-      if (event.timestamps[0].day > endDay) endDay = event.timestamps[0].day;
-      const x = moment(event.timestamps[0].start, "HH:mm:ss").get("hours");
+      if (event.timestamps.day < startDay) startDay = event.timestamps.day;
+      if (event.timestamps.day > endDay) endDay = event.timestamps.day;
+      const x = moment(event.timestamps.start, "HH:mm:ss").get("hours");
       if (x < startHour) startHour = x;
-      const y = moment(event.timestamps[0].end, "HH:mm:ss").get("hours");
+      const y = moment(event.timestamps.end, "HH:mm:ss").get("hours");
       if (y > endHour) endHour = y;
     }
 

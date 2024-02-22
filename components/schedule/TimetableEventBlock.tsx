@@ -3,7 +3,7 @@ import moment from "moment";
 interface TimetableEventBlockProps {
   event: Subject;
   config: TimetableConfig;
-  onClick?: (event: Subject) => void;
+  onClick: (event: Subject) => void;
 }
 
 export default function TimetableEventBlock({
@@ -11,8 +11,8 @@ export default function TimetableEventBlock({
   config,
   onClick,
 }: TimetableEventBlockProps) {
-  const startMoment = moment(event.timestamps[0].start, "HH:mm:ss");
-  const endMoment = moment(event.timestamps[0].end, "HH:mm:ss");
+  const startMoment = moment(event.timestamps.start, "HH:mm:ss");
+  const endMoment = moment(event.timestamps.end, "HH:mm:ss");
   const numberOfDays = config.endDay - config.startDay + 1;
 
   const top =
@@ -31,7 +31,7 @@ export default function TimetableEventBlock({
     5;
 
   const left = `calc(${
-    (100 / numberOfDays) * (event.timestamps[0].day - config.startDay)
+    (100 / numberOfDays) * (event.timestamps.day - config.startDay)
   }% )`;
 
   const width = `calc(${100 / numberOfDays}% - 5px)`;
@@ -49,10 +49,10 @@ export default function TimetableEventBlock({
       onClick={() => onClick(event)}
     >
       <p className="text-[8px] top-1 left-1 absolute flex sm:hidden">
-        {moment(event.timestamps[0].start, "HH:mm:ss").format("h:mma")}
+        {moment(event.timestamps.start, "HH:mm:ss").format("h:mma")}
       </p>
       <p className="text-[8px] bottom-1 right-1 absolute flex sm:hidden">
-        {moment(event.timestamps[0].end, "HH:mm:ss").format("h:mma")}
+        {moment(event.timestamps.end, "HH:mm:ss").format("h:mma")}
       </p>
       <p className="text-[8px] hidden sm:block md:text-xs md:font-bold">
         {event.courseCode}
@@ -66,8 +66,8 @@ export default function TimetableEventBlock({
         </p>
       </div>
       <p className="text-[8px] hidden sm:block md:text-xs md:font-bold">
-        {moment(event.timestamps[0].start, "HH:mm:ss").format("h:mma")} -{" "}
-        {moment(event.timestamps[0].end, "HH:mm:ss").format("h:mma")}
+        {moment(event.timestamps.start, "HH:mm:ss").format("h:mma")} -{" "}
+        {moment(event.timestamps.end, "HH:mm:ss").format("h:mma")}
       </p>
     </button>
   );

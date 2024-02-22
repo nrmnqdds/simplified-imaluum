@@ -21,53 +21,59 @@ const predefinedColors = [
   "bg-purple-200 text-purple-700 border-purple-500 hover:bg-purple-300 hover:text-purple-800",
 ];
 
+type ScheduleProps = {
+  schedule: Subject[];
+  sessionName: string;
+  sessionQuery: string;
+};
+
 const ScheduleSwitcher = ({
   setEvents,
   courses,
-}: { setEvents: any; courses: any }) => {
+}: { setEvents: any; courses: ScheduleProps[] }) => {
   const [selected, setSelected] = useState(courses[0]?.sessionName);
   const [coloredEvents, setColoredEvents] = useState<Subject[]>();
 
-  useEffect(() => {
-    const titleToColorMap = {}; // Map event titles to colors
+  // useEffect(() => {
+  //   const titleToColorMap = {}; // Map event titles to colors
 
-    const mappedEvents = courses.map((course) => {
-      const eventsWithColor = course?.schedule.map((event) => {
-        let _color = titleToColorMap[event.courseCode];
-        if (!_color) {
-          // If no color assigned for this title, find an available color
-          const availableColors = predefinedColors.filter(
-            (c) => !Object.values(titleToColorMap).includes(c)
-          );
+  //   const mappedEvents = courses.map((course) => {
+  //     const eventsWithColor = course?.schedule.map((event) => {
+  //       let _color = titleToColorMap[event.courseCode];
+  //       if (!_color) {
+  //         // If no color assigned for this title, find an available color
+  //         const availableColors = predefinedColors.filter(
+  //           (c) => !Object.values(titleToColorMap).includes(c)
+  //         );
 
-          if (availableColors.length > 0) {
-            // If there are available colors, pick one randomly
-            const randomColorIndex = Math.floor(
-              Math.random() * availableColors.length
-            );
-            _color = availableColors[randomColorIndex];
-          } else {
-            // If all colors have been used, assign a random color from predefinedColors
-            const randomColorIndex = Math.floor(
-              Math.random() * predefinedColors.length
-            );
-            _color = predefinedColors[randomColorIndex];
-          }
+  //         if (availableColors.length > 0) {
+  //           // If there are available colors, pick one randomly
+  //           const randomColorIndex = Math.floor(
+  //             Math.random() * availableColors.length
+  //           );
+  //           _color = availableColors[randomColorIndex];
+  //         } else {
+  //           // If all colors have been used, assign a random color from predefinedColors
+  //           const randomColorIndex = Math.floor(
+  //             Math.random() * predefinedColors.length
+  //           );
+  //           _color = predefinedColors[randomColorIndex];
+  //         }
 
-          // Store the assigned color for this title
-          titleToColorMap[event.courseCode] = _color;
-        }
-        return {
-          ...event,
-          color: _color,
-        };
-      });
+  //         // Store the assigned color for this title
+  //         titleToColorMap[event.courseCode] = _color;
+  //       }
+  //       return {
+  //         ...event,
+  //         color: _color,
+  //       };
+  //     });
 
-      return { ...course, schedule: eventsWithColor };
-    });
+  //     return { ...course, schedule: eventsWithColor };
+  //   });
 
-    setColoredEvents(mappedEvents);
-  }, [courses]);
+  //   setColoredEvents(mappedEvents);
+  // }, [courses]);
 
   useEffect(() => {
     // console.log("selected", selected);
