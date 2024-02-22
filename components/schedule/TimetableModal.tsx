@@ -37,7 +37,7 @@ export default function TimetableModal({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-background border-border border-2 border-solid px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 {/* <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                     <CheckIcon
                       className="h-6 w-6 text-green-600"
@@ -47,50 +47,50 @@ export default function TimetableModal({
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title
                     as="h3"
-                    className="text-base font-semibold leading-6 text-zinc-900"
+                    className="text-base font-semibold leading-6 text-secondary-foreground"
                   >
                     {currentSubject?.courseCode}
                   </Dialog.Title>
                   <div className="mt-0">
-                    <p className="text-sm text-zinc-800">
+                    <p className="text-sm text-foreground">
                       {currentSubject?.courseName}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1 items-start mt-5">
-                    <p className="text-sm text-zinc-800">
-                      <span className="text-sm text-zinc-900 font-bold">
+                    <p className="text-sm text-foreground">
+                      <span className="text-sm text-secondary-foreground font-bold">
                         Time:{" "}
                       </span>
                       {moment(
-                        currentSubject?.timestamps[0].start,
+                        currentSubject?.timestamps.start,
                         "HH:mm:ss"
                       ).format("h:mma")}{" "}
                       -{" "}
                       {moment(
-                        currentSubject?.timestamps[0].end,
+                        currentSubject?.timestamps.end,
                         "HH:mm:ss"
                       ).format("h:mma")}
                     </p>
-                    <p className="text-sm text-zinc-800">
-                      <span className="text-sm text-zinc-900 font-bold">
+                    <p className="text-sm text-foreground">
+                      <span className="text-sm text-secondary-foreground font-bold">
                         Lecturer:{" "}
                       </span>
                       {currentSubject?.lecturer}
                     </p>
-                    <p className="text-sm text-zinc-800">
-                      <span className="text-sm text-zinc-900 font-bold">
+                    <p className="text-sm text-foreground">
+                      <span className="text-sm text-secondary-foreground font-bold">
                         Section:{" "}
                       </span>
                       {currentSubject?.section}
                     </p>
-                    <p className="text-sm text-zinc-800">
-                      <span className="text-sm text-zinc-900 font-bold">
+                    <p className="text-sm text-foreground">
+                      <span className="text-sm text-secondary-foreground font-bold">
                         Credit Hour:{" "}
                       </span>
                       {currentSubject?.chr}
                     </p>
-                    <p className="text-sm text-zinc-800">
-                      <span className="text-sm text-zinc-900 font-bold">
+                    <p className="text-sm text-foreground">
+                      <span className="text-sm text-secondary-foreground font-bold">
                         Location:{" "}
                       </span>
                       {currentSubject?.venue}

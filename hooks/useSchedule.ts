@@ -8,19 +8,21 @@ type ScheduleProps = {
 };
 
 type ScheduleType = {
-  schedule: ScheduleProps[] | null | undefined;
+  schedule: ScheduleProps[];
   setSchedule: (schedule: ScheduleProps[]) => void;
+  reset: () => void;
 };
 
 const useSchedule = create(
   persist<ScheduleType>(
     (set) => ({
-      schedule: null,
-      setSchedule: (schedule) => set({ schedule }),
+      schedule: [],
+      setSchedule: (schedule: ScheduleProps[]) => set({ schedule }),
+      reset: () => set({ schedule: [] }),
     }),
     {
       name: "schedule-storage",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

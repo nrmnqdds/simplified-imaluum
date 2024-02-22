@@ -3,15 +3,23 @@
 import { IMALUUM_SCHEDULE_PAGE } from "@/constants";
 import * as Sentry from "@sentry/nextjs";
 import got from "got";
-import { jwtVerify } from "jose";
 import moment from "moment";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { parse } from "node-html-parser";
-import { ImaluumLogin } from "./auth";
 
-const secret = new Date().toISOString().split("T")[0];
+const predefinedColors = [
+  "bg-red-200 text-red-700 border-red-500 hover:bg-red-300 hover:text-red-800",
+  "bg-sky-200 text-sky-700 border-sky-500 hover:bg-sky-300 hover:text-sky-800",
+  "bg-fuchsia-200 text-fuchsia-700 border-fuchsia-500 hover:bg-fuchsia-300 hover:text-fuchsia-800",
+  "bg-orange-200 text-orange-700 border-orange-500 hover:bg-orange-300 hover:text-orange-800",
+  "bg-lime-200 text-lime-700 border-lime-500 hover:bg-lime-300 hover:text-lime-800",
+  "bg-yellow-200 text-yellow-700 border-yellow-500 hover:bg-yellow-300 hover:text-yellow-800",
+  "bg-emerald-200 text-emerald-700 border-emerald-500 hover:bg-emerald-300 hover:text-emerald-800",
+  "bg-pink-200 text-pink-700 border-pink-500 hover:bg-pink-300 hover:text-pink-800",
+  "bg-indigo-200 text-indigo-700 border-indigo-500 hover:bg-indigo-300 hover:text-indigo-800",
+  "bg-stone-200 text-stone-700 border-stone-500 hover:bg-stone-300 hover:text-stone-800",
+  "bg-purple-200 text-purple-700 border-purple-500 hover:bg-purple-300 hover:text-purple-800",
+];
 
 /**
  * A helper function to get the schedule from a single session
@@ -19,14 +27,17 @@ const secret = new Date().toISOString().split("T")[0];
  * @param {string} sessionName
  * @returns {Promise<{sessionQuery: string, sessionName: string, schedule: Subject[]}>} An object containing the schedule for a single session
  */
-export const getScheduleFromSession = async (
+const getScheduleFromSession = async (
   sessionQuery: string,
   sessionName: string
-): Promise<{
-  sessionQuery: string;
-  sessionName: string;
-  schedule: Subject[];
-}> => {
+): Promise<
+  | {
+      sessionQuery: string;
+      sessionName: string;
+      schedule: Subject[];
+    }
+  | undefined
+> => {
   return await Sentry.withServerActionInstrumentation(
     "get-schedule-from-session",
     {
@@ -35,37 +46,8 @@ export const getScheduleFromSession = async (
     async () => {
       const url = `https://imaluum.iium.edu.my/MyAcademic/schedule${sessionQuery}`;
 
-      if (!cookies().get("MOD_AUTH_CAS")) {
-        console.log("No cookies, logging in...");
-        const token = cookies().get("imaluum-session");
-
-        if (!token) {
-          revalidatePath("/", "layout");
-          redirect("/");
-        }
-
-        const payload = await jwtVerify(
-          token.value,
-          new TextEncoder().encode(secret)
-        );
-
-        console.log(payload.payload);
-        if (payload.payload.iss !== "nrmnqdds") {
-          revalidatePath("/", "layout");
-          redirect("/");
-        }
-
-        const creds = JSON.parse(payload.payload.sub);
-
-        await ImaluumLogin({
-          username: creds.username,
-          password: atob(creds.password),
-        });
-      }
-
       try {
         if (cookies().get("MOD_AUTH_CAS")) {
-          console.log("got cookies, directly going into the page");
           const response = await got(url, {
             headers: {
               Cookie: cookies().toString(),
@@ -73,25 +55,30 @@ export const getScheduleFromSession = async (
             https: { rejectUnauthorized: false },
             followRedirect: false,
           });
+          if (!response.body) throw new Error("Failed to go to page");
 
           const root = parse(response.body);
+          if (!root) throw new Error("Failed to parse the body");
 
           const table = root.querySelector(".box-body table.table.table-hover");
-          const rows = table?.querySelectorAll("tr");
+          if (!table) throw new Error("No table found!");
 
-          const schedule = [];
+          const rows = table.querySelectorAll("tr");
+          if (!rows) throw new Error("No row available");
+
+          const schedule: Subject[] = [];
 
           for (const row of rows) {
             const tds = row.querySelectorAll("td");
 
-            if (tds.length === 0) continue;
+            if (tds.length === 0 || !tds) continue;
 
             // Check if tds array has enough elements
             if (tds.length === 9) {
               const courseCode = tds[0].textContent.trim();
               const courseName = tds[1].textContent.trim();
-              const section = parseInt(tds[2].textContent.trim(), 10);
-              const chr = parseInt(tds[3].textContent.trim(), 10);
+              const section = tds[2].textContent.trim();
+              const chr = tds[3].textContent.trim();
               const days = tds[5].textContent
                 .trim()
                 .replace(/ /gi, "")
@@ -105,28 +92,46 @@ export const getScheduleFromSession = async (
                   if (x === "F" || x.includes("FRI")) return 5;
                   if (x.includes("SAT")) return 6;
                 });
+              if (!days) continue;
 
               // Split the days array if it has more than one item
               const splitDays = days.length > 1 ? [...days] : days;
+              if (!splitDays) continue;
+
               const timetemp = tds[6].textContent;
-              if (timetemp === "" || !timetemp) continue;
+              if (!timetemp) continue;
+
               const time = timetemp.trim().replace(/ /gi, "").split("-");
               const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
               const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
               const venue = tds[7].textContent.trim();
               const lecturer = tds[8].textContent.trim();
 
-              const color = "";
+              let color = "";
+
+              for (const i of schedule) {
+                if (i.courseCode === courseCode) {
+                  color = i.color;
+                }
+              }
+
+              if (!color) {
+                color =
+                  predefinedColors[
+                    Math.floor(Math.random() * predefinedColors.length)
+                  ];
+              }
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {
+                if (!splitDay) continue;
                 schedule.push({
                   id: `${courseCode}-${section}-${splitDays.indexOf(splitDay)}`,
                   courseCode,
                   courseName,
                   section,
                   chr,
-                  timestamps: [{ start, end, day: splitDay }],
+                  timestamps: { start, end, day: splitDay },
                   venue,
                   color,
                   lecturer,
@@ -139,7 +144,6 @@ export const getScheduleFromSession = async (
               const courseName = schedule[schedule.length - 1].courseName;
               const section = schedule[schedule.length - 1].section;
               const chr = schedule[schedule.length - 1].chr;
-
               const days = tds[0].textContent
                 .trim()
                 .replace(/ /gi, "")
@@ -153,27 +157,46 @@ export const getScheduleFromSession = async (
                   if (x === "F" || x.includes("FRI")) return 5;
                   if (x.includes("SAT")) return 6;
                 });
+
+              if (!days) continue;
               // Split the days array if it has more than one item
               const splitDays = days.length > 1 ? [...days] : days;
+              if (!splitDays) continue;
+
               const timetemp = tds[1].textContent;
-              if (timetemp === "" || !timetemp) continue;
+              if (!timetemp) continue;
+
               const time = timetemp.trim().replace(/ /gi, "").split("-");
               const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
               const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
               const venue = tds[2].textContent.trim();
               const lecturer = tds[3].textContent.trim();
 
-              const color = "";
+              let color = "";
+
+              for (const i of schedule) {
+                if (i.courseCode === courseCode) {
+                  color = i.color;
+                }
+              }
+
+              if (!color) {
+                color =
+                  predefinedColors[
+                    Math.floor(Math.random() * predefinedColors.length)
+                  ];
+              }
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {
+                if (!splitDay) continue;
                 schedule.push({
                   id: `${courseCode}-${section}-${splitDays.indexOf(splitDay)}`,
                   courseCode,
                   courseName,
                   section,
                   chr,
-                  timestamps: [{ start, end, day: splitDay }],
+                  timestamps: { start, end, day: splitDay },
                   venue,
                   color,
                   lecturer,
@@ -181,8 +204,11 @@ export const getScheduleFromSession = async (
               }
             }
           }
-
-          return { sessionQuery, sessionName, schedule };
+          if (schedule && Array.isArray(schedule)) {
+            return { sessionQuery, sessionName, schedule };
+          }
+          // Handle the situation where schedule is either null or empty
+          throw new Error("Invalid schedule");
         }
       } catch (err) {
         console.log("err", err);
@@ -223,30 +249,47 @@ export async function GetSchedule(): Promise<{
 
         const sessionList = sessionBody.map((element) => {
           const row = element;
-          const sessionName = row.querySelector("a").textContent.trim();
-          const sessionQuery = row.querySelector("a").getAttribute("href");
+          const sessionSelector = row.querySelector("a");
+
+          if (!sessionSelector) throw new Error("No session selector found!");
+
+          const sessionName: string = sessionSelector.textContent.trim();
+          const sessionQuery: string =
+            sessionSelector.getAttribute("href") || "#";
+
           return { sessionName, sessionQuery };
         });
 
         const results = await Promise.all(
-          sessionList.map(({ sessionQuery, sessionName }) =>
-            getScheduleFromSession(
-              sessionQuery as string,
-              sessionName as string
+          (sessionList as { sessionName: string; sessionQuery: string }[])
+            .filter((session) => session !== undefined)
+            .map(({ sessionName, sessionQuery }) =>
+              getScheduleFromSession(sessionQuery, sessionName)
             )
-          )
         );
 
-        const resultData = results.map((result) => ({
-          schedule: result.schedule,
-          sessionName: result.sessionName,
-          sessionQuery: result.sessionQuery,
-        }));
+        if (!results || results.length === 0) {
+          throw new Error("Invalid schedule");
+        }
 
-        return {
-          success: true,
-          data: resultData,
-        };
+        const resultData = [];
+        for (const result of results) {
+          if (!result) continue;
+          resultData.push({
+            schedule: result.schedule,
+            sessionName: result.sessionName,
+            sessionQuery: result.sessionQuery,
+          });
+        }
+
+        if (resultData && Array.isArray(resultData)) {
+          return {
+            success: true,
+            data: resultData,
+          };
+        }
+
+        throw new Error("No schedule found");
       } catch (err) {
         console.log("err", err);
         throw new Error("Failed to fetch schedule");

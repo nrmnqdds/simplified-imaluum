@@ -14,7 +14,7 @@ type Subject = {
 type WeekTime = {
   start: string;
   end: string;
-  day: number;
+  day: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 };
 
 type TimetableConfig = {

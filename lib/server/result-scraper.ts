@@ -91,7 +91,7 @@ const getResultFromSession = async (
  */
 export async function GetResult(): Promise<{
   success: boolean;
-  data: Result[];
+  data: Result[] | null;
 }> {
   return await Sentry.withServerActionInstrumentation(
     "result-scraper",
@@ -109,10 +109,12 @@ export async function GetResult(): Promise<{
         });
 
         const root = parse(response.body);
+        if (!root) throw new Error("Failed to parse the page body");
 
         const sessionBody = root.querySelectorAll(
           ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
         );
+        if (!sessionBody) throw new Error("Failed to fetch session body");
 
         const sessionList = [];
 

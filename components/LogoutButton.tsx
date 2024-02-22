@@ -13,19 +13,20 @@ import toast from "react-hot-toast";
 const LogoutButton = () => {
   const queryClient = useQueryClient();
 
-  const { profile, setProfile } = useProfile();
-  const { result, setResult } = useResult();
-  const { schedule, setSchedule } = useSchedule();
+  const { reset: ProfileReset } = useProfile();
+  const { reset: ResultReset } = useResult();
+  const { reset: ScheduleReset } = useSchedule();
 
   const router = useRouter();
 
   const logoutMutation = useMutation({
     mutationFn: ImaluumLogout,
     onSuccess: () => {
-      setProfile(null);
-      setResult(null);
-      setSchedule(null);
+      ProfileReset(); // Reset profile
+      ResultReset(); // Reset result
+      ScheduleReset(); // Reset schedule
       queryClient.invalidateQueries();
+      sessionStorage.clear();
       router.refresh();
       toast.success("Logged out successfully");
     },

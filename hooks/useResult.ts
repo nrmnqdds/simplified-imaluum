@@ -2,19 +2,21 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type ResultType = {
-  result: Result[] | null | undefined;
-  setResult: (result: Result[]) => void;
+  result: Result[] | null;
+  setResult: (result: Result[] | null) => void;
+  reset: () => void;
 };
 
 const useResult = create(
   persist<ResultType>(
     (set) => ({
-      result: null,
-      setResult: (result) => set({ result }),
+      result: [],
+      setResult: (result: Result[] | null) => set({ result }),
+      reset: () => set({ result: [] }),
     }),
     {
       name: "result-storage",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
