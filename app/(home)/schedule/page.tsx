@@ -6,7 +6,7 @@ import useSchedule from "@/hooks/useSchedule";
 import { useState } from "react";
 
 const Page = () => {
-  const [subjects, setSubjects] = useState<Courses[]>();
+  const [subjects, setSubjects] = useState<Subject[]>();
   const { schedule } = useSchedule();
 
   return (
@@ -14,7 +14,7 @@ const Page = () => {
       <div className="w-fit p-2 flex gap-5">
         <ScheduleSwitcher courses={schedule} setEvents={setSubjects} />
       </div>
-      <Timetable events={!subjects ? [] : subjects[0].schedule} />
+      <Timetable events={!subjects || subjects.length === 0 ? [] : subjects} />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/common/cn";
 import moment from "moment";
 
 interface TimetableEventBlockProps {
@@ -39,7 +40,10 @@ export default function TimetableEventBlock({
   return (
     <button
       type="button"
-      className={`absolute rounded-md duration-100 p-1 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${event.color}`}
+      className={cn(
+        "absolute rounded-md duration-100 p-1 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        event.color
+      )}
       style={{
         top,
         height,
