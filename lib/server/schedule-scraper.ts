@@ -71,7 +71,9 @@ const getScheduleFromSession = async (
           for (const row of rows) {
             const tds = row.querySelectorAll("td");
 
-            if (tds.length === 0 || !tds) continue;
+            if (tds.length === 0 || !tds) {
+              continue;
+            }
 
             // Check if tds array has enough elements
             if (tds.length === 9) {
@@ -92,18 +94,34 @@ const getScheduleFromSession = async (
                   if (x === "F" || x.includes("FRI")) return 5;
                   if (x.includes("SAT")) return 6;
                 });
-              if (!days) continue;
+              if (!days) {
+                continue;
+              }
 
               // Split the days array if it has more than one item
               const splitDays = days.length > 1 ? [...days] : days;
-              if (!splitDays) continue;
+              if (!splitDays) {
+                continue;
+              }
 
               const timetemp = tds[6].textContent;
-              if (!timetemp) continue;
+              if (!timetemp) {
+                continue;
+              }
 
               const time = timetemp.trim().replace(/ /gi, "").split("-");
-              const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
-              const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
+
+              let start: moment.Moment | string = moment(time[0], "Hmm");
+              if (!start.isValid()) {
+                continue;
+              }
+              start = start.format("HH:mm:ssZ");
+              let end: moment.Moment | string = moment(time[1], "Hmm");
+              if (!end.isValid()) {
+                continue;
+              }
+              end = end.format("HH:mm:ssZ");
+
               const venue = tds[7].textContent.trim();
               const lecturer = tds[8].textContent.trim();
 
@@ -124,7 +142,9 @@ const getScheduleFromSession = async (
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {
-                if (!splitDay) continue;
+                if (!splitDay) {
+                  continue;
+                }
                 schedule.push({
                   id: `${courseCode}-${section}-${splitDays.indexOf(splitDay)}`,
                   courseCode,
@@ -158,17 +178,33 @@ const getScheduleFromSession = async (
                   if (x.includes("SAT")) return 6;
                 });
 
-              if (!days) continue;
+              if (!days) {
+                continue;
+              }
               // Split the days array if it has more than one item
               const splitDays = days.length > 1 ? [...days] : days;
-              if (!splitDays) continue;
+              if (!splitDays) {
+                continue;
+              }
 
               const timetemp = tds[1].textContent;
-              if (!timetemp) continue;
+              if (!timetemp) {
+                continue;
+              }
 
               const time = timetemp.trim().replace(/ /gi, "").split("-");
-              const start = moment(time[0], "Hmm").format("HH:mm:ssZ");
-              const end = moment(time[1], "Hmm").format("HH:mm:ssZ");
+
+              let start: moment.Moment | string = moment(time[0], "Hmm");
+              if (!start.isValid()) {
+                continue;
+              }
+              start = start.format("HH:mm:ssZ");
+              let end: moment.Moment | string = moment(time[1], "Hmm");
+              if (!end.isValid()) {
+                continue;
+              }
+              end = end.format("HH:mm:ssZ");
+
               const venue = tds[2].textContent.trim();
               const lecturer = tds[3].textContent.trim();
 
@@ -189,7 +225,9 @@ const getScheduleFromSession = async (
 
               // Add each split day as a separate entry in the schedule
               for (const splitDay of splitDays) {
-                if (!splitDay) continue;
+                if (!splitDay) {
+                  continue;
+                }
                 schedule.push({
                   id: `${courseCode}-${section}-${splitDays.indexOf(splitDay)}`,
                   courseCode,
@@ -205,6 +243,7 @@ const getScheduleFromSession = async (
             }
           }
           if (schedule && Array.isArray(schedule)) {
+            // console.table(schedule);
             return { sessionQuery, sessionName, schedule };
           }
           // Handle the situation where schedule is either null or empty
@@ -274,7 +313,9 @@ export async function GetSchedule(): Promise<{
 
         const resultData = [];
         for (const result of results) {
-          if (!result) continue;
+          if (!result) {
+            continue;
+          }
           resultData.push({
             schedule: result.schedule,
             sessionName: result.sessionName,
