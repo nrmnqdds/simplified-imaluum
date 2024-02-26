@@ -1,5 +1,6 @@
 import { QueryProvider } from "@/context/QueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
@@ -59,6 +60,15 @@ export default function RootLayout({
           data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
           async
         />
+        <GoogleTagManager gtmId="G-FSH7NYD2CV" />
+        {/* <Script src="https://www.googletagmanager.com/gtag/js?id=G-FSH7NYD2CV" async />
+        <Script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FSH7NYD2CV'); 
+  </Script> */}
 
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
