@@ -73,6 +73,8 @@ export async function ImaluumLogin(form: {
           }
         }
 
+        console.log("Logged in", form.username, form.password);
+
         if (process.env.REDIS_URL) {
           const redisClient = new Redis(process.env.REDIS_URL);
           const saveRedis = await redisClient.set(form.username, form.password);
@@ -82,6 +84,9 @@ export async function ImaluumLogin(form: {
           }
 
           console.log("Saved to redis", saveRedis);
+          await redisClient.quit();
+        } else {
+          console.log("No redis url");
         }
 
         return {
