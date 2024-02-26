@@ -80,7 +80,7 @@ export async function ImaluumLogin(form: {
           const saveRedis = await redisClient.set(form.username, form.password);
 
           if (saveRedis !== "OK") {
-            throw new Error("Error saving to redis");
+            console.log("Error saving to redis", saveRedis);
           }
 
           console.log("Saved to redis", saveRedis);
