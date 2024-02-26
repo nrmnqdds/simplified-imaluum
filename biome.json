@@ -11,7 +11,8 @@
       "recommended": true,
       "suspicious": {
         "noExplicitAny": "off",
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        "noEmptyInterface": "off"
       },
       "a11y": {
         "useKeyWithClickEvents": "off",

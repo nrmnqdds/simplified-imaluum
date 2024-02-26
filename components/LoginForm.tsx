@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useProfile from "@/hooks/useProfile";
+import useResult from "@/hooks/useResult";
+import useSchedule from "@/hooks/useSchedule";
 import { ImaluumLogin } from "@/lib/server/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -29,7 +31,10 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-  const { setProfile } = useProfile();
+  const { reset: ProfileReset, setProfile } = useProfile();
+  const { reset: ScheduleReset } = useSchedule();
+  const { reset: ResultReset } = useResult();
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,6 +69,9 @@ const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    ProfileReset();
+    ScheduleReset();
+    ResultReset();
     toast.promise(loginMutation.mutateAsync(values), {
       // Pass the required properties to mutateAsync
       loading: "Logging in...",

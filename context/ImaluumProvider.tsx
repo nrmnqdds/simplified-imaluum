@@ -1,14 +1,13 @@
 "use client";
 
+import LoadingScreen from "@/components/loading-screen";
 import useProfile from "@/hooks/useProfile";
 import useResult from "@/hooks/useResult";
 import useSchedule from "@/hooks/useSchedule";
 import { GetUserProfile } from "@/lib/server/profile-scraper";
 import { GetResult } from "@/lib/server/result-scraper";
 import { GetSchedule } from "@/lib/server/schedule-scraper";
-import LOGO from "@/public/logo-landing-page.png";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { profile, setProfile } = useProfile();
@@ -36,7 +35,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         return data.data;
       }
     },
-    retry: 3,
+    retry: 5,
   });
 
   const scheduleData = useQuery({
@@ -48,7 +47,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         return data.data;
       }
     },
-    retry: 3,
+    retry: 5,
   });
 
   return scheduleData.isSuccess &&
@@ -56,20 +55,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
     resultData.isSuccess ? (
     <>{children}</>
   ) : (
-    <div className="w-full h-screen bg-background flex items-center justify-center">
-      <div className="flex flex-col items-center gap-y-4">
-        <Image
-          src={LOGO}
-          alt="logo"
-          width={200}
-          height={200}
-          className="object-contain animate-spin"
-        />
-        <div className="text-2xl font-semibold text-zinc-50">
-          Loading your data...
-        </div>
-      </div>
-    </div>
+    <LoadingScreen />
   );
 };
 
