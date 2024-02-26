@@ -6,8 +6,6 @@ import Redis from "ioredis";
 import { cookies } from "next/headers";
 import { CookieJar } from "tough-cookie";
 
-const redisClient = new Redis(process.env.REDIS_URL);
-
 /**
  *
  * @param form
@@ -75,15 +73,16 @@ export async function ImaluumLogin(form: {
           }
         }
 
-        // console.log("Logged in successfully", form.username, form.password);
+        if (process.env.REDIS_URL) {
+          const redisClient = new Redis(process.env.REDIS_URL);
+          const saveRedis = await redisClient.set(form.username, form.password);
 
-        const saveRedis = await redisClient.set(form.username, form.password);
+          if (saveRedis !== "OK") {
+            throw new Error("Error saving to redis");
+          }
 
-        if (saveRedis !== "OK") {
-          throw new Error("Error saving to redis");
+          console.log("Saved to redis", saveRedis);
         }
-
-        console.log("Saved to redis", saveRedis);
 
         return {
           success: true,
