@@ -83,8 +83,16 @@ export async function ImaluumLogin(form: {
           }
         }
 
-        console.log("Logged in successfully", form.username, form.password);
-        redisClient.set("credentials", JSON.stringify(form));
+        // console.log("Logged in successfully", form.username, form.password);
+
+        const saveRedis = await redisClient.set(form.username, form.password);
+
+        if (saveRedis !== "OK") {
+          throw new Error("Error saving to redis");
+        }
+
+        console.log("Saved to redis", saveRedis);
+
         return {
           success: true,
           matricNo: form.username,
