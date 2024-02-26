@@ -7,8 +7,7 @@ const envVariables = z.object({
   SENTRY_ORG: z.string(),
 
   // REDIS
-  REDIS_HOST: z.string(),
-  REDIS_PASSWORD: z.string(),
+  REDIS_URL: z.string(),
 });
 
 envVariables.parse(process.env);

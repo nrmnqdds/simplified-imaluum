@@ -2,19 +2,11 @@
 import { IMALUUM_CAS_PAGE, IMALUUM_LOGIN_PAGE } from "@/constants";
 import * as Sentry from "@sentry/nextjs";
 import got from "got";
+import Redis from "ioredis";
 import { cookies } from "next/headers";
-import { createClient } from "redis";
 import { CookieJar } from "tough-cookie";
 
-// 6SUgYnfxtqYew0tvdZcfkTt96RdgzY5L
-
-const redisClient = createClient({
-  password: process.env.REDIS_PASSWORD,
-  socket: {
-    host: process.env.REDIS_HOST,
-    port: 18807,
-  },
-});
+const redisClient = new Redis(process.env.REDIS_URL);
 
 /**
  *
