@@ -8,7 +8,6 @@ import { GetUserProfile } from "@/lib/server/profile-scraper";
 import { GetResult } from "@/lib/server/result-scraper";
 import { GetSchedule } from "@/lib/server/schedule-scraper";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const { profile, setProfile } = useProfile();
@@ -36,7 +35,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         return data.data;
       }
     },
-    retry: 3,
+    retry: 5,
   });
 
   const scheduleData = useQuery({
@@ -48,7 +47,7 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
         return data.data;
       }
     },
-    retry: 3,
+    retry: 5,
   });
 
   return scheduleData.isSuccess &&
