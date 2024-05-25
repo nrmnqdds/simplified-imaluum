@@ -44,13 +44,27 @@ const getResultFromSession = async (
 
         const tds = rows[rows.length - 1].querySelectorAll("td");
 
-        const neutralized1 = tds[1].textContent.trim().split(/\s{2,}/);
-        const gpaValue = neutralized1[2];
-        const status = neutralized1[3];
-        const remarks = neutralized1[4];
+        // const neutralized1 = tds[1].textContent?.trim().split(/\s{2,}/);
+        // const neutralized1 = tds[1].textContent?.trim().split(/\s{2,}/) || [];
+        const _neutralized1 = tds[1].textContent;
+        let neutralized1: string[];
+        let gpaValue = "N/A";
+        let status = "N/A";
+        let remarks = "N/A";
+        if (_neutralized1) {
+          neutralized1 = _neutralized1.trim().split(/\s{2,}/) || [];
+          gpaValue = neutralized1[2];
+          status = neutralized1[3];
+          remarks = neutralized1[4];
+        }
 
-        const neutralized2 = tds[3].textContent.trim().split(/\s{2,}/);
-        const cgpaValue = neutralized2[2];
+        const _neutralized2 = tds[3].textContent;
+        let neutralized2: string[];
+        let cgpaValue = "N/A";
+        if (_neutralized2) {
+          neutralized2 = _neutralized2.trim().split(/\s{2,}/) || [];
+          cgpaValue = neutralized2[2];
+        }
 
         // Remove the last row
         rows.pop();
@@ -62,7 +76,7 @@ const getResultFromSession = async (
           if (tds.length >= 4) {
             const courseCode = tds[0].textContent.trim();
             const courseName = tds[1].textContent.trim();
-            const courseGrade = tds[2].textContent.trim();
+            const courseGrade = tds[2].textContent.trim() || "N/A";
             const courseCredit = tds[3].textContent.trim();
             result.push({ courseCode, courseName, courseGrade, courseCredit });
           }
@@ -114,7 +128,9 @@ export async function GetResult(): Promise<{
         const sessionBody = root.querySelectorAll(
           ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
         );
+
         if (!sessionBody) throw new Error("Failed to fetch session body");
+        console.log("sessionBody", sessionBody);
 
         const sessionList = [];
 

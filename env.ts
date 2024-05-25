@@ -1,4 +1,4 @@
-import { TypeOf, z } from "zod";
+import { type TypeOf, z } from "zod";
 
 const envVariables = z.object({
   // SENTRY
