@@ -42,7 +42,7 @@ const getResultFromSession = async (
         const result = [];
 
         const tds = rows[rows.length - 1].querySelectorAll("td");
-        console.log("tds: ", tds[0].textContent);
+
         if (
           tds[0].textContent.trim() ===
           "Please contact finance division regarding tuition fees"
@@ -53,6 +53,9 @@ const getResultFromSession = async (
             // Check if tds array has enough elements
             if (tds.length >= 4) {
               const courseCode = tds[0].textContent.trim();
+              if (courseCode.split(/\s{2,}/)[0] === "Total Credit Points") {
+                break;
+              }
               const courseName = tds[1].textContent.trim();
               const courseGrade = tds[2].textContent.trim() || "N/A";
               const courseCredit = tds[3].textContent.trim();
