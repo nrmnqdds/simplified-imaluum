@@ -2,10 +2,16 @@
 
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import FinancialDialog from "@/components/financial-dialog";
 import ImaluumProvider from "@/context/ImaluumProvider";
 import { getDate } from "@/lib/common/time";
 import LOGO from "@/public/logo-landing-page.png";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import {
   Bars3Icon,
   CalendarIcon,
@@ -59,6 +65,7 @@ export default function HomeLayout({
 
   return (
     <ImaluumProvider>
+      <FinancialDialog />
       <div>
         <div className="w-full flex items-center justify-center bg-primary py-1 px-2">
           <h1 className="drop-shadow text-accent text-[10px] sm:text-sm">
@@ -66,13 +73,13 @@ export default function HomeLayout({
             inconvenience. UIA pls support.
           </h1>
         </div>
-        <Transition.Root show={sidebarOpen} as={Fragment}>
+        <Transition show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
             className="relative z-50 lg:hidden"
             onClose={setSidebarOpen}
           >
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
               enterFrom="opacity-0"
@@ -82,10 +89,10 @@ export default function HomeLayout({
               leaveTo="opacity-0"
             >
               <div className="fixed inset-0 bg-gray-900/80" />
-            </Transition.Child>
+            </TransitionChild>
 
             <div className="fixed inset-0 flex">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="transition ease-in-out duration-300 transform"
                 enterFrom="-translate-x-full"
@@ -94,8 +101,8 @@ export default function HomeLayout({
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
-                  <Transition.Child
+                <DialogPanel className="relative mr-16 flex w-full max-w-xs flex-1">
+                  <TransitionChild
                     as={Fragment}
                     enter="ease-in-out duration-300"
                     enterFrom="opacity-0"
@@ -117,7 +124,7 @@ export default function HomeLayout({
                         />
                       </button>
                     </div>
-                  </Transition.Child>
+                  </TransitionChild>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-background px-6 pb-4">
                     <div className="flex h-32 shrink-0 items-center justify-center">
@@ -174,11 +181,11 @@ export default function HomeLayout({
                       </ul>
                     </nav>
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </Dialog>
-        </Transition.Root>
+        </Transition>
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
