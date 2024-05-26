@@ -35,15 +35,6 @@ export async function GetUserProfile(
 
         const root = parse(response.body);
 
-        const financialAlert = root.querySelector("#financialAlert.modal");
-        console.log(financialAlert?.innerHTML);
-
-        if (financialAlert) {
-          // financialAlert.remove();
-          financialAlert.outerHTML.replace(financialAlert.outerHTML, "");
-          console.log(financialAlert?.innerHTML);
-        }
-
         const hiddenTextSelector = root.querySelector(
           ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
         );
