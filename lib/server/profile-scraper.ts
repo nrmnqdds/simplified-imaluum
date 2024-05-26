@@ -1,10 +1,10 @@
 "use server";
 
-import { parse } from "node-html-parser";
-import { cookies } from "next/headers";
 import { IMALUUM_HOME_PAGE } from "@/constants";
-import got from "got";
 import * as Sentry from "@sentry/nextjs";
+import got from "got";
+import { cookies } from "next/headers";
+import { parse } from "node-html-parser";
 
 /**
  * A server function to get the user profile
@@ -34,6 +34,7 @@ export async function GetUserProfile(
         }
 
         const root = parse(response.body);
+
         const hiddenTextSelector = root.querySelector(
           ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
         );

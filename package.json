@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.6.9",
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^2.0.4",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.3",
     "@next/third-parties": "latest",

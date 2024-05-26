@@ -82,7 +82,10 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 mt-10">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-2 mt-10 w-fit"
+      >
         <div className="flex flex-row items-center justify-center gap-2">
           <FormField
             control={form.control}
