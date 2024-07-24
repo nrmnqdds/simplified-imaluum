@@ -46,7 +46,12 @@ export default function ProfileDropdown() {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => router.push("/profile")}
+        >
+          Profile
+        </DropdownMenuItem>
 
         <DropdownMenuItem
           className="cursor-pointer focus:bg-red-600/50"
@@ -56,7 +61,7 @@ export default function ProfileDropdown() {
               localStorage.clear();
               queryClient.invalidateQueries();
               toast.success("Logged out successfully.");
-              router.push("/");
+              router.replace("/");
             }
           }}
         >
