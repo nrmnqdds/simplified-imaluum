@@ -1,12 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "organizeImports": {
     "enabled": true,
-    "ignore": ["/node_modules/**", "/.next/**"]
+    "ignore": [".next", "node_modules"]
   },
   "linter": {
     "enabled": true,
-    "ignore": ["/node_modules/**", "/.next/**"],
     "rules": {
       "recommended": true,
       "suspicious": {
@@ -18,18 +17,19 @@
         "useKeyWithClickEvents": "off",
         "noSvgWithoutTitle": "off"
       }
-    }
+    },
+    "ignore": [".next", "node_modules"]
   },
   "formatter": {
-    "ignore": ["/node_modules/**", "/.next/**"],
     "enabled": true,
     "indentStyle": "space",
-    "formatWithErrors": true
+    "indentWidth": 2,
+    "formatWithErrors": true,
+    "ignore": [".next", "node_modules"]
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
-      "trailingComma": "es5"
+      "quoteStyle": "double"
     }
   }
 }

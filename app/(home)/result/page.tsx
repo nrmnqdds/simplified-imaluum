@@ -25,10 +25,10 @@ const Page = () => {
   useEffect(() => {
     if (session) {
       const tempRemarks = result?.filter(
-        (result) => result.sessionName === session
+        (result) => result.sessionName === session,
       )[0].remarks;
       const tempStatus = result?.filter(
-        (result) => result.sessionName === session
+        (result) => result.sessionName === session,
       )[0].status;
       setNotes({
         remarks: tempRemarks || "No Remarks",

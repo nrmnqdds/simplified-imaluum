@@ -7,7 +7,7 @@ const CGPAChart = () => {
   const { result } = useResult();
 
   const filteredResult = result?.filter(
-    (cgpa) => cgpa.cgpaValue && cgpa.gpaValue
+    (cgpa) => cgpa.cgpaValue && cgpa.gpaValue,
   );
 
   const data = filteredResult?.map((cgpa) => {

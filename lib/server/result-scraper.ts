@@ -13,7 +13,7 @@ import { parse } from "node-html-parser";
  */
 const getResultFromSession = async (
   sessionQuery: string,
-  sessionName: string
+  sessionName: string,
 ): Promise<Result> => {
   const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
   try {
@@ -131,7 +131,7 @@ export async function GetResult(): Promise<{
     if (!root) throw new Error("Failed to parse the page body");
 
     const sessionBody = root.querySelectorAll(
-      ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
+      ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']",
     );
 
     if (!sessionBody) throw new Error("Failed to fetch session body");
@@ -157,8 +157,8 @@ export async function GetResult(): Promise<{
 
     const results: Result[] = await Promise.all(
       sessionList.map(({ sessionQuery, sessionName }) =>
-        getResultFromSession(sessionQuery as string, sessionName as string)
-      )
+        getResultFromSession(sessionQuery as string, sessionName as string),
+      ),
     );
 
     return {

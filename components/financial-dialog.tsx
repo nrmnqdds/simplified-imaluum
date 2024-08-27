@@ -20,7 +20,7 @@ export default function FinancialDialog() {
       !!results.result &&
       results.result.length > 0 &&
       results.result[0]?.remarks ===
-        "Please contact finance division regarding tuition fees"
+        "Please contact finance division regarding tuition fees",
   );
 
   return (

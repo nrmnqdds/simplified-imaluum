@@ -11,7 +11,7 @@ import { parse } from "node-html-parser";
  * @returns {Promise<{ success: boolean; data: StudentInfo }>} An object containing the user profile
  */
 export async function GetUserProfile(
-  username: string
+  username: string,
 ): Promise<{ success: boolean; data: StudentInfo }> {
   try {
     const response = await got(IMALUUM_HOME_PAGE, {
@@ -29,7 +29,7 @@ export async function GetUserProfile(
     const root = parse(response.body);
 
     const hiddenTextSelector = root.querySelector(
-      ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs"
+      ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs",
     );
 
     if (!hiddenTextSelector) {

@@ -1,6 +1,5 @@
 import { QueryProvider } from "@/context/QueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
-import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
 import { Poppins } from "next/font/google";
@@ -62,13 +61,6 @@ export default async function RootLayout({
           data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
           async
         />
-        <Script
-          defer
-          src="https://eu.umami.is/script.js"
-          data-website-id="4f1a0eb5-2fe9-4578-badd-6777440a1f6a"
-        />
-        <GoogleTagManager gtmId="G-FSH7NYD2CV" />
-
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}

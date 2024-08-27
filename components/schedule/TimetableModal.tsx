@@ -63,12 +63,12 @@ export default function TimetableModal({
                       </span>
                       {moment(
                         currentSubject?.timestamps.start,
-                        "HH:mm:ss"
+                        "HH:mm:ss",
                       ).format("h:mma")}{" "}
                       -{" "}
                       {moment(
                         currentSubject?.timestamps.end,
-                        "HH:mm:ss"
+                        "HH:mm:ss",
                       ).format("h:mma")}
                     </p>
                     <p className="text-sm text-foreground">

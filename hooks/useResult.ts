@@ -17,8 +17,8 @@ const useResult = create(
     {
       name: "result-storage",
       storage: createJSONStorage(() => sessionStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useResult;

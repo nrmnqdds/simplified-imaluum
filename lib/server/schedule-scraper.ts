@@ -14,7 +14,7 @@ import { parse } from "node-html-parser";
  */
 const getScheduleFromSession = async (
   sessionQuery: string,
-  sessionName: string
+  sessionName: string,
 ): Promise<
   | {
       sessionQuery: string;
@@ -290,7 +290,7 @@ export async function GetSchedule(): Promise<{
     const root = parse(response.body);
 
     const sessionBody = root.querySelectorAll(
-      ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']"
+      ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']",
     );
 
     const sessionList = sessionBody.map((element) => {
@@ -309,8 +309,8 @@ export async function GetSchedule(): Promise<{
       (sessionList as { sessionName: string; sessionQuery: string }[])
         .filter((session) => session !== undefined)
         .map(({ sessionName, sessionQuery }) =>
-          getScheduleFromSession(sessionQuery, sessionName)
-        )
+          getScheduleFromSession(sessionQuery, sessionName),
+        ),
     );
 
     if (!results || results.length === 0) {
