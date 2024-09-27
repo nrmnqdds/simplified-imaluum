@@ -148,7 +148,7 @@ export default function HomeLayout({
                                     pathname === item.href
                                       ? "bg-gray-50 text-primary"
                                       : "text-gray-700 hover:text-primary hover:bg-gray-50 dark:hover:bg-zinc-800",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
                                   )}
                                 >
                                   <item.icon
@@ -156,7 +156,7 @@ export default function HomeLayout({
                                       pathname === item.href
                                         ? "text-primary"
                                         : "text-accent group-hover:text-primary",
-                                      "h-6 w-6 shrink-0"
+                                      "h-6 w-6 shrink-0",
                                     )}
                                     aria-hidden="true"
                                   />
@@ -212,7 +212,7 @@ export default function HomeLayout({
                             pathname === item.href
                               ? "bg-primary-foreground text-primary"
                               : "text-accent hover:text-primary hover:bg-accent",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
                           )}
                         >
                           <item.icon
@@ -220,7 +220,7 @@ export default function HomeLayout({
                               pathname === item.href
                                 ? "text-primary"
                                 : "text-accent group-hover:text-primary",
-                              "h-6 w-6 shrink-0"
+                              "h-6 w-6 shrink-0",
                             )}
                             aria-hidden="true"
                           />

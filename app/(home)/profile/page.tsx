@@ -1,7 +1,9 @@
+import Tag3d from "@/components/card-tag";
+
 const Page = () => {
   return (
-    <div>
-      <p className="text-white">profile</p>
+    <div className="min-h-screen">
+      <Tag3d />
     </div>
   );
 };

@@ -14,7 +14,7 @@ export async function GetAds() {
 
     const root = parse(response.body);
     const articles = root.querySelectorAll(
-      'div[style*="width:100%; clear:both;height:100px"]'
+      'div[style*="width:100%; clear:both;height:100px"]',
     );
 
     // const structuredData = articles.map((element) => {

@@ -56,7 +56,7 @@ export default function TimetableEventBlock({
       type="button"
       className={cn(
         "absolute rounded-md duration-100 p-1 border md:border-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-        [event.color]
+        [event.color],
       )}
       style={{
         top,

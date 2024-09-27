@@ -23,8 +23,8 @@ const useSchedule = create(
     {
       name: "schedule-storage",
       storage: createJSONStorage(() => sessionStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useSchedule;

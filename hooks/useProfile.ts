@@ -17,8 +17,8 @@ const useProfile = create(
     {
       name: "profile-storage",
       storage: createJSONStorage(() => sessionStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useProfile;

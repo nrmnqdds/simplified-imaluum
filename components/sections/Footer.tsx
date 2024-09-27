@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { JSX, SVGProps } from "react";
+import type { JSX, SVGProps } from "react";
 
 const navigation = {
   social: [
