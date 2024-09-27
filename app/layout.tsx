@@ -2,6 +2,7 @@ import { QueryProvider } from "@/context/QueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "react-hot-toast";
@@ -61,6 +62,12 @@ export default async function RootLayout({
           data-token="09a05d6b-9ccf-4902-8ad0-e623689d586a"
           async
         />
+        <Script
+          defer
+          src="https://umami.mallam.chat/getinfo"
+          data-website-id="45609499-5b7c-451e-9683-4ef520bae636"
+        />
+        <GoogleTagManager gtmId="G-FSH7NYD2CV" />
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {children}
