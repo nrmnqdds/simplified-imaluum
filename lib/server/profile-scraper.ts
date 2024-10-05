@@ -37,7 +37,7 @@ export async function GetUserProfile(
       throw new Error("Selectors not found on the page.");
     }
 
-    const imageURL = `https://corsproxy.io/?https://smartcard.iium.edu.my/packages/card/printing/camera/uploads/original/${username}.jpeg`;
+    const imageURL = `https://smartcard.iium.edu.my/packages/card/printing/camera/uploads/original/${username}.jpeg`;
     const name =
       hiddenTextSelector.textContent?.trim().replace(/\s+/g, " ") ?? "";
 
