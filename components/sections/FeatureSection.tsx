@@ -89,16 +89,12 @@ const Feature = () => {
           </div>
         </div>
         <ContainerScroll
-          titleComponent={
-            <>
-              <h1 className="text-4xl font-semibold text-cyan-600">
+          titleComponent=<h1 className="text-4xl font-semibold text-cyan-600">
                 Everything you need <br />
                 <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none text-foreground">
                   i-Ma&apos;luum on steroid!
                 </span>
               </h1>
-            </>
-          }
         />
       </div>
       <div className="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-0 lg:px-8">

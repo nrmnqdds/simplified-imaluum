@@ -48,17 +48,19 @@ export async function ImaluumLogin(form: {
       followRedirect: false,
     });
 
-    const cookieStore = cookieJar.toJSON().cookies;
+    const cookieStore = cookieJar.toJSON()?.cookies;
 
-    if (cookieStore.length === 0) {
+    if (cookieStore?.length === 0) {
       throw new Error("Invalid credentials!");
     }
 
-    for (const cookie of cookieStore) {
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    for (const cookie of cookieStore!) {
       // console.log(cookie);
       if (cookie.key === "MOD_AUTH_CAS") {
         cookies().set({
           name: "MOD_AUTH_CAS",
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
           value: cookie.value!,
           expires: new Date(Date.now() + 600000), // 10 minutes
         });
