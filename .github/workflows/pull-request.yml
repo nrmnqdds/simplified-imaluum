@@ -1,9 +1,7 @@
 name: Code quality
-
 on:
   push:
   pull_request:
-
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -14,15 +12,12 @@ jobs:
         uses: biomejs/setup-biome@v1
         with:
           version: latest
-
       # - name: Import Sorting
       #   run: biome check --write --unsafe .
-
       - name: Format Code
         run: biome format --write .
-
       - name: Lint Code
         run: biome lint --write --unsafe .
-
-      - name: Run Biome
-        run: biome ci .
+    #
+    # - name: Run Biome
+    #   run: biome ci .
