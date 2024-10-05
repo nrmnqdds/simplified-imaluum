@@ -79,13 +79,13 @@ const getScheduleFromSession = async (
             .replace(/ /gi, "")
             .split("-")
             .map((x) => {
-              if (x.includes("SUN")) return 0;
-              if (x === "M" || x.includes("MON")) return 1;
-              if (x === "T" || x.includes("TUE")) return 2;
-              if (x === "W" || x.includes("WED")) return 3;
-              if (x === "TH" || x.includes("THUR")) return 4;
-              if (x === "F" || x.includes("FRI")) return 5;
-              if (x.includes("SAT")) return 6;
+              if (x.includes("SUN")) return 1;
+              if (x === "M" || x.includes("MON")) return 2;
+              if (x === "T" || x.includes("TUE")) return 3;
+              if (x === "W" || x.includes("WED")) return 4;
+              if (x === "TH" || x.includes("THUR")) return 5;
+              if (x === "F" || x.includes("FRI")) return 6;
+              if (x.includes("SAT")) return 7;
             });
           if (!days) {
             continue;
@@ -165,13 +165,13 @@ const getScheduleFromSession = async (
             .replace(/ /gi, "")
             .split("-")
             .map((x) => {
-              if (x.includes("SUN")) return 0;
-              if (x === "M" || x.includes("MON")) return 1;
-              if (x === "T" || x.includes("TUE")) return 2;
-              if (x === "W" || x.includes("WED")) return 3;
-              if (x === "TH" || x.includes("THUR")) return 4;
-              if (x === "F" || x.includes("FRI")) return 5;
-              if (x.includes("SAT")) return 6;
+              if (x.includes("SUN")) return 1;
+              if (x === "M" || x.includes("MON")) return 2;
+              if (x === "T" || x.includes("TUE")) return 3;
+              if (x === "W" || x.includes("WED")) return 4;
+              if (x === "TH" || x.includes("THUR")) return 5;
+              if (x === "F" || x.includes("FRI")) return 6;
+              if (x.includes("SAT")) return 7;
             });
 
           if (!days) {

@@ -46,7 +46,7 @@ export default function TimetableEventBlock({
     5;
 
   const left = `calc(${
-    (100 / numberOfDays) * (event.timestamps.day - config.startDay)
+    (100 / numberOfDays) * (event.timestamps.day - config.startDay - 1)
   }% )`;
 
   const width = `calc(${100 / numberOfDays}% - 5px)`;
