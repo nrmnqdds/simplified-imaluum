@@ -15,14 +15,14 @@ jobs:
         with:
           version: latest
 
-      - name: Import Sorting
-        run: biome check --write --unsafe .
+      # - name: Import Sorting
+      #   run: biome check --write --unsafe .
 
       - name: Format Code
-        run: biome format --write --unsafe .
+        run: biome format --write .
 
       - name: Lint Code
-        run: biome lint .
+        run: biome lint --write --unsafe .
 
       - name: Run Biome
         run: biome ci .
