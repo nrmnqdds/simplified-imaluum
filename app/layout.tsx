@@ -1,7 +1,6 @@
 import { QueryProvider } from "@/context/QueryProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import type { Metadata } from "next";
-import { unstable_noStore as noStore } from "next/cache";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
@@ -48,12 +47,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  noStore();
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`scroll-smooth scrollbar-hide ${poppins.className}`}>
