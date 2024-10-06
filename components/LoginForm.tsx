@@ -49,8 +49,24 @@ const LoginForm = () => {
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof formSchema>) =>
-      await ImaluumLogin(values),
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        throw new Error("Invalid credentials.");
+      }
+
+      const json = await res.json();
+
+      return json;
+    },
+    // await ImaluumLogin(values),
     onSuccess: (data: {
       success: boolean;
       matricNo?: string;
