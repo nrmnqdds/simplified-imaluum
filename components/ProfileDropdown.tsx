@@ -54,15 +54,11 @@ export default function ProfileDropdown() {
 
         <DropdownMenuItem
           className="cursor-pointer focus:bg-red-600/50"
-          // onClick={async () => {
-          //   const res = await ImaluumLogout();
-          //   if (res.success) {
-          //     localStorage.clear();
-          //     queryClient.invalidateQueries();
-          //     toast.success("Logged out successfully.");
-          //     router.replace("/");
-          //   }
-          // }}
+          onClick={async () => {
+            await fetch("/api/logout", {
+              method: "DELETE",
+            });
+          }}
         >
           Log out
         </DropdownMenuItem>
