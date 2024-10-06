@@ -35,7 +35,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^10.17.4",
-    "got": "^14.0.0",
     "leva": "^0.9.35",
     "lucide-react": "^0.303.0",
     "meshline": "^3.3.1",

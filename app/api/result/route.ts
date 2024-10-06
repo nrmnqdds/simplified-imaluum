@@ -1,5 +1,4 @@
 import { IMALUUM_RESULT_PAGE } from "@/constants";
-import got from "got";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
@@ -16,15 +15,21 @@ const getResultFromSession = async (
 ): Promise<Result> => {
   const url = `https://imaluum.iium.edu.my/MyAcademic/result${sessionQuery}`;
   try {
-    const response = await got(url, {
+    const response = await fetch(url, {
       headers: {
         Cookie: cookies().toString(),
       },
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
+      // https: { rejectUnauthorized: false },
+      // followRedirect: false,
     });
 
-    const root = parse(response.body);
+    if (!response.ok) {
+      throw new Error("Failed to fetch schedule");
+    }
+
+    const body = await response.text();
+
+    const root = parse(body);
 
     const table = root.querySelector(".box-body table.table.table-hover");
     const rows = table?.querySelectorAll("tr");
@@ -111,15 +116,19 @@ const getResultFromSession = async (
 
 export async function GET() {
   try {
-    const response = await got(IMALUUM_RESULT_PAGE, {
+    const response = await fetch(IMALUUM_RESULT_PAGE, {
       headers: {
         Cookie: cookies().toString(),
       },
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
     });
 
-    const root = parse(response.body);
+    if (!response.ok) {
+      throw new Error("Failed to fetch result");
+    }
+
+    const body = await response.text();
+
+    const root = parse(body);
     if (!root) throw new Error("Failed to parse the page body");
 
     const sessionBody = root.querySelectorAll(
@@ -141,10 +150,13 @@ export async function GET() {
     if (sessionList.length === 0) {
       // must return null, dont throw error
       // assuming the student is 1st year 1st sem and havent taken any exams yet
-      return {
-        success: true,
-        data: null,
-      };
+      return NextResponse.json(
+        {
+          success: true,
+          data: null,
+        },
+        { status: 200 },
+      );
     }
 
     const results: Result[] = await Promise.all(

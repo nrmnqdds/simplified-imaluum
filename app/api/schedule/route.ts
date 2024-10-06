@@ -1,5 +1,4 @@
 import { IMALUUM_SCHEDULE_PAGE } from "@/constants";
-import got from "got";
 import moment from "moment";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -40,16 +39,16 @@ const getScheduleFromSession = async (
 
   try {
     if (cookies().get("MOD_AUTH_CAS")) {
-      const response = await got(url, {
+      const response = await fetch(url, {
         headers: {
           Cookie: cookies().toString(),
         },
-        https: { rejectUnauthorized: false },
-        followRedirect: false,
       });
-      if (!response.body) throw new Error("Failed to go to page");
+      if (!response.ok) throw new Error("Failed to go to page");
 
-      const root = parse(response.body);
+      const body = await response.text();
+
+      const root = parse(body);
       if (!root) throw new Error("Failed to parse the body");
 
       const table = root.querySelector(".box-body table.table.table-hover");
@@ -271,15 +270,19 @@ const getScheduleFromSession = async (
 
 export async function GET() {
   try {
-    const response = await got(IMALUUM_SCHEDULE_PAGE, {
+    const response = await fetch(IMALUUM_SCHEDULE_PAGE, {
       headers: {
         Cookie: cookies().toString(),
       },
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
     });
 
-    const root = parse(response.body);
+    if (!response.ok) {
+      throw new Error("Failed to fetch schedule");
+    }
+
+    const body = await response.text();
+
+    const root = parse(body);
 
     const sessionBody = root.querySelectorAll(
       ".box.box-primary .box-header.with-border .dropdown ul.dropdown-menu li[style*='font-size:16px']",

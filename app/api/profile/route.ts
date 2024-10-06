@@ -1,5 +1,4 @@
 import { IMALUUM_HOME_PAGE } from "@/constants";
-import got from "got";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { parse } from "node-html-parser";
@@ -14,12 +13,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await got(IMALUUM_HOME_PAGE, {
+    const response = await fetch(IMALUUM_HOME_PAGE, {
       headers: {
         Cookie: cookies().toString(),
       },
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
     });
 
     if (!response.ok) {
@@ -30,7 +27,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const root = parse(response.body);
+    const body = await response.text();
+
+    const root = parse(body);
 
     const hiddenTextSelector = root.querySelector(
       ".navbar-custom-menu ul.nav.navbar-nav li.dropdown.user.user-menu span.hidden-xs",
