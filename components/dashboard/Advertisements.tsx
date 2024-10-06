@@ -1,6 +1,5 @@
 "use client";
 
-import { GetAds } from "@/lib/server/ads-scraper";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { AiOutlineLink } from "react-icons/ai";
@@ -11,7 +10,18 @@ const Advertisement = ({ className }: { className: string }) => {
   const { data: ads, isLoading: loading } = useQuery({
     queryKey: ["ads"],
     queryFn: async () => {
-      const data = await GetAds();
+      // const data = await GetAds();
+      // if (data.success) {
+      //   return data.data;
+      // }
+
+      const res = await fetch("/api/ads");
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await res.json();
+
       if (data.success) {
         return data.data;
       }

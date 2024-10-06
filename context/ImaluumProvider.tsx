@@ -4,9 +4,6 @@ import LoadingScreen from "@/components/loading-screen";
 import useProfile from "@/hooks/useProfile";
 import useResult from "@/hooks/useResult";
 import useSchedule from "@/hooks/useSchedule";
-import { GetUserProfile } from "@/lib/server/profile-scraper";
-import { GetResult } from "@/lib/server/result-scraper";
-import { GetSchedule } from "@/lib/server/schedule-scraper";
 import { useQuery } from "@tanstack/react-query";
 
 const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
@@ -17,8 +14,6 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const profileData = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      // const data = await GetUserProfile(profile?.matricNo as string);
-
       const res = await fetch(`/api/profile?username=${profile?.matricNo}`);
 
       if (!res.ok) {

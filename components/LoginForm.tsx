@@ -13,11 +13,9 @@ import { Input } from "@/components/ui/input";
 import useProfile from "@/hooks/useProfile";
 import useResult from "@/hooks/useResult";
 import useSchedule from "@/hooks/useSchedule";
-import { ImaluumLogin } from "@/lib/server/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import type { CSSProperties, HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
@@ -30,8 +28,6 @@ const formSchema = z.object({
     message: "Please enter password.",
   }),
 });
-
-type Props = {} & HTMLAttributes<HTMLFormElement> & CSSProperties;
 
 const LoginForm = () => {
   const { reset: ProfileReset, setProfile } = useProfile();
@@ -76,7 +72,6 @@ const LoginForm = () => {
         imageURL: "",
       });
       router.replace("/dashboard");
-      console.log("reroute");
     },
     onError: (err) => {
       console.log(err);

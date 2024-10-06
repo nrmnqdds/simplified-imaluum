@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useProfile from "@/hooks/useProfile";
-import { ImaluumLogout } from "@/lib/server/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -55,15 +54,15 @@ export default function ProfileDropdown() {
 
         <DropdownMenuItem
           className="cursor-pointer focus:bg-red-600/50"
-          onClick={async () => {
-            const res = await ImaluumLogout();
-            if (res.success) {
-              localStorage.clear();
-              queryClient.invalidateQueries();
-              toast.success("Logged out successfully.");
-              router.replace("/");
-            }
-          }}
+          // onClick={async () => {
+          //   const res = await ImaluumLogout();
+          //   if (res.success) {
+          //     localStorage.clear();
+          //     queryClient.invalidateQueries();
+          //     toast.success("Logged out successfully.");
+          //     router.replace("/");
+          //   }
+          // }}
         >
           Log out
         </DropdownMenuItem>

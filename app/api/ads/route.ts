@@ -1,18 +1,19 @@
-"use server";
-
-import got from "got";
+import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 
-export async function GetAds() {
+export async function GET() {
   try {
     const url = "https://souq.iium.edu.my/embeded";
 
-    const response = await got(url, {
-      https: { rejectUnauthorized: false },
-      followRedirect: false,
-    });
+    const response = await fetch(url);
 
-    const root = parse(response.body);
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const body = await response.text();
+
+    const root = parse(body);
     const articles = root.querySelectorAll(
       'div[style*="width:100%; clear:both;height:100px"]',
     );
@@ -42,12 +43,16 @@ export async function GetAds() {
       });
     }
 
-    return {
+    return NextResponse.json({
       success: true,
       data: structuredData,
-    };
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw new Error("Failed to fetch data");
+    // throw new Error("Failed to fetch data");
+    return NextResponse.json(
+      { error: "Failed to fetch data" },
+      { status: 500 },
+    );
   }
 }

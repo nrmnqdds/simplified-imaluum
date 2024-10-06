@@ -4,13 +4,13 @@ import { type NextRequest, NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 
 export async function GET(request: NextRequest) {
-  const params = request.nextUrl.searchParams;
-
-  const username = params.get("username");
+  const username = request.nextUrl.searchParams.get("username");
 
   if (!username) {
     return NextResponse.json({ error: "Invalid username" }, { status: 400 });
   }
+
+  console.log("username: ", username);
 
   try {
     const response = await fetch(IMALUUM_HOME_PAGE, {
@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
     }
 
     const imageURL = `https://smartcard.iium.edu.my/packages/card/printing/camera/uploads/original/${username.trim()}.jpeg`;
+    console.log("imageURL: ", imageURL);
     const name =
       hiddenTextSelector.textContent?.trim().replace(/\s+/g, " ") ?? "";
 
