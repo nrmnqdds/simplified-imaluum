@@ -5,5 +5,5 @@ export async function DELETE() {
   // Clear the cookie
   cookies().delete("MOD_AUTH_CAS");
 
-  return NextResponse.redirect("/");
+  return NextResponse.json({ success: true }, { status: 200 });
 }
