@@ -68,21 +68,18 @@ const LoginForm = () => {
     },
     // await ImaluumLogin(values),
     onSuccess: (data: {
-      success: boolean;
-      matricNo?: string;
+      username: string;
     }) => {
-      if (!data.success) {
-        toast.error("Invalid credentials.");
-      } else {
-        setProfile({
-          matricNo: data.matricNo as string,
-          name: "",
-          imageURL: "",
-        });
-        router.replace("/dashboard");
-      }
+      setProfile({
+        matricNo: data.username,
+        name: "",
+        imageURL: "",
+      });
+      router.replace("/dashboard");
+      console.log("reroute");
     },
-    onError: () => {
+    onError: (err) => {
+      console.log(err);
       toast.error("Invalid credentials.");
     },
   });

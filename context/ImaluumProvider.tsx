@@ -17,7 +17,16 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const profileData = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const data = await GetUserProfile(profile?.matricNo as string);
+      // const data = await GetUserProfile(profile?.matricNo as string);
+
+      const res = await fetch(`/api/profile?username=${profile?.matricNo}`);
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+
+      const data = await res.json();
+
       if (data.success && data.data) {
         setProfile(data.data);
         return data.data;
@@ -29,7 +38,14 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const resultData = useQuery({
     queryKey: ["result"],
     queryFn: async () => {
-      const data = await GetResult();
+      const res = await fetch("/api/result");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch result");
+      }
+
+      const data = await res.json();
+
       if (data.success) {
         setResult(data.data);
         return data.data;
@@ -41,7 +57,15 @@ const ImaluumProvider = ({ children }: { children: React.ReactNode }) => {
   const scheduleData = useQuery({
     queryKey: ["schedule"],
     queryFn: async () => {
-      const data = await GetSchedule();
+      // const data = await GetSchedule();
+      const res = await fetch("/api/schedule");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch schedule");
+      }
+
+      const data = await res.json();
+
       if (data.success) {
         setSchedule(data.data);
         return data.data;
