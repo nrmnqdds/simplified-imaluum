@@ -58,6 +58,12 @@ export default function ProfileDropdown() {
             await fetch("/api/logout", {
               method: "DELETE",
             });
+
+            queryClient.clear();
+
+            toast.success("Logged out successfully");
+
+            router.replace("/");
           }}
         >
           Log out
