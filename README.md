@@ -1,3 +1,6 @@
+> [!CAUTION]
+> **ARCHIVED** Checkout [Imaluum V2](https://github.com/nrmnqdds/imaluum-v2) for latest version
+
 # Welcome to Simplified i-Ma'luum 🌟
 
 <img src="https://github.com/nrmnqdds/simplified-imaluum/assets/65181897/2ad4fedc-1018-4779-b94a-5aae6f2944a3" width=100 />
@@ -5,11 +8,6 @@
 ## 🚧 **In Construction** 🚧
 > [!IMPORTANT]
 > This project is **not** associated with the official i-Ma'luum website!
-
-> [!CAUTION]
-> **Not stable yet**, if your data failed to fetched on laptop, try on your phone
-> 
-> If still not working, try do it other time, later at night or anything
 
 > [!NOTE]
 > Beta version available at https://imaluum-beta.nrmnqdds.com
