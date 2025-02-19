@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(IMALUUM_HOME_PAGE, {
       headers: {
-        Cookie: cookies().toString(),
+        Cookie: (await cookies()).toString(),
       },
     });
 

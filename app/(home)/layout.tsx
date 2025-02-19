@@ -5,7 +5,6 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import FinancialDialog from "@/components/financial-dialog";
 import ImaluumProvider from "@/context/ImaluumProvider";
 import { getDate } from "@/lib/common/time";
-import LOGO from "@/public/logo-landing-page.png";
 import {
   Dialog,
   DialogPanel,
@@ -15,14 +14,13 @@ import {
 import {
   Bars3Icon,
   CalendarIcon,
-  Cog6ToothIcon,
   FlagIcon,
   HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 
 const navigation = [
@@ -45,7 +43,6 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<string>("00:00:00 AM");
@@ -132,7 +129,7 @@ export default function HomeLayout({
                         width={64}
                         height={64}
                         className="object-contain"
-                        src={LOGO}
+                        src="/logo-landing-page.png"
                         alt="Your Company"
                       />
                     </div>
@@ -196,7 +193,7 @@ export default function HomeLayout({
                 width={64}
                 height={64}
                 className="object-contain"
-                src={LOGO}
+                src="/logo-landing-page.png"
                 alt="Your Company"
               />
             </div>

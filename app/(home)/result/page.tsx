@@ -66,7 +66,7 @@ const Page = () => {
       {!result ? (
         <div className="h-[500px] w-full flex flex-col items-center justify-center">
           <LottiePlayer
-            animationData={require("../../../public/lottie/study.lottie")}
+            animationData={require("../../../assets/lottie/study.lottie")}
           />
           <h1 className="text-lg md:text-5xl text-center font-bold text-white">
             You have not taken any exams yet

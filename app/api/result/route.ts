@@ -5,7 +5,7 @@ import { parse } from "node-html-parser";
 import { getResultFromSession } from "@/lib/server/result";
 
 export async function GET() {
-  const _cookies = cookies().toString();
+  const _cookies = (await cookies()).toString();
 
   try {
     const response = await fetch(IMALUUM_RESULT_PAGE, {

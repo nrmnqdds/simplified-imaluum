@@ -72,12 +72,12 @@ export default function Tag3d() {
 }
 
 function Band({ maxSpeed = 50, minSpeed = 10 }) {
-  const band = useRef();
-  const fixed = useRef();
-  const j1 = useRef();
-  const j2 = useRef();
-  const j3 = useRef();
-  const card = useRef(); // prettier-ignore
+  const band = useRef(undefined);
+  const fixed = useRef(undefined);
+  const j1 = useRef(undefined);
+  const j2 = useRef(undefined);
+  const j3 = useRef(undefined);
+  const card = useRef(undefined); // prettier-ignore
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
   const rot = new THREE.Vector3();
@@ -169,78 +169,75 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   curve.curveType = "chordal";
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-  return (
-    <>
-      <group position={[0, 4, 0]}>
-        <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
-          <BallCollider args={[0.1]} />
-        </RigidBody>
-        <RigidBody
-          position={[2, 0, 0]}
-          ref={card}
-          {...segmentProps}
-          type={dragged ? "kinematicPosition" : "dynamic"}
+  return (<>
+    <group position={[0, 4, 0]}>
+      <RigidBody ref={fixed} {...segmentProps} type="fixed" />
+      <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody
+        position={[2, 0, 0]}
+        ref={card}
+        {...segmentProps}
+        type={dragged ? "kinematicPosition" : "dynamic"}
+      >
+        <CuboidCollider args={[0.8, 1.125, 0.01]} />
+        <group
+          scale={2.25}
+          position={[0, -1.2, -0.05]}
+          onPointerOver={() => hover(true)}
+          onPointerOut={() => hover(false)}
+          onPointerUp={(e) =>
+            (
+              // biome-ignore lint/style/noCommaOperator: <explanation>
+              (e.target.releasePointerCapture(e.pointerId), drag(false))
+            )}
+          onPointerDown={(e) =>
+            (
+              // biome-ignore lint/style/noCommaOperator: <explanation>
+              (e.target.setPointerCapture(e.pointerId), drag(
+                new THREE.Vector3()
+                  .copy(e.point)
+                  .sub(vec.copy(card.current.translation())),
+              ))
+            )}
         >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
-          <group
-            scale={2.25}
-            position={[0, -1.2, -0.05]}
-            onPointerOver={() => hover(true)}
-            onPointerOut={() => hover(false)}
-            onPointerUp={(e) =>
-              (
-                // biome-ignore lint/style/noCommaOperator: <explanation>
-                e.target.releasePointerCapture(e.pointerId), drag(false)
-              )}
-            onPointerDown={(e) =>
-              (
-                // biome-ignore lint/style/noCommaOperator: <explanation>
-                e.target.setPointerCapture(e.pointerId),
-                drag(
-                  new THREE.Vector3()
-                    .copy(e.point)
-                    .sub(vec.copy(card.current.translation())),
-                )
-              )}
-          >
-            <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={materials.base.map}
-                map-anisotropy={16}
-                clearcoat={1}
-                clearcoatRoughness={0.15}
-                roughness={0.3}
-                metalness={0.5}
-              />
-            </mesh>
-            <mesh
-              geometry={nodes.clip.geometry}
-              material={materials.metal}
-              material-roughness={0.3}
+          <mesh geometry={nodes.card.geometry}>
+            <meshPhysicalMaterial
+              map={materials.base.map}
+              map-anisotropy={16}
+              clearcoat={1}
+              clearcoatRoughness={0.15}
+              roughness={0.3}
+              metalness={0.5}
             />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
-          </group>
-        </RigidBody>
-      </group>
-      <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color="white"
-          depthTest={false}
-          resolution={[width, height]}
-          useMap
-          map={texture}
-          repeat={[-3, 1]}
-          lineWidth={1}
-        />
-      </mesh>
-    </>
-  );
+          </mesh>
+          <mesh
+            geometry={nodes.clip.geometry}
+            material={materials.metal}
+            material-roughness={0.3}
+          />
+          <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+        </group>
+      </RigidBody>
+    </group>
+    <mesh ref={band}>
+      <meshLineGeometry />
+      <meshLineMaterial
+        color="white"
+        depthTest={false}
+        resolution={[width, height]}
+        useMap
+        map={texture}
+        repeat={[-3, 1]}
+        lineWidth={1}
+      />
+    </mesh>
+  </>);
 }

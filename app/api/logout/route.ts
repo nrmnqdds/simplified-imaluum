@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE() {
   // Clear the cookie
-  cookies().delete("MOD_AUTH_CAS");
+  (await cookies()).delete("MOD_AUTH_CAS");
 
   return NextResponse.json({ success: true }, { status: 200 });
 }

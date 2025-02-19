@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { parse } from "node-html-parser";
 
 export async function GET() {
-  const _cookies = cookies().toString();
+  const _cookies = (await cookies()).toString();
 
   try {
     const response = await fetch(IMALUUM_SCHEDULE_PAGE, {

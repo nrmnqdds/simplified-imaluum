@@ -8,7 +8,7 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -58,7 +58,7 @@ export default function FinancialDialog() {
                   <div className="mt-3 text-center sm:mt-5">
                     <DialogTitle
                       as="h3"
-                      className="text-primary font-semibold leading-6 text-gray-900"
+                      className="text-primary font-semibold leading-6"
                     >
                       You have unpaid tuition fees!
                     </DialogTitle>
@@ -73,7 +73,7 @@ export default function FinancialDialog() {
                 <div className="mt-5 sm:mt-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     onClick={() => setOpen(false)}
                   >
                     Close

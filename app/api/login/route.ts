@@ -19,9 +19,9 @@ export async function POST(request: NextRequest) {
   const json = await res.json();
 
   // Clear the cookie
-  cookies().delete("MOD_AUTH_CAS");
+  (await cookies()).delete("MOD_AUTH_CAS");
 
-  cookies().set("MOD_AUTH_CAS", json.data.token, {
+  (await cookies()).set("MOD_AUTH_CAS", json.data.token, {
     path: "/",
   });
 
